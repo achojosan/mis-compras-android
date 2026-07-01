@@ -52,7 +52,7 @@ fun HistoryListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Historial de Compras") }
+                title = { }
             )
         }
     ) { paddingValues ->

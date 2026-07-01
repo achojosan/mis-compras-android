@@ -2,7 +2,7 @@ package app.miscompras.com.ui.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -30,19 +30,13 @@ sealed class Screen(
         icon = Icons.Default.History
     )
 
-    data object Nearby : Screen(
-        route = "nearby",
-        title = "Cercanos",
-        icon = Icons.Default.LocationOn
-    )
-
     data object Settings : Screen(
         route = "settings",
         title = "Ajustes",
-        icon = Icons.Default.Store
+        icon = Icons.Default.Settings
     )
 
     companion object {
-        val bottomNavItems = listOf(Supermarkets, ShoppingList, History, Nearby)
+        val bottomNavItems = listOf(Supermarkets, ShoppingList, History, Settings)
     }
 }

@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -51,7 +50,6 @@ import app.miscompras.com.ui.theme.AccessibilityDefaults
 fun SupermarketListScreen(
     onSupermarketClick: (Long) -> Unit,
     onAddSupermarketClick: () -> Unit,
-    onSettingsClick: () -> Unit,
     viewModel: SupermarketListViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -59,22 +57,10 @@ fun SupermarketListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Mis Supermercados") },
+                title = { },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface
-                ),
-                actions = {
-                    IconButton(
-                        onClick = onSettingsClick,
-                        modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = "Ajustes",
-                            modifier = Modifier.size(AccessibilityDefaults.IconSize)
-                        )
-                    }
-                }
+                )
             )
         },
         floatingActionButton = {

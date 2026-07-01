@@ -55,7 +55,7 @@ fun ShoppingListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Lista de Compra") }
+                title = { }
             )
         }
     ) { paddingValues ->

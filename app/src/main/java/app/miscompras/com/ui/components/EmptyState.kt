@@ -17,8 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.translateY
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -46,8 +45,10 @@ fun EmptyState(
         modifier = modifier
             .fillMaxWidth()
             .padding(AccessibilityDefaults.SectionSpacing * 2)
-            .alpha(alpha.value)
-            .translateY(translationY.value),
+            .graphicsLayer {
+                this.alpha = alpha.value
+                this.translationY = translationY.value
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import app.miscompras.com.ui.screens.history.HistoryDetailScreen
 import app.miscompras.com.ui.screens.history.HistoryListScreen
+import app.miscompras.com.ui.screens.nearby.NearbyScreen
 import app.miscompras.com.ui.screens.products.AddProductScreen
 import app.miscompras.com.ui.screens.shopping.ShoppingListScreen
 import app.miscompras.com.ui.screens.supermarkets.AddSupermarketScreen
@@ -112,7 +113,11 @@ fun NavGraph(
         }
 
         composable(Routes.NEARBY.route) {
-            NearbyPlaceholder()
+            NearbyScreen(
+                onAddSupermarketClick = { name, lat, lon, openingHours ->
+                    navController.navigate(Routes.ADD_SUPERMARKET)
+                }
+            )
         }
     }
 }

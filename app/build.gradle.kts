@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     
     implementation(libs.play.services.location)
+    implementation(libs.kotlinx.coroutines.play.services)
     
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)

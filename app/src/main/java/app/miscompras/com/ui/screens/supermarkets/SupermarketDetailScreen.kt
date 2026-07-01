@@ -60,12 +60,7 @@ fun SupermarketDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    when (val state = uiState) {
-                        is SupermarketDetailUiState.Success -> Text(state.supermarket.name)
-                        else -> Text("Supermercado")
-                    }
-                },
+                title = { },
                 navigationIcon = {
                     IconButton(
                         onClick = onNavigateBack,

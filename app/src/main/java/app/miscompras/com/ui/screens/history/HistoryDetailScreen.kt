@@ -51,7 +51,7 @@ fun HistoryDetailScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Detalle de compra") },
+                title = { },
                 navigationIcon = {
                     IconButton(
                         onClick = onNavigateBack,

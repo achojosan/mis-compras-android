@@ -68,7 +68,7 @@ fun AddSupermarketScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (uiState.isEditing) "Editar supermercado" else "Añadir supermercado") },
+                title = { },
                 navigationIcon = {
                     IconButton(
                         onClick = onNavigateBack,

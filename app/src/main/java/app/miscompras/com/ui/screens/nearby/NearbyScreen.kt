@@ -86,7 +86,7 @@ fun NearbyScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Comercios Cercanos") }
+                title = { }
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },

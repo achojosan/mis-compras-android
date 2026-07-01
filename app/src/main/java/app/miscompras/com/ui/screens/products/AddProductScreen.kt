@@ -58,7 +58,7 @@ fun AddProductScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Añadir producto") },
+                title = { },
                 navigationIcon = {
                     IconButton(
                         onClick = onNavigateBack,

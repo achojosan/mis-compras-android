@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.AlertDialog
@@ -36,7 +37,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.miscompras.com.domain.model.Product
-import app.miscompras.com.domain.model.Supermarket
 import app.miscompras.com.ui.components.AccessibleButton
 import app.miscompras.com.ui.components.EmptyState
 import app.miscompras.com.ui.components.SupermarketLogo
@@ -118,9 +118,12 @@ fun SupermarketShoppingCard(
 ) {
     val supermarket = shoppingItem.supermarket
     val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
+    val purchasedCount = shoppingItem.products.count { it.isPurchased }
+    val totalCount = shoppingItem.products.size
 
     Card(
         modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface
@@ -151,7 +154,7 @@ fun SupermarketShoppingCard(
                         style = MaterialTheme.typography.titleLarge
                     )
                     Text(
-                        text = "${shoppingItem.products.size} productos",
+                        text = "$purchasedCount de $totalCount productos",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

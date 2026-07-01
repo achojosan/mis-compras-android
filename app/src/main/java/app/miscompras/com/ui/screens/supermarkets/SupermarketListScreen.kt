@@ -1,6 +1,8 @@
 package app.miscompras.com.ui.screens.supermarkets
 
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -27,9 +30,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -53,6 +60,9 @@ fun SupermarketListScreen(
         topBar = {
             TopAppBar(
                 title = { Text("Mis Supermercados") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                ),
                 actions = {
                     IconButton(
                         onClick = onSettingsClick,
@@ -66,6 +76,19 @@ fun SupermarketListScreen(
                     }
                 }
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onAddSupermarketClick,
+                containerColor = MaterialTheme.colorScheme.primary,
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Añadir supermercado",
+                    modifier = Modifier.size(AccessibilityDefaults.IconSize)
+                )
+            }
         }
     ) { paddingValues ->
         Box(
@@ -93,9 +116,11 @@ fun SupermarketListScreen(
                 }
                 is SupermarketListUiState.Success -> {
                     LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(AccessibilityDefaults.ItemSpacing),
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                            horizontal = AccessibilityDefaults.ItemSpacing,
+                            vertical = AccessibilityDefaults.ItemSpacing
+                        ),
                         verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
                     ) {
                         items(state.supermarkets, key = { it.id }) { supermarket ->
@@ -108,25 +133,11 @@ fun SupermarketListScreen(
                     }
                 }
             }
-
-            FloatingActionButton(
-                onClick = onAddSupermarketClick,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(AccessibilityDefaults.SectionSpacing)
-                    .size(AccessibilityDefaults.MinTouchTarget),
-                containerColor = MaterialTheme.colorScheme.primary
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Añadir supermercado",
-                    modifier = Modifier.size(AccessibilityDefaults.IconSize)
-                )
-            }
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SupermarketItem(
     supermarket: Supermarket,
@@ -134,15 +145,21 @@ fun SupermarketItem(
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var showDelete by remember { mutableStateOf(false) }
+
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = { showDelete = !showDelete }
+            ),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Row(
             modifier = Modifier
@@ -154,27 +171,27 @@ fun SupermarketItem(
             SupermarketLogo(
                 supermarketName = supermarket.name,
                 customLogoPath = supermarket.logoPath,
-                size = AccessibilityDefaults.LargeIconSize
+                size = 56.dp
             )
 
-            Column(
+            Text(
+                text = supermarket.name,
+                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    text = supermarket.name,
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
+            )
 
-            IconButton(
-                onClick = onDelete,
-                modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Eliminar ${supermarket.name}",
-                    tint = MaterialTheme.colorScheme.error
-                )
+            AnimatedVisibility(visible = showDelete) {
+                IconButton(
+                    onClick = onDelete,
+                    modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Eliminar ${supermarket.name}",
+                        tint = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.size(AccessibilityDefaults.SmallIconSize)
+                    )
+                }
             }
         }
     }

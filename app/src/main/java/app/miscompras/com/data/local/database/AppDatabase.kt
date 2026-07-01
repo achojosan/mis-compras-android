@@ -11,7 +11,7 @@ import app.miscompras.com.domain.model.Supermarket
 
 @Database(
     entities = [Supermarket::class, Product::class, PurchaseHistory::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

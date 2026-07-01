@@ -91,11 +91,11 @@ fun NavGraph(
             )
         }
 
-        composable(Routes.SHOPPING_LIST.route) {
+        composable(Routes.SHOPPING_LIST) {
             ShoppingListScreen()
         }
 
-        composable(Routes.HISTORY.route) {
+        composable(Routes.HISTORY) {
             HistoryListScreen(
                 onHistoryItemClick = { historyId ->
                     navController.navigate(Routes.historyDetail(historyId))
@@ -112,7 +112,7 @@ fun NavGraph(
             )
         }
 
-        composable(Routes.NEARBY.route) {
+        composable(Routes.NEARBY) {
             NearbyScreen(
                 onAddSupermarketClick = { name, lat, lon, openingHours ->
                     navController.navigate(Routes.ADD_SUPERMARKET)

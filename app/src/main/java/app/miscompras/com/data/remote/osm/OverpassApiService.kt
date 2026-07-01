@@ -11,15 +11,13 @@ interface OverpassApiService {
 }
 
 object OverpassQueryBuilder {
-    fun buildNearbySupermarketsQuery(lat: Double, lon: Double, radiusMeters: Int = 5000): String {
+    fun buildNearbySupermarketsQuery(lat: Double, lon: Double, radiusMeters: Int = 10000): String {
         return """
             [out:json][timeout:25];
             (
-              node["shop"="supermarket"](around:$radiusMeters,$lat,$lon);
-              way["shop"="supermarket"](around:$radiusMeters,$lat,$lon);
-              relation["shop"="supermarket"](around:$radiusMeters,$lat,$lon);
-              node["shop"="convenience"](around:$radiusMeters,$lat,$lon);
-              way["shop"="convenience"](around:$radiusMeters,$lat,$lon);
+              node["shop"~"supermarket|convenience|frozen_food|greengrocer|butcher|bakery"](around:$radiusMeters,$lat,$lon);
+              way["shop"~"supermarket|convenience|frozen_food|greengrocer|butcher|bakery"](around:$radiusMeters,$lat,$lon);
+              relation["shop"~"supermarket|convenience|frozen_food|greengrocer|butcher|bakery"](around:$radiusMeters,$lat,$lon);
             );
             out center;
         """.trimIndent()

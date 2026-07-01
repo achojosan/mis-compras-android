@@ -203,8 +203,9 @@ fun ProductItem(
                     style = MaterialTheme.typography.titleMedium,
                     textDecoration = if (product.isPurchased) TextDecoration.LineThrough else null
                 )
+                val priceText = product.price?.let { " - $it€" } ?: ""
                 Text(
-                    text = "${product.quantity} ${product.unit} - ${product.price}€",
+                    text = "${product.quantity} ${product.unit}$priceText",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

@@ -23,7 +23,7 @@ data class Product(
     val name: String,
     val quantity: Double,
     val unit: String,
-    val price: Double,
+    val price: Double? = null,
     val supermarketId: Long,
     val isPurchased: Boolean = false,
     val createdAt: Long = System.currentTimeMillis(),

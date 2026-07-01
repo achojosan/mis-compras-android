@@ -192,7 +192,7 @@ fun AddProductScreen(
                 AccessibleTextField(
                     value = uiState.price,
                     onValueChange = viewModel::onPriceChange,
-                    label = "Precio (€)",
+                    label = "Precio (€) (opcional)",
                     keyboardType = KeyboardType.Decimal,
                     isError = uiState.priceError != null,
                     errorMessage = uiState.priceError

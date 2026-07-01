@@ -74,7 +74,7 @@ class AddProductViewModel @Inject constructor(
         }
 
         val price = state.price.toDoubleOrNull()
-        if (price == null || price < 0) {
+        if (state.price.isNotBlank() && (price == null || price < 0)) {
             _uiState.value = state.copy(priceError = "Introduce un precio válido")
             return
         }

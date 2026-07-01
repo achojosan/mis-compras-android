@@ -245,8 +245,9 @@ fun ShoppingProductItem(
             )
         }
 
+        val priceText = product.price?.let { "${it}€" } ?: ""
         Text(
-            text = "${product.price}€",
+            text = priceText,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.primary
         )

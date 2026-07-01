@@ -239,11 +239,14 @@ fun HistoryProductItem(
                 )
             }
 
-            Text(
-                text = currencyFormat.format(product.price * product.quantity),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
+            val price = product.price
+            if (price != null) {
+                Text(
+                    text = currencyFormat.format(price * product.quantity),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
         }
     }
 }

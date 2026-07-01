@@ -24,7 +24,9 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             "mis_compras_database"
-        ).build()
+        )
+        .fallbackToDestructiveMigration()
+        .build()
     }
 
     @Provides

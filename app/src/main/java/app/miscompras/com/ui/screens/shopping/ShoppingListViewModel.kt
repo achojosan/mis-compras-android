@@ -45,7 +45,7 @@ class ShoppingListViewModel @Inject constructor(
                     ShoppingItem(
                         supermarket = supermarket,
                         products = products,
-                        total = products.sumOf { it.price * it.quantity }
+                        total = products.sumOf { (it.price ?: 0.0) * it.quantity }
                     )
                 }.sortedBy { it.supermarket?.name ?: "" }
                 shoppingItems
@@ -112,5 +112,5 @@ data class PurchasedProductData(
     val name: String,
     val quantity: Double,
     val unit: String,
-    val price: Double
+    val price: Double?
 )

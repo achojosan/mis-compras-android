@@ -54,7 +54,6 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(AccessibilityDefaults.SectionSpacing))
         }
-    }
 }
 
 @Composable

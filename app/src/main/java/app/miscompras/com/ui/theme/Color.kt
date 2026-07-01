@@ -2,42 +2,56 @@ package app.miscompras.com.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+// ── Brand palette: "Mis Compras" ────────────────────────────
+// Fresh green (primary) conveys groceries, nature, savings.
+// Warm terracotta (secondary) adds appetite, energy, warmth.
+// Golden amber (tertiary) brings optimism and approachability.
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Light theme
+val Green800 = Color(0xFF2E7D32)
+val Green700 = Color(0xFF388E3C)
+val Green600 = Color(0xFF43A047)
+val Green50 = Color(0xFFE8F5E9)
 
+val Orange800 = Color(0xFFE65100)
+val Orange700 = Color(0xFFF57C00)
+val Orange600 = Color(0xFFFB8C00)
+val Orange50 = Color(0xFFFFF3E0)
+
+val Amber700 = Color(0xFFFFA000)
+val Amber600 = Color(0xFFFFB300)
+val Amber50 = Color(0xFFFFF8E1)
+
+// Dark theme
+val Green300 = Color(0xFF81C784)
+val Green200 = Color(0xFFA5D6A7)
+
+val Orange300 = Color(0xFFFFB74D)
+val Orange200 = Color(0xFFFFCC80)
+
+val Amber300 = Color(0xFFFFD54F)
+val Amber200 = Color(0xFFFFE082)
+
+// Neutrals with warm undertone
+val WarmWhite = Color(0xFFFFFCF5)
+val WarmGray50 = Color(0xFFFAF8F6)
+val WarmGray100 = Color(0xFFF5F0EB)
+val WarmGray200 = Color(0xFFE2DDD8)
+val WarmGray300 = Color(0xFFC4C0BB)
+val WarmGray500 = Color(0xFF7D7975)
+val WarmGray700 = Color(0xFF4E4B47)
+val WarmGray900 = Color(0xFF1C1B1A)
+
+// Dark neutrals
+val DarkWarmBg = Color(0xFF1A1A1A)
+val DarkWarmSurface = Color(0xFF2D2D2D)
+
+// Core
 val White = Color(0xFFFFFFFF)
 val Black = Color(0xFF000000)
 
-val Gray50 = Color(0xFFFAFAFA)
-val Gray100 = Color(0xFFF5F5F5)
-val Gray200 = Color(0xFFEEEEEE)
-val Gray300 = Color(0xFFE0E0E0)
-val Gray400 = Color(0xFFBDBDBD)
-val Gray500 = Color(0xFF9E9E9E)
-val Gray600 = Color(0xFF757575)
-val Gray700 = Color(0xFF616161)
-val Gray800 = Color(0xFF424242)
-val Gray900 = Color(0xFF212121)
-
-val Green500 = Color(0xFF4CAF50)
-val Green700 = Color(0xFF388E3C)
-val Green900 = Color(0xFF1B5E20)
-
-val Red500 = Color(0xFFF44336)
+// Semantic
+val Red600 = Color(0xFFE53935)
 val Red700 = Color(0xFFD32F2F)
-val Red900 = Color(0xFFB71C1C)
-
-val Blue500 = Color(0xFF2196F3)
-val Blue700 = Color(0xFF1976D2)
-val Blue900 = Color(0xFF0D47A1)
-
-val Orange500 = Color(0xFFFF9800)
-val Orange700 = Color(0xFFF57C00)
-
-val Yellow500 = Color(0xFFFFEB3B)
-val Yellow700 = Color(0xFFFBC02D)
+val Red800 = Color(0xFFC62828)
+val Red50 = Color(0xFFFFEBEE)

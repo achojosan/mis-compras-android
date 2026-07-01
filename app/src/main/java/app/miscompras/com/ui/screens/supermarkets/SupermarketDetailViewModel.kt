@@ -14,6 +14,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+enum class ProductSortOrder {
+    NameAsc,
+    NameDesc,
+    PriceAsc,
+    PriceDesc,
+    Status
+}
+
 @HiltViewModel
 class SupermarketDetailViewModel @Inject constructor(
     private val supermarketRepository: SupermarketRepository,
@@ -25,6 +33,11 @@ class SupermarketDetailViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<SupermarketDetailUiState>(SupermarketDetailUiState.Loading)
     val uiState: StateFlow<SupermarketDetailUiState> = _uiState.asStateFlow()
+
+    private val _sortOrder = MutableStateFlow(ProductSortOrder.NameAsc)
+    val sortOrder: StateFlow<ProductSortOrder> = _sortOrder.asStateFlow()
+
+    private var allProducts: List<Product> = emptyList()
 
     init {
         loadSupermarket()
@@ -49,17 +62,40 @@ class SupermarketDetailViewModel @Inject constructor(
     private fun loadProducts() {
         viewModelScope.launch {
             productRepository.getProductsBySupermarket(supermarketId).collect { products ->
-                val currentState = _uiState.value
-                if (currentState is SupermarketDetailUiState.Success) {
-                    _uiState.value = currentState.copy(products = products)
-                }
+                allProducts = products
+                applySort()
             }
+        }
+    }
+
+    fun setSortOrder(order: ProductSortOrder) {
+        _sortOrder.value = order
+        applySort()
+    }
+
+    private fun applySort() {
+        val sorted = when (_sortOrder.value) {
+            ProductSortOrder.NameAsc -> allProducts.sortedBy { it.name }
+            ProductSortOrder.NameDesc -> allProducts.sortedByDescending { it.name }
+            ProductSortOrder.PriceAsc -> allProducts.sortedBy { it.price ?: Double.MAX_VALUE }
+            ProductSortOrder.PriceDesc -> allProducts.sortedByDescending { it.price ?: 0.0 }
+            ProductSortOrder.Status -> allProducts.sortedBy { it.isPurchased }
+        }
+        val currentState = _uiState.value
+        if (currentState is SupermarketDetailUiState.Success) {
+            _uiState.value = currentState.copy(products = sorted)
         }
     }
 
     fun toggleProductPurchased(product: Product) {
         viewModelScope.launch {
             productRepository.updatePurchaseStatus(product.id, !product.isPurchased)
+        }
+    }
+
+    fun updateProduct(product: Product) {
+        viewModelScope.launch {
+            productRepository.updateProduct(product)
         }
     }
 

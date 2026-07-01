@@ -6,21 +6,27 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.miscompras.com.ui.components.EmptyState
@@ -68,22 +75,69 @@ fun HistoryListScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(AccessibilityDefaults.ItemSpacing),
+                        .padding(horizontal = AccessibilityDefaults.ItemSpacing),
                     verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
                 ) {
                     item {
-                        Text(
-                            text = "Gastado este mes: ${currencyFormat.format(monthlyTotal)}",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.padding(bottom = AccessibilityDefaults.ItemSpacing)
-                        )
+                        Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing / 2))
+
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(20.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            ),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(AccessibilityDefaults.CardPadding),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.ShoppingCart,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(24.dp),
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = "Gasto del mes",
+                                        style = MaterialTheme.typography.titleSmall,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
+                                    )
+                                    Text(
+                                        text = currencyFormat.format(monthlyTotal),
+                                        style = MaterialTheme.typography.headlineSmall,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing / 2))
                     }
 
                     items(state.historyItems, key = { it.history.id }) { historyItem ->
                         TimelineHistoryItem(
                             historyItem = historyItem,
-                            onClick = { onHistoryItemClick(historyItem.history.id) }
+                            onClick = { onHistoryItemClick(historyItem.history.id) },
+                            onRepeatPurchase = { viewModel.repeatPurchase(historyItem) },
+                            isFirst = historyItem == state.historyItems.first(),
+                            isLast = historyItem == state.historyItems.last()
                         )
                     }
                 }
@@ -96,6 +150,9 @@ fun HistoryListScreen(
 fun TimelineHistoryItem(
     historyItem: HistoryItem,
     onClick: () -> Unit,
+    onRepeatPurchase: () -> Unit,
+    isFirst: Boolean = false,
+    isLast: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -105,15 +162,34 @@ fun TimelineHistoryItem(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .width(24.dp)
-                .padding(top = 20.dp)
+                .width(36.dp)
         ) {
+            if (!isFirst) {
+                Box(
+                    modifier = Modifier
+                        .width(2.dp)
+                        .height(16.dp)
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                )
+            } else {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
             Box(
                 modifier = Modifier
-                    .size(12.dp)
+                    .size(16.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.primary)
             )
+
+            if (!isLast) {
+                Box(
+                    modifier = Modifier
+                        .width(2.dp)
+                        .height(200.dp)
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                )
+            }
         }
 
         Card(
@@ -132,39 +208,62 @@ fun TimelineHistoryItem(
                     .fillMaxWidth()
                     .padding(AccessibilityDefaults.CardPadding)
             ) {
-                Text(
-                    text = historyItem.supermarket?.name ?: "Supermercado",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = getRelativeTimeString(historyItem.history.purchasedAt),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = AccessibilityDefaults.ItemSpacing / 2),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
-                        Text(
-                            text = currencyFormat.format(historyItem.history.totalAmount),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        val productCount = try {
-                            Json.decodeFromString<List<PurchasedProductData>>(historyItem.history.productsJson).size
-                        } catch (e: Exception) {
-                            0
-                        }
-                        Text(
-                            text = "$productCount productos",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing / 2)
+                ) {
+                    Text(
+                        text = historyItem.supermarket?.name ?: "Supermercado",
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.weight(1f)
+                    )
+                    val productCount = try {
+                        Json.decodeFromString<List<PurchasedProductData>>(historyItem.history.productsJson).size
+                    } catch (e: Exception) {
+                        0
                     }
+                    Text(
+                        text = "$productCount productos",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing / 2))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = getRelativeTimeString(historyItem.history.purchasedAt),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
+                    Text(
+                        text = currencyFormat.format(historyItem.history.totalAmount),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing / 2))
+
+                TextButton(
+                    onClick = onRepeatPurchase,
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("Repetir compra")
+                }
             }
         }
     }
@@ -179,6 +278,7 @@ fun HistoryListItem(
     TimelineHistoryItem(
         historyItem = historyItem,
         onClick = onClick,
+        onRepeatPurchase = {},
         modifier = modifier
     )
 }

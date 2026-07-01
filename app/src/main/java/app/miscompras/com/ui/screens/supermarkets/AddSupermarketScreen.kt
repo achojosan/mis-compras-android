@@ -2,9 +2,11 @@ package app.miscompras.com.ui.screens.supermarkets
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -52,85 +55,116 @@ fun AddSupermarketScreen(
     val context = LocalContext.current
 
     val imagePickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
+        contract = ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         viewModel.onLogoUriChange(uri?.toString())
     }
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(AccessibilityDefaults.SectionSpacing),
-        verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
-    ) {
-            item {
-                AccessibleTextField(
-                    value = uiState.name,
-                    onValueChange = viewModel::onNameChange,
-                    label = "Nombre del supermercado",
-                    isError = uiState.nameError != null,
-                    errorMessage = uiState.nameError
-                )
-            }
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(
+                start = AccessibilityDefaults.SectionSpacing,
+                end = AccessibilityDefaults.SectionSpacing,
+                top = AccessibilityDefaults.SectionSpacing,
+                bottom = AccessibilityDefaults.SectionSpacing + 100.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+        ) {
+                item {
+                    AccessibleTextField(
+                        value = uiState.name,
+                        onValueChange = viewModel::onNameChange,
+                        label = "Nombre del supermercado",
+                        isError = uiState.nameError != null,
+                        errorMessage = uiState.nameError
+                    )
+                }
 
-            item {
-                Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing / 2))
-                Surface(
-                    shape = RoundedCornerShape(16.dp),
-                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Column(
-                        modifier = Modifier.padding(AccessibilityDefaults.SectionSpacing),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                item {
+                    Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing / 2))
+                    Surface(
+                        shape = RoundedCornerShape(16.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f),
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        if (uiState.logoUri != null) {
-                            AsyncImage(
-                                model = ImageRequest.Builder(context)
-                                    .data(uiState.logoUri)
-                                    .build(),
-                                contentDescription = "Logo personalizado",
-                                modifier = Modifier.size(72.dp)
-                            )
-                        } else {
-                            Icon(
-                                imageVector = Icons.Default.Image,
-                                contentDescription = null,
-                                modifier = Modifier.size(72.dp),
-                                tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                        Column(
+                            modifier = Modifier.padding(AccessibilityDefaults.SectionSpacing),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                        ) {
+                            if (uiState.logoUri != null) {
+                                AsyncImage(
+                                    model = ImageRequest.Builder(context)
+                                        .data(uiState.logoUri)
+                                        .build(),
+                                    contentDescription = "Logo personalizado",
+                                    modifier = Modifier.size(72.dp)
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Default.Image,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(72.dp),
+                                    tint = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                                )
+                            }
+
+                            AccessibleButton(
+                                text = if (uiState.logoUri != null) "Cambiar logo" else "Seleccionar logo",
+                                onClick = { imagePickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }
                             )
                         }
-
-                        AccessibleButton(
-                            text = if (uiState.logoUri != null) "Cambiar logo" else "Seleccionar logo",
-                            onClick = { imagePickerLauncher.launch("image/*") }
-                        )
                     }
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing))
+                    HorizontalDivider(
+                        color = MaterialTheme.colorScheme.outlineVariant,
+                        thickness = 0.5.dp
+                    )
+                    Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing))
+                    Text(
+                        text = "Supermercados predeterminados",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
+                items(defaultSupermarkets) { defaultSupermarket ->
+                    DefaultSupermarketItem(
+                        defaultSupermarket = defaultSupermarket,
+                        isSelected = uiState.name == defaultSupermarket.name && uiState.logoUri == null,
+                        onClick = { viewModel.selectDefaultSupermarket(defaultSupermarket.name) }
+                    )
                 }
             }
 
-            item {
-                Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing))
-                HorizontalDivider(
-                    color = MaterialTheme.colorScheme.outlineVariant,
-                    thickness = 0.5.dp
-                )
-                Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing))
-                Text(
-                    text = "Supermercados predeterminados",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-
-            items(defaultSupermarkets) { defaultSupermarket ->
-                DefaultSupermarketItem(
-                    defaultSupermarket = defaultSupermarket,
-                    isSelected = uiState.name == defaultSupermarket.name && uiState.logoUri == null,
-                    onClick = { viewModel.selectDefaultSupermarket(defaultSupermarket.name) }
-                )
-            }
+        Surface(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
+            color = MaterialTheme.colorScheme.surface,
+            tonalElevation = 4.dp,
+            shadowElevation = 8.dp
+        ) {
+            AccessibleButton(
+                text = if (uiState.isEditing) "Guardar cambios" else "Crear supermercado",
+                onClick = { viewModel.saveSupermarket(onNavigateBack) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = AccessibilityDefaults.SectionSpacing,
+                        end = AccessibilityDefaults.SectionSpacing,
+                        top = AccessibilityDefaults.ItemSpacing,
+                        bottom = AccessibilityDefaults.ItemSpacing
+                    ),
+                enabled = uiState.name.isNotBlank()
+            )
         }
+    }
 }
 
 @Composable

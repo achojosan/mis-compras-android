@@ -2,6 +2,7 @@ package app.miscompras.com.ui.screens.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.miscompras.com.data.local.datastore.ThemeMode
 import app.miscompras.com.data.local.datastore.UserPreferencesDataStore
 import app.miscompras.com.ui.theme.AccessibilityConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,12 +26,16 @@ class SettingsViewModel @Inject constructor(
             combine(
                 dataStore.fontScale,
                 dataStore.spacingScale,
-                dataStore.highContrast
-            ) { fontScale, spacingScale, highContrast ->
+                dataStore.highContrast,
+                dataStore.deletePurchased,
+                dataStore.themeMode
+            ) { fontScale, spacingScale, highContrast, deletePurchased, themeMode ->
                 SettingsUiState(
                     fontScale = fontScale,
                     spacingScale = spacingScale,
-                    highContrast = highContrast
+                    highContrast = highContrast,
+                    deletePurchased = deletePurchased,
+                    themeMode = themeMode
                 )
             }.collect { state ->
                 _uiState.value = state
@@ -55,12 +60,26 @@ class SettingsViewModel @Inject constructor(
             dataStore.setHighContrast(enabled)
         }
     }
+
+    fun setDeletePurchased(enabled: Boolean) {
+        viewModelScope.launch {
+            dataStore.setDeletePurchased(enabled)
+        }
+    }
+
+    fun setThemeMode(mode: ThemeMode) {
+        viewModelScope.launch {
+            dataStore.setThemeMode(mode)
+        }
+    }
 }
 
 data class SettingsUiState(
     val fontScale: Float = 1.0f,
     val spacingScale: Float = 1.0f,
-    val highContrast: Boolean = false
+    val highContrast: Boolean = false,
+    val deletePurchased: Boolean = true,
+    val themeMode: ThemeMode = ThemeMode.System
 ) {
     val accessibilityConfig = AccessibilityConfig(
         fontScale = fontScale,

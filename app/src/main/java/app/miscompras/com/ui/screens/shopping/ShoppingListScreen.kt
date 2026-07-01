@@ -1,25 +1,37 @@
 package app.miscompras.com.ui.screens.shopping
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,6 +40,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -63,15 +77,75 @@ fun ShoppingListScreen(
                 )
             }
             is ShoppingListUiState.Success -> {
+                val grandTotal = state.shoppingItems.sumOf { it.total }
+                val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
+                val totalProductCount = state.shoppingItems.sumOf { it.products.size }
+
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = androidx.compose.foundation.layout.PaddingValues(AccessibilityDefaults.ItemSpacing),
                     verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
                 ) {
+                    item {
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(20.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                            ),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(AccessibilityDefaults.CardPadding),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.ShoppingCart,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(24.dp),
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = "Total estimado",
+                                        style = MaterialTheme.typography.titleSmall,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
+                                    )
+                                    Text(
+                                        text = currencyFormat.format(grandTotal),
+                                        style = MaterialTheme.typography.headlineSmall,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+
+                                Text(
+                                    text = "$totalProductCount prod.",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
+                                )
+                            }
+                        }
+                    }
+
                     items(state.shoppingItems, key = { it.supermarket?.id ?: 0 }) { shoppingItem ->
                         SupermarketShoppingCard(
                             shoppingItem = shoppingItem,
                             onToggleProduct = viewModel::toggleProductPurchased,
+                            onQuantityChange = viewModel::updateProductQuantity,
                             onFinishPurchase = { showFinishDialog = shoppingItem }
                         )
                     }
@@ -97,6 +171,7 @@ fun ShoppingListScreen(
 fun SupermarketShoppingCard(
     shoppingItem: ShoppingItem,
     onToggleProduct: (Product) -> Unit,
+    onQuantityChange: (Long, Double) -> Unit,
     onFinishPurchase: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -148,7 +223,8 @@ fun SupermarketShoppingCard(
             shoppingItem.products.forEach { product ->
                 ShoppingProductItem(
                     product = product,
-                    onToggle = { onToggleProduct(product) }
+                    onToggle = { onToggleProduct(product) },
+                    onQuantityChange = { onQuantityChange(product.id, it) }
                 )
             }
 
@@ -179,14 +255,17 @@ fun SupermarketShoppingCard(
 fun ShoppingProductItem(
     product: Product,
     onToggle: () -> Unit,
+    onQuantityChange: (Double) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val totalPrice = product.price?.let { it * product.quantity }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = AccessibilityDefaults.ItemSpacing / 2),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+        horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing / 2)
     ) {
         Checkbox(
             checked = product.isPurchased,
@@ -200,18 +279,36 @@ fun ShoppingProductItem(
                 style = MaterialTheme.typography.bodyLarge,
                 textDecoration = if (product.isPurchased) TextDecoration.LineThrough else null
             )
-            Text(
-                text = "${product.quantity} ${product.unit}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                OutlinedTextField(
+                    value = product.quantity.toBigDecimal().stripTrailingZeros().toPlainString(),
+                    onValueChange = { value ->
+                        value.toDoubleOrNull()?.let { onQuantityChange(it) }
+                    },
+                    textStyle = MaterialTheme.typography.bodySmall,
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    modifier = Modifier.width(60.dp).heightIn(min = 36.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
+                        focusedBorderColor = MaterialTheme.colorScheme.primary
+                    )
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = product.unit,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
 
-        val priceText = product.price?.let { "${it}€" } ?: ""
         Text(
-            text = priceText,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.primary
+            text = if (totalPrice != null) "${String.format("%.2f", totalPrice)}€" else "",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.SemiBold
         )
     }
 }

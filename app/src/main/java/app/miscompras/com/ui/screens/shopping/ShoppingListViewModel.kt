@@ -2,6 +2,7 @@ package app.miscompras.com.ui.screens.shopping
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.miscompras.com.data.local.datastore.UserPreferencesDataStore
 import app.miscompras.com.data.repository.ProductRepository
 import app.miscompras.com.data.repository.PurchaseHistoryRepository
 import app.miscompras.com.data.repository.SupermarketRepository
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -23,7 +25,8 @@ import javax.inject.Inject
 class ShoppingListViewModel @Inject constructor(
     private val productRepository: ProductRepository,
     private val supermarketRepository: SupermarketRepository,
-    private val purchaseHistoryRepository: PurchaseHistoryRepository
+    private val purchaseHistoryRepository: PurchaseHistoryRepository,
+    private val dataStore: UserPreferencesDataStore
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ShoppingListUiState>(ShoppingListUiState.Loading)
@@ -65,10 +68,19 @@ class ShoppingListViewModel @Inject constructor(
         }
     }
 
+    fun updateProductQuantity(productId: Long, quantity: Double) {
+        viewModelScope.launch {
+            productRepository.getProductById(productId).first()?.let { product ->
+                productRepository.updateProduct(product.copy(quantity = quantity))
+            }
+        }
+    }
+
     fun finishPurchase(shoppingItem: ShoppingItem) {
         viewModelScope.launch {
             val supermarket = shoppingItem.supermarket ?: return@launch
             val products = shoppingItem.products
+            val deletePurchased = dataStore.deletePurchased.first()
 
             val productsJson = Json.encodeToString(
                 products.map {
@@ -89,8 +101,14 @@ class ShoppingListViewModel @Inject constructor(
 
             purchaseHistoryRepository.insertHistory(history)
 
-            products.forEach { product ->
-                productRepository.deleteProduct(product)
+            if (deletePurchased) {
+                products.forEach { product ->
+                    productRepository.deleteProduct(product)
+                }
+            } else {
+                products.forEach { product ->
+                    productRepository.updatePurchaseStatus(product.id, false)
+                }
             }
         }
     }
@@ -108,6 +126,7 @@ data class ShoppingItem(
     val total: Double
 )
 
+@Serializable
 data class PurchasedProductData(
     val name: String,
     val quantity: Double,

@@ -6,16 +6,22 @@ import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Store
@@ -24,6 +30,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -38,12 +45,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.miscompras.com.domain.model.Supermarket
 import app.miscompras.com.ui.components.EmptyState
+import app.miscompras.com.ui.components.SkeletonLoader
+import app.miscompras.com.ui.components.SkeletonShape
 import app.miscompras.com.ui.components.SupermarketLogo
 import app.miscompras.com.ui.theme.AccessibilityDefaults
 import kotlin.math.abs
@@ -80,9 +91,32 @@ fun SupermarketListScreen(
         ) {
             when (val state = uiState) {
                 is SupermarketListUiState.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(AccessibilityDefaults.ItemSpacing),
+                        verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                    ) {
+                        repeat(4) {
+                            Card(
+                                shape = RoundedCornerShape(16.dp),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.surface
+                                )
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(AccessibilityDefaults.CardPadding),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                                ) {
+                                    SkeletonLoader(width = 56.dp, height = 56.dp, skeletonShape = SkeletonShape.Circle)
+                                    SkeletonLoader(width = 150.dp, height = 20.dp)
+                                }
+                            }
+                        }
+                    }
                 }
                 is SupermarketListUiState.Empty -> {
                     EmptyState(
@@ -99,12 +133,35 @@ fun SupermarketListScreen(
                 is SupermarketListUiState.Success -> {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                        contentPadding = PaddingValues(
                             horizontal = AccessibilityDefaults.ItemSpacing,
                             vertical = AccessibilityDefaults.ItemSpacing
                         ),
                         verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
                     ) {
+                        item {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = AccessibilityDefaults.ItemSpacing / 2),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = "Mis tiendas",
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onBackground
+                                )
+                                Text(
+                                    text = "${state.supermarkets.size} tiendas",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing / 2))
+                        }
+
                         items(state.supermarkets, key = { it.id }) { supermarket ->
                             SupermarketItem(
                                 supermarket = supermarket,
@@ -164,19 +221,18 @@ fun SupermarketItem(
     ) {
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    color = MaterialTheme.colorScheme.error,
-                    shape = RoundedCornerShape(16.dp)
-                )
-                .padding(horizontal = AccessibilityDefaults.CardPadding),
+                .matchParentSize()
+                .clip(RoundedCornerShape(16.dp))
+                .background(MaterialTheme.colorScheme.error),
             contentAlignment = Alignment.CenterEnd
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = "Eliminar",
                 tint = MaterialTheme.colorScheme.onError,
-                modifier = Modifier.size(AccessibilityDefaults.IconSize)
+                modifier = Modifier
+                    .padding(horizontal = AccessibilityDefaults.CardPadding)
+                    .size(AccessibilityDefaults.IconSize)
             )
         }
 
@@ -222,7 +278,15 @@ fun SupermarketItem(
                 Text(
                     text = supermarket.name,
                     style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.weight(1f)
+                )
+
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }

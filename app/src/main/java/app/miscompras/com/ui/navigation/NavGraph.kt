@@ -63,6 +63,9 @@ fun NavGraph(
                 onNavigateBack = { navController.popBackStack() },
                 onAddProductClick = { supermarketId ->
                     navController.navigate(Routes.addProduct(supermarketId))
+                },
+                onEditSupermarket = { supermarketId ->
+                    navController.navigate(Routes.editSupermarket(supermarketId))
                 }
             )
         }

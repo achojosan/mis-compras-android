@@ -3,8 +3,10 @@ package app.miscompras.com.ui.screens.history
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.miscompras.com.data.repository.ProductRepository
 import app.miscompras.com.data.repository.PurchaseHistoryRepository
 import app.miscompras.com.data.repository.SupermarketRepository
+import app.miscompras.com.domain.model.Product
 import app.miscompras.com.domain.model.PurchaseHistory
 import app.miscompras.com.domain.model.Supermarket
 import app.miscompras.com.ui.screens.shopping.PurchasedProductData
@@ -20,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryListViewModel @Inject constructor(
     private val purchaseHistoryRepository: PurchaseHistoryRepository,
-    private val supermarketRepository: SupermarketRepository
+    private val supermarketRepository: SupermarketRepository,
+    private val productRepository: ProductRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<HistoryListUiState>(HistoryListUiState.Loading)
@@ -49,6 +52,28 @@ class HistoryListViewModel @Inject constructor(
                 } else {
                     HistoryListUiState.Success(historyItems)
                 }
+            }
+        }
+    }
+
+    fun repeatPurchase(historyItem: HistoryItem) {
+        viewModelScope.launch {
+            val supermarketId = historyItem.history.supermarketId
+            val products = try {
+                Json.decodeFromString<List<PurchasedProductData>>(historyItem.history.productsJson)
+            } catch (e: Exception) {
+                emptyList()
+            }
+            products.forEach { data ->
+                productRepository.insertProduct(
+                    Product(
+                        name = data.name,
+                        quantity = data.quantity,
+                        unit = data.unit,
+                        price = data.price,
+                        supermarketId = supermarketId
+                    )
+                )
             }
         }
     }

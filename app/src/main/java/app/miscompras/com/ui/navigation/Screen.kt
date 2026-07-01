@@ -14,19 +14,19 @@ sealed class Screen(
 ) {
     data object Supermarkets : Screen(
         route = "supermarkets",
-        title = "Supermercados",
+        title = "Tiendas",
         icon = Icons.Default.Store
     )
 
     data object ShoppingList : Screen(
         route = "shopping_list",
-        title = "Lista de compra",
+        title = "Lista",
         icon = Icons.Default.ShoppingCart
     )
 
     data object History : Screen(
         route = "history",
-        title = "Historial",
+        title = "Gastos",
         icon = Icons.Default.History
     )
 

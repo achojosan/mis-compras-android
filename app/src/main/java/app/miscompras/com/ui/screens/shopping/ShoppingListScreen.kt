@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,7 +32,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,10 +39,8 @@ import app.miscompras.com.domain.model.Product
 import app.miscompras.com.domain.model.Supermarket
 import app.miscompras.com.ui.components.AccessibleButton
 import app.miscompras.com.ui.components.EmptyState
+import app.miscompras.com.ui.components.SupermarketLogo
 import app.miscompras.com.ui.theme.AccessibilityDefaults
-import app.miscompras.com.util.DefaultSupermarkets
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -120,9 +116,7 @@ fun SupermarketShoppingCard(
     onFinishPurchase: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
     val supermarket = shoppingItem.supermarket
-    val defaultLogoRes = supermarket?.let { DefaultSupermarkets.getLogoResId(it.name) }
     val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
 
     Card(
@@ -145,30 +139,11 @@ fun SupermarketShoppingCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
             ) {
-                if (supermarket?.logoPath != null) {
-                    AsyncImage(
-                        model = ImageRequest.Builder(context)
-                            .data(supermarket.logoPath)
-                            .build(),
-                        contentDescription = "Logo de ${supermarket.name}",
-                        modifier = Modifier.size(AccessibilityDefaults.LargeIconSize)
-                    )
-                } else if (defaultLogoRes != null) {
-                    AsyncImage(
-                        model = ImageRequest.Builder(context)
-                            .data(defaultLogoRes)
-                            .build(),
-                        contentDescription = "Logo de ${supermarket.name}",
-                        modifier = Modifier.size(AccessibilityDefaults.LargeIconSize)
-                    )
-                } else {
-                    Icon(
-                        imageVector = Icons.Default.Store,
-                        contentDescription = null,
-                        modifier = Modifier.size(AccessibilityDefaults.LargeIconSize),
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
+                SupermarketLogo(
+                    supermarketName = supermarket?.name ?: "",
+                    customLogoPath = supermarket?.logoPath,
+                    size = AccessibilityDefaults.LargeIconSize
+                )
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(

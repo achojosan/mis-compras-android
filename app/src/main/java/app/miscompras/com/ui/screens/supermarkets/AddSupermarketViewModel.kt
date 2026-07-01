@@ -75,7 +75,7 @@ class AddSupermarketViewModel @Inject constructor(
                 id = if (supermarketId != -1L) supermarketId else 0,
                 name = state.name.trim(),
                 logoPath = state.logoUri,
-                isDefault = DefaultSupermarkets.getLogoResId(state.name) != null
+                isDefault = DefaultSupermarkets.getLogoAssetPath(state.name) != null
             )
 
             if (state.isEditing) {

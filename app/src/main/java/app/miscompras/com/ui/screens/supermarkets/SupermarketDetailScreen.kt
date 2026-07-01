@@ -33,7 +33,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,9 +40,6 @@ import app.miscompras.com.domain.model.Product
 import app.miscompras.com.domain.model.Supermarket
 import app.miscompras.com.ui.components.EmptyState
 import app.miscompras.com.ui.theme.AccessibilityDefaults
-import app.miscompras.com.util.DefaultSupermarkets
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -38,10 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.miscompras.com.ui.components.AccessibleButton
 import app.miscompras.com.ui.components.AccessibleTextField
+import app.miscompras.com.ui.components.SupermarketLogo
 import app.miscompras.com.ui.theme.AccessibilityDefaults
 import app.miscompras.com.util.DefaultSupermarket
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -173,8 +172,6 @@ fun DefaultSupermarketItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -194,12 +191,10 @@ fun DefaultSupermarketItem(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(context)
-                    .data(defaultSupermarket.logoResId)
-                    .build(),
-                contentDescription = "Logo de ${defaultSupermarket.name}",
-                modifier = Modifier.size(AccessibilityDefaults.LargeIconSize)
+            SupermarketLogo(
+                supermarketName = defaultSupermarket.name,
+                customLogoPath = null,
+                size = AccessibilityDefaults.LargeIconSize
             )
 
             Text(

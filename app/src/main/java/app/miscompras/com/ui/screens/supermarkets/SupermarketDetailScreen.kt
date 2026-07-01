@@ -1,5 +1,8 @@
 package app.miscompras.com.ui.screens.supermarkets
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,12 +12,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -23,6 +29,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -32,15 +39,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.miscompras.com.domain.model.Product
@@ -48,7 +60,10 @@ import app.miscompras.com.domain.model.Supermarket
 import app.miscompras.com.ui.components.EmptyState
 import app.miscompras.com.ui.components.SupermarketLogo
 import app.miscompras.com.ui.theme.AccessibilityDefaults
+import kotlin.math.abs
+import kotlin.math.roundToInt
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SupermarketDetailScreen(
     onNavigateBack: () -> Unit,
@@ -59,6 +74,62 @@ fun SupermarketDetailScreen(
     var productToDelete by remember { mutableStateOf<Product?>(null) }
 
     Scaffold(
+        topBar = {
+            when (val state = uiState) {
+                is SupermarketDetailUiState.Success -> {
+                    TopAppBar(
+                        title = {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                            ) {
+                                SupermarketLogo(
+                                    supermarketName = state.supermarket.name,
+                                    customLogoPath = state.supermarket.logoPath,
+                                    size = 40.dp
+                                )
+                                Text(
+                                    text = state.supermarket.name,
+                                    style = MaterialTheme.typography.titleLarge
+                                )
+                            }
+                        },
+                        navigationIcon = {
+                            IconButton(
+                                onClick = onNavigateBack,
+                                modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = "Volver",
+                                    modifier = Modifier.size(AccessibilityDefaults.IconSize)
+                                )
+                            }
+                        },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.surface
+                        )
+                    )
+                }
+                else -> {
+                    TopAppBar(
+                        title = { Text("") },
+                        navigationIcon = {
+                            IconButton(
+                                onClick = onNavigateBack,
+                                modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = "Volver",
+                                    modifier = Modifier.size(AccessibilityDefaults.IconSize)
+                                )
+                            }
+                        }
+                    )
+                }
+            }
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -150,36 +221,46 @@ fun SupermarketDetailContent(
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.surface
         ) {
-            Column(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(AccessibilityDefaults.SectionSpacing),
-                horizontalAlignment = Alignment.CenterHorizontally
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.SectionSpacing)
             ) {
                 SupermarketLogo(
                     supermarketName = supermarket.name,
                     customLogoPath = supermarket.logoPath,
-                    size = 72.dp
+                    size = 96.dp
                 )
-                Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing))
-                Text(
-                    text = supermarket.name,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-                Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing / 2))
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = MaterialTheme.colorScheme.secondaryContainer
+
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing / 2)
                 ) {
-                    Text(
-                        text = "${products.size} producto${if (products.size != 1) "s" else ""}",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.padding(
-                            horizontal = AccessibilityDefaults.ItemSpacing,
-                            vertical = AccessibilityDefaults.ItemSpacing / 2
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = MaterialTheme.colorScheme.primaryContainer
+                    ) {
+                        Text(
+                            text = "${products.size} producto${if (products.size != 1) "s" else ""}",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            modifier = Modifier.padding(
+                                horizontal = AccessibilityDefaults.ItemSpacing,
+                                vertical = AccessibilityDefaults.ItemSpacing / 2
+                            )
                         )
-                    )
+                    }
+
+                    val total = products.sumOf { (it.price ?: 0.0) * it.quantity }
+                    if (total > 0) {
+                        Text(
+                            text = "Total estimado: ${String.format("%.2f", total)}€",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
             }
         }
@@ -230,55 +311,90 @@ fun ProductItem(
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.5.dp)
+    var offsetX by remember { mutableFloatStateOf(0f) }
+    val maxWidth = 300f
+    val threshold = 150f
+    val animatedOffset by animateFloatAsState(
+        targetValue = offsetX,
+        label = "swipeAnimation"
+    )
+
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = AccessibilityDefaults.ItemSpacing / 4)
     ) {
-        Row(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = AccessibilityDefaults.ItemSpacing / 2, vertical = AccessibilityDefaults.ItemSpacing / 4),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing / 2)
+                .background(
+                    color = MaterialTheme.colorScheme.error,
+                    shape = RoundedCornerShape(12.dp)
+                )
+                .padding(horizontal = AccessibilityDefaults.CardPadding),
+            contentAlignment = Alignment.CenterEnd
         ) {
-            Checkbox(
-                checked = product.isPurchased,
-                onCheckedChange = { onTogglePurchased() },
-                modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = "Eliminar",
+                tint = MaterialTheme.colorScheme.onError,
+                modifier = Modifier.size(AccessibilityDefaults.IconSize)
             )
+        }
 
-            Column(
-                modifier = Modifier.weight(1f)
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset { IntOffset(animatedOffset.roundToInt(), 0) }
+                .pointerInput(Unit) {
+                    detectHorizontalDragGestures(
+                        onDragEnd = {
+                            if (abs(offsetX) > threshold) {
+                                onDelete()
+                            }
+                            offsetX = 0f
+                        },
+                        onHorizontalDrag = { _, dragAmount ->
+                            val newOffset = offsetX + dragAmount
+                            offsetX = newOffset.coerceIn(-maxWidth, 0f)
+                        }
+                    )
+                },
+            shape = RoundedCornerShape(12.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.onSurface
+            ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.5.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = AccessibilityDefaults.ItemSpacing / 2, vertical = AccessibilityDefaults.ItemSpacing / 4),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing / 2)
             ) {
-                Text(
-                    text = product.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    textDecoration = if (product.isPurchased) TextDecoration.LineThrough else null
+                Checkbox(
+                    checked = product.isPurchased,
+                    onCheckedChange = { onTogglePurchased() },
+                    modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)
                 )
-                val priceText = product.price?.let { " · $it€" } ?: ""
-                Text(
-                    text = "${product.quantity} ${product.unit}$priceText",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = if (product.isPurchased) MaterialTheme.colorScheme.onSurfaceVariant
-                    else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
 
-            IconButton(
-                onClick = onDelete,
-                modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Eliminar ${product.name}",
-                    tint = MaterialTheme.colorScheme.error.copy(alpha = 0.6f),
-                    modifier = Modifier.size(AccessibilityDefaults.SmallIconSize)
-                )
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = product.name,
+                        style = MaterialTheme.typography.titleMedium,
+                        textDecoration = if (product.isPurchased) TextDecoration.LineThrough else null
+                    )
+                    val priceText = product.price?.let { " · $it€" } ?: ""
+                    Text(
+                        text = "${product.quantity} ${product.unit}$priceText",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
         }
     }

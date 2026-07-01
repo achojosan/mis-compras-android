@@ -3,6 +3,9 @@ package app.miscompras.com.ui.screens.nearby
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,19 +20,27 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Public
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -44,10 +55,28 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NearbyScreen(
-    onAddSupermarketClick: (String, Double?, Double?, String?) -> Unit = { _, _, _, _ -> },
+    onPlacesAdded: () -> Unit = {},
     viewModel: NearbyViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val selectedPlaceIds by viewModel.selectedPlaceIds.collectAsState()
+    val addResult by viewModel.addResult.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(addResult) {
+        when (val result = addResult) {
+            is AddResult.Success -> {
+                snackbarHostState.showSnackbar("${result.count} supermercado(s) añadido(s) correctamente")
+                viewModel.clearAddResult()
+                onPlacesAdded()
+            }
+            is AddResult.Error -> {
+                snackbarHostState.showSnackbar(result.message)
+                viewModel.clearAddResult()
+            }
+            null -> {}
+        }
+    }
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
@@ -62,6 +91,22 @@ fun NearbyScreen(
             TopAppBar(
                 title = { Text("Comercios Cercanos") }
             )
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        bottomBar = {
+            AnimatedVisibility(
+                visible = selectedPlaceIds.isNotEmpty(),
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it })
+            ) {
+                SelectionBottomBar(
+                    selectedCount = selectedPlaceIds.size,
+                    totalCount = if (uiState is NearbyUiState.Success) (uiState as NearbyUiState.Success).places.size else 0,
+                    onSelectAll = viewModel::selectAll,
+                    onDeselectAll = viewModel::deselectAll,
+                    onAddSelected = viewModel::addSelectedSupermarkets
+                )
+            }
         }
     ) { paddingValues ->
         Box(
@@ -129,20 +174,19 @@ fun NearbyScreen(
                 is NearbyUiState.Success -> {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(AccessibilityDefaults.ItemSpacing),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                            start = AccessibilityDefaults.ItemSpacing,
+                            end = AccessibilityDefaults.ItemSpacing,
+                            top = AccessibilityDefaults.ItemSpacing,
+                            bottom = AccessibilityDefaults.ItemSpacing + 80.dp
+                        ),
                         verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
                     ) {
                         items(state.places, key = { it.id }) { place ->
                             NearbyPlaceItem(
                                 place = place,
-                                onAdd = {
-                                    onAddSupermarketClick(
-                                        place.name,
-                                        place.latitude,
-                                        place.longitude,
-                                        place.openingHours
-                                    )
-                                }
+                                isSelected = place.id in selectedPlaceIds,
+                                onToggleSelection = { viewModel.toggleSelection(place.id) }
                             )
                         }
                     }
@@ -153,7 +197,10 @@ fun NearbyScreen(
                 onClick = { viewModel.loadNearbyPlaces() },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(AccessibilityDefaults.SectionSpacing)
+                    .padding(
+                        end = AccessibilityDefaults.SectionSpacing,
+                        bottom = if (selectedPlaceIds.isNotEmpty()) 80.dp + AccessibilityDefaults.SectionSpacing else AccessibilityDefaults.SectionSpacing
+                    )
                     .size(AccessibilityDefaults.MinTouchTarget),
                 containerColor = MaterialTheme.colorScheme.primary
             ) {
@@ -168,9 +215,66 @@ fun NearbyScreen(
 }
 
 @Composable
+fun SelectionBottomBar(
+    selectedCount: Int,
+    totalCount: Int,
+    onSelectAll: () -> Unit,
+    onDeselectAll: () -> Unit,
+    onAddSelected: () -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(AccessibilityDefaults.CardPadding)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "$selectedCount de $totalCount seleccionados",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                TextButton(
+                    onClick = if (selectedCount == totalCount) onDeselectAll else onSelectAll
+                ) {
+                    Text(if (selectedCount == totalCount) "Deseleccionar todo" else "Seleccionar todo")
+                }
+            }
+
+            Button(
+                onClick = onAddSelected,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = AccessibilityDefaults.ItemSpacing / 2),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            ) {
+                Text(
+                    text = "Añadir seleccionados ($selectedCount)",
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun NearbyPlaceItem(
     place: NearbyPlace,
-    onAdd: () -> Unit,
+    isSelected: Boolean,
+    onToggleSelection: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val distanceFormat = NumberFormat.getNumberInstance(Locale("es", "ES"))
@@ -183,10 +287,12 @@ fun NearbyPlaceItem(
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
+            containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer
+            else MaterialTheme.colorScheme.surface,
+            contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
+            else MaterialTheme.colorScheme.onSurface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = if (isSelected) 4.dp else 2.dp)
     ) {
         Column(
             modifier = Modifier
@@ -196,8 +302,14 @@ fun NearbyPlaceItem(
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
             ) {
+                Checkbox(
+                    checked = isSelected,
+                    onCheckedChange = { onToggleSelection() },
+                    modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)
+                )
+
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = place.name,
@@ -230,7 +342,10 @@ fun NearbyPlaceItem(
                     text = "Horario: ${place.openingHours}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(top = AccessibilityDefaults.ItemSpacing / 2)
+                    modifier = Modifier.padding(
+                        top = AccessibilityDefaults.ItemSpacing / 2,
+                        start = AccessibilityDefaults.MinTouchTarget + AccessibilityDefaults.ItemSpacing
+                    )
                 )
             }
 
@@ -238,7 +353,10 @@ fun NearbyPlaceItem(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing / 2),
-                    modifier = Modifier.padding(top = AccessibilityDefaults.ItemSpacing / 2)
+                    modifier = Modifier.padding(
+                        top = AccessibilityDefaults.ItemSpacing / 2,
+                        start = AccessibilityDefaults.MinTouchTarget + AccessibilityDefaults.ItemSpacing
+                    )
                 ) {
                     Icon(
                         imageVector = Icons.Default.Phone,
@@ -258,7 +376,10 @@ fun NearbyPlaceItem(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing / 2),
-                    modifier = Modifier.padding(top = AccessibilityDefaults.ItemSpacing / 2)
+                    modifier = Modifier.padding(
+                        top = AccessibilityDefaults.ItemSpacing / 2,
+                        start = AccessibilityDefaults.MinTouchTarget + AccessibilityDefaults.ItemSpacing
+                    )
                 ) {
                     Icon(
                         imageVector = Icons.Default.Public,
@@ -273,12 +394,6 @@ fun NearbyPlaceItem(
                     )
                 }
             }
-
-            AccessibleButton(
-                text = "Añadir a mis supermercados",
-                onClick = onAdd,
-                modifier = Modifier.padding(top = AccessibilityDefaults.ItemSpacing)
-            )
         }
     }
 }

@@ -3,13 +3,15 @@ package app.miscompras.com.ui.screens.nearby
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.miscompras.com.data.remote.osm.OverpassApiService
 import app.miscompras.com.data.remote.osm.OverpassQueryBuilder
+import app.miscompras.com.data.repository.SupermarketRepository
 import app.miscompras.com.domain.model.NearbyPlace
+import app.miscompras.com.domain.model.Supermarket
+import app.miscompras.com.util.DefaultSupermarkets
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,9 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -31,6 +31,7 @@ import kotlin.math.sqrt
 @HiltViewModel
 class NearbyViewModel @Inject constructor(
     private val overpassApiService: OverpassApiService,
+    private val supermarketRepository: SupermarketRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
@@ -39,6 +40,12 @@ class NearbyViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<NearbyUiState>(NearbyUiState.Idle)
     val uiState: StateFlow<NearbyUiState> = _uiState.asStateFlow()
+
+    private val _selectedPlaceIds = MutableStateFlow<Set<Long>>(emptySet())
+    val selectedPlaceIds: StateFlow<Set<Long>> = _selectedPlaceIds.asStateFlow()
+
+    private val _addResult = MutableStateFlow<AddResult?>(null)
+    val addResult: StateFlow<AddResult?> = _addResult.asStateFlow()
 
     fun checkPermissionAndLoad() {
         val hasPermission = ContextCompat.checkSelfPermission(
@@ -56,6 +63,7 @@ class NearbyViewModel @Inject constructor(
     fun loadNearbyPlaces() {
         viewModelScope.launch {
             _uiState.value = NearbyUiState.Loading
+            _selectedPlaceIds.value = emptySet()
 
             try {
                 val hasPermission = ContextCompat.checkSelfPermission(
@@ -114,6 +122,58 @@ class NearbyViewModel @Inject constructor(
                 _uiState.value = NearbyUiState.Error("Error al cargar comercios: ${e.message}")
             }
         }
+    }
+
+    fun toggleSelection(placeId: Long) {
+        _selectedPlaceIds.value = if (_selectedPlaceIds.value.contains(placeId)) {
+            _selectedPlaceIds.value - placeId
+        } else {
+            _selectedPlaceIds.value + placeId
+        }
+    }
+
+    fun selectAll() {
+        val currentState = _uiState.value
+        if (currentState is NearbyUiState.Success) {
+            _selectedPlaceIds.value = currentState.places.map { it.id }.toSet()
+        }
+    }
+
+    fun deselectAll() {
+        _selectedPlaceIds.value = emptySet()
+    }
+
+    fun addSelectedSupermarkets() {
+        val currentState = _uiState.value
+        if (currentState !is NearbyUiState.Success) return
+
+        val selectedPlaces = currentState.places.filter { it.id in _selectedPlaceIds.value }
+        if (selectedPlaces.isEmpty()) return
+
+        viewModelScope.launch {
+            try {
+                selectedPlaces.forEach { place ->
+                    val isDefault = DefaultSupermarkets.getLogoAssetPath(place.name) != null
+                    val supermarket = Supermarket(
+                        name = place.name,
+                        logoPath = null,
+                        isDefault = isDefault,
+                        latitude = place.latitude,
+                        longitude = place.longitude,
+                        openingHours = place.openingHours
+                    )
+                    supermarketRepository.insertSupermarket(supermarket)
+                }
+                _selectedPlaceIds.value = emptySet()
+                _addResult.value = AddResult.Success(selectedPlaces.size)
+            } catch (e: Exception) {
+                _addResult.value = AddResult.Error("Error al añadir supermercados: ${e.message}")
+            }
+        }
+    }
+
+    fun clearAddResult() {
+        _addResult.value = null
     }
 
     private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
@@ -176,4 +236,9 @@ sealed class NearbyUiState {
     data object Empty : NearbyUiState()
     data class Error(val message: String) : NearbyUiState()
     data class Success(val places: List<NearbyPlace>) : NearbyUiState()
+}
+
+sealed class AddResult {
+    data class Success(val count: Int) : AddResult()
+    data class Error(val message: String) : AddResult()
 }

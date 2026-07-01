@@ -119,8 +119,8 @@ fun NavGraph(
 
         composable(Routes.NEARBY) {
             NearbyScreen(
-                onAddSupermarketClick = { name, lat, lon, openingHours ->
-                    navController.navigate(Routes.ADD_SUPERMARKET)
+                onPlacesAdded = {
+                    navController.popBackStack()
                 }
             )
         }

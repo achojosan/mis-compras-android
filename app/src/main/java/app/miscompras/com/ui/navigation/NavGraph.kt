@@ -8,6 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import app.miscompras.com.ui.screens.products.AddProductScreen
 import app.miscompras.com.ui.screens.supermarkets.AddSupermarketScreen
 import app.miscompras.com.ui.screens.supermarkets.SupermarketDetailScreen
 import app.miscompras.com.ui.screens.supermarkets.SupermarketListScreen
@@ -71,6 +72,15 @@ fun NavGraph(
             arguments = listOf(navArgument("supermarketId") { type = NavType.LongType })
         ) {
             AddSupermarketScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(
+            route = Routes.ADD_PRODUCT,
+            arguments = listOf(navArgument("supermarketId") { type = NavType.LongType })
+        ) {
+            AddProductScreen(
                 onNavigateBack = { navController.popBackStack() }
             )
         }

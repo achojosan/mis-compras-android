@@ -20,11 +20,8 @@ import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,7 +38,6 @@ import java.text.NumberFormat
 import java.util.Calendar
 import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryListScreen(
     onHistoryItemClick: (Long) -> Unit,
@@ -49,56 +45,46 @@ fun HistoryListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { }
-            )
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            when (val state = uiState) {
-                is HistoryListUiState.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-                is HistoryListUiState.Empty -> {
-                    EmptyState(
-                        icon = Icons.Default.History,
-                        title = "No hay historial",
-                        description = "Cuando finalices una compra, aparecerá aquí"
-                    )
-                }
-                is HistoryListUiState.Success -> {
-                    val monthlyTotal = calculateMonthlyTotal(state.historyItems)
-                    val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        when (val state = uiState) {
+            is HistoryListUiState.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+            is HistoryListUiState.Empty -> {
+                EmptyState(
+                    icon = Icons.Default.History,
+                    title = "No hay historial",
+                    description = "Cuando finalices una compra, aparecerá aquí"
+                )
+            }
+            is HistoryListUiState.Success -> {
+                val monthlyTotal = calculateMonthlyTotal(state.historyItems)
+                val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
 
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(AccessibilityDefaults.ItemSpacing),
-                        verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
-                    ) {
-                        item {
-                            Text(
-                                text = "Gastado este mes: ${currencyFormat.format(monthlyTotal)}",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.padding(bottom = AccessibilityDefaults.ItemSpacing)
-                            )
-                        }
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(AccessibilityDefaults.ItemSpacing),
+                    verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                ) {
+                    item {
+                        Text(
+                            text = "Gastado este mes: ${currencyFormat.format(monthlyTotal)}",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.padding(bottom = AccessibilityDefaults.ItemSpacing)
+                        )
+                    }
 
-                        items(state.historyItems, key = { it.history.id }) { historyItem ->
-                            TimelineHistoryItem(
-                                historyItem = historyItem,
-                                onClick = { onHistoryItemClick(historyItem.history.id) }
-                            )
-                        }
+                    items(state.historyItems, key = { it.history.id }) { historyItem ->
+                        TimelineHistoryItem(
+                            historyItem = historyItem,
+                            onClick = { onHistoryItemClick(historyItem.history.id) }
+                        )
                     }
                 }
             }

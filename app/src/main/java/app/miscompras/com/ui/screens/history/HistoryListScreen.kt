@@ -17,9 +17,12 @@ import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -39,6 +42,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryListScreen(
     onHistoryItemClick: (Long) -> Unit,
@@ -46,32 +50,44 @@ fun HistoryListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        when (val state = uiState) {
-            is HistoryListUiState.Loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-            is HistoryListUiState.Empty -> {
-                EmptyState(
-                    icon = Icons.Default.History,
-                    title = "No hay historial",
-                    description = "Cuando finalices una compra, aparecerá aquí"
-                )
-            }
-            is HistoryListUiState.Success -> {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(AccessibilityDefaults.ItemSpacing),
-                    verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
-                ) {
-                    items(state.historyItems, key = { it.history.id }) { historyItem ->
-                        HistoryListItem(
-                            historyItem = historyItem,
-                            onClick = { onHistoryItemClick(historyItem.history.id) }
-                        )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Historial de Compras") }
+            )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            when (val state = uiState) {
+                is HistoryListUiState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+                is HistoryListUiState.Empty -> {
+                    EmptyState(
+                        icon = Icons.Default.History,
+                        title = "No hay historial",
+                        description = "Cuando finalices una compra, aparecerá aquí"
+                    )
+                }
+                is HistoryListUiState.Success -> {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(AccessibilityDefaults.ItemSpacing),
+                        verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                    ) {
+                        items(state.historyItems, key = { it.history.id }) { historyItem ->
+                            HistoryListItem(
+                                historyItem = historyItem,
+                                onClick = { onHistoryItemClick(historyItem.history.id) }
+                            )
+                        }
                     }
                 }
             }

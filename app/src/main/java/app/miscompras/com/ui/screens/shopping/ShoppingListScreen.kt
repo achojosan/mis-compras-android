@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.AlertDialog
@@ -19,10 +18,13 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -46,6 +48,7 @@ import coil.request.ImageRequest
 import java.text.NumberFormat
 import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShoppingListScreen(
     viewModel: ShoppingListViewModel = hiltViewModel()
@@ -53,32 +56,44 @@ fun ShoppingListScreen(
     val uiState by viewModel.uiState.collectAsState()
     var showFinishDialog by remember { mutableStateOf<ShoppingItem?>(null) }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        when (val state = uiState) {
-            is ShoppingListUiState.Loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-            is ShoppingListUiState.Empty -> {
-                EmptyState(
-                    icon = Icons.Default.ShoppingCart,
-                    title = "Lista de compra vacía",
-                    description = "Añade productos a tus supermercados para verlos aquí"
-                )
-            }
-            is ShoppingListUiState.Success -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = androidx.compose.foundation.layout.PaddingValues(AccessibilityDefaults.ItemSpacing),
-                    verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
-                ) {
-                    items(state.shoppingItems, key = { it.supermarket?.id ?: 0 }) { shoppingItem ->
-                        SupermarketShoppingCard(
-                            shoppingItem = shoppingItem,
-                            onToggleProduct = viewModel::toggleProductPurchased,
-                            onFinishPurchase = { showFinishDialog = shoppingItem }
-                        )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Lista de Compra") }
+            )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            when (val state = uiState) {
+                is ShoppingListUiState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+                is ShoppingListUiState.Empty -> {
+                    EmptyState(
+                        icon = Icons.Default.ShoppingCart,
+                        title = "Lista de compra vacía",
+                        description = "Añade productos a tus supermercados para verlos aquí"
+                    )
+                }
+                is ShoppingListUiState.Success -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(AccessibilityDefaults.ItemSpacing),
+                        verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                    ) {
+                        items(state.shoppingItems, key = { it.supermarket?.id ?: 0 }) { shoppingItem ->
+                            SupermarketShoppingCard(
+                                shoppingItem = shoppingItem,
+                                onToggleProduct = viewModel::toggleProductPurchased,
+                                onFinishPurchase = { showFinishDialog = shoppingItem }
+                            )
+                        }
                     }
                 }
             }

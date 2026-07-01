@@ -121,18 +121,3 @@ fun NavGraph(
         }
     }
 }
-
-@Composable
-fun ShoppingListPlaceholder() {
-    androidx.compose.material3.Text("Pantalla de Lista de Compra")
-}
-
-@Composable
-fun HistoryPlaceholder() {
-    androidx.compose.material3.Text("Pantalla de Historial")
-}
-
-@Composable
-fun NearbyPlaceholder() {
-    androidx.compose.material3.Text("Pantalla de Comercios Cercanos")
-}

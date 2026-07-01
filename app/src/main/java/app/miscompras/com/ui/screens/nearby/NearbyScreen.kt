@@ -14,17 +14,19 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -39,6 +41,7 @@ import app.miscompras.com.ui.theme.AccessibilityDefaults
 import java.text.NumberFormat
 import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NearbyScreen(
     onAddSupermarketClick: (String, Double?, Double?, String?) -> Unit = { _, _, _, _ -> },
@@ -54,100 +57,112 @@ fun NearbyScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        when (val state = uiState) {
-            is NearbyUiState.Idle -> {
-                EmptyState(
-                    icon = Icons.Default.LocationOn,
-                    title = "Comercios cercanos",
-                    description = "Descubre supermercados cerca de tu ubicación",
-                    action = {
-                        AccessibleButton(
-                            text = "Buscar comercios",
-                            onClick = { viewModel.checkPermissionAndLoad() }
-                        )
-                    }
-                )
-            }
-            is NearbyUiState.PermissionRequired -> {
-                EmptyState(
-                    icon = Icons.Default.LocationOn,
-                    title = "Permiso de ubicación",
-                    description = "Necesitamos permiso de ubicación para encontrar comercios cercanos",
-                    action = {
-                        AccessibleButton(
-                            text = "Conceder permiso",
-                            onClick = {
-                                permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-                            }
-                        )
-                    }
-                )
-            }
-            is NearbyUiState.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-            is NearbyUiState.Empty -> {
-                EmptyState(
-                    icon = Icons.Default.LocationOn,
-                    title = "No hay comercios cercanos",
-                    description = "No se encontraron supermercados en un radio de 5km"
-                )
-            }
-            is NearbyUiState.Error -> {
-                EmptyState(
-                    icon = Icons.Default.LocationOn,
-                    title = "Error",
-                    description = state.message,
-                    action = {
-                        AccessibleButton(
-                            text = "Reintentar",
-                            onClick = { viewModel.loadNearbyPlaces() }
-                        )
-                    }
-                )
-            }
-            is NearbyUiState.Success -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = androidx.compose.foundation.layout.PaddingValues(AccessibilityDefaults.ItemSpacing),
-                    verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
-                ) {
-                    items(state.places, key = { it.id }) { place ->
-                        NearbyPlaceItem(
-                            place = place,
-                            onAdd = {
-                                onAddSupermarketClick(
-                                    place.name,
-                                    place.latitude,
-                                    place.longitude,
-                                    place.openingHours
-                                )
-                            }
-                        )
-                    }
-                }
-            }
-        }
-
-        FloatingActionButton(
-            onClick = { viewModel.loadNearbyPlaces() },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(AccessibilityDefaults.SectionSpacing)
-                .size(AccessibilityDefaults.MinTouchTarget),
-            containerColor = MaterialTheme.colorScheme.primary
-        ) {
-            Icon(
-                imageVector = Icons.Default.LocationOn,
-                contentDescription = "Actualizar ubicación",
-                modifier = Modifier.size(AccessibilityDefaults.IconSize)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Comercios Cercanos") }
             )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            when (val state = uiState) {
+                is NearbyUiState.Idle -> {
+                    EmptyState(
+                        icon = Icons.Default.LocationOn,
+                        title = "Comercios cercanos",
+                        description = "Descubre supermercados cerca de tu ubicación",
+                        action = {
+                            AccessibleButton(
+                                text = "Buscar comercios",
+                                onClick = { viewModel.checkPermissionAndLoad() }
+                            )
+                        }
+                    )
+                }
+                is NearbyUiState.PermissionRequired -> {
+                    EmptyState(
+                        icon = Icons.Default.LocationOn,
+                        title = "Permiso de ubicación",
+                        description = "Necesitamos permiso de ubicación para encontrar comercios cercanos",
+                        action = {
+                            AccessibleButton(
+                                text = "Conceder permiso",
+                                onClick = {
+                                    permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                                }
+                            )
+                        }
+                    )
+                }
+                is NearbyUiState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                is NearbyUiState.Empty -> {
+                    EmptyState(
+                        icon = Icons.Default.LocationOn,
+                        title = "No hay comercios cercanos",
+                        description = "No se encontraron supermercados en un radio de 5km"
+                    )
+                }
+                is NearbyUiState.Error -> {
+                    EmptyState(
+                        icon = Icons.Default.LocationOn,
+                        title = "Error",
+                        description = state.message,
+                        action = {
+                            AccessibleButton(
+                                text = "Reintentar",
+                                onClick = { viewModel.loadNearbyPlaces() }
+                            )
+                        }
+                    )
+                }
+                is NearbyUiState.Success -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(AccessibilityDefaults.ItemSpacing),
+                        verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                    ) {
+                        items(state.places, key = { it.id }) { place ->
+                            NearbyPlaceItem(
+                                place = place,
+                                onAdd = {
+                                    onAddSupermarketClick(
+                                        place.name,
+                                        place.latitude,
+                                        place.longitude,
+                                        place.openingHours
+                                    )
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+
+            FloatingActionButton(
+                onClick = { viewModel.loadNearbyPlaces() },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(AccessibilityDefaults.SectionSpacing)
+                    .size(AccessibilityDefaults.MinTouchTarget),
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(
+                    imageVector = Icons.Default.LocationOn,
+                    contentDescription = "Actualizar ubicación",
+                    modifier = Modifier.size(AccessibilityDefaults.IconSize)
+                )
+            }
         }
     }
 }

@@ -18,11 +18,14 @@ import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -38,6 +41,7 @@ import app.miscompras.com.util.DefaultSupermarkets
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SupermarketListScreen(
     onSupermarketClick: (Long) -> Unit,
@@ -46,56 +50,68 @@ fun SupermarketListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        when (val state = uiState) {
-            is SupermarketListUiState.Loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-            is SupermarketListUiState.Empty -> {
-                EmptyState(
-                    icon = Icons.Default.Store,
-                    title = "No hay supermercados",
-                    description = "Añade tu primer supermercado para empezar",
-                    action = {
-                        androidx.compose.material3.Button(onClick = onAddSupermarketClick) {
-                            Text("Añadir supermercado")
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Mis Supermercados") }
+            )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            when (val state = uiState) {
+                is SupermarketListUiState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+                is SupermarketListUiState.Empty -> {
+                    EmptyState(
+                        icon = Icons.Default.Store,
+                        title = "No hay supermercados",
+                        description = "Añade tu primer supermercado para empezar",
+                        action = {
+                            androidx.compose.material3.Button(onClick = onAddSupermarketClick) {
+                                Text("Añadir supermercado")
+                            }
                         }
-                    }
-                )
-            }
-            is SupermarketListUiState.Success -> {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(AccessibilityDefaults.ItemSpacing),
-                    verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
-                ) {
-                    items(state.supermarkets, key = { it.id }) { supermarket ->
-                        SupermarketItem(
-                            supermarket = supermarket,
-                            onClick = { onSupermarketClick(supermarket.id) },
-                            onDelete = { viewModel.deleteSupermarket(supermarket) }
-                        )
+                    )
+                }
+                is SupermarketListUiState.Success -> {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(AccessibilityDefaults.ItemSpacing),
+                        verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                    ) {
+                        items(state.supermarkets, key = { it.id }) { supermarket ->
+                            SupermarketItem(
+                                supermarket = supermarket,
+                                onClick = { onSupermarketClick(supermarket.id) },
+                                onDelete = { viewModel.deleteSupermarket(supermarket) }
+                            )
+                        }
                     }
                 }
             }
-        }
 
-        FloatingActionButton(
-            onClick = onAddSupermarketClick,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(AccessibilityDefaults.SectionSpacing)
-                .size(AccessibilityDefaults.MinTouchTarget),
-            containerColor = MaterialTheme.colorScheme.primary
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "Añadir supermercado",
-                modifier = Modifier.size(AccessibilityDefaults.IconSize)
-            )
+            FloatingActionButton(
+                onClick = onAddSupermarketClick,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(AccessibilityDefaults.SectionSpacing)
+                    .size(AccessibilityDefaults.MinTouchTarget),
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Añadir supermercado",
+                    modifier = Modifier.size(AccessibilityDefaults.IconSize)
+                )
+            }
         }
     }
 }

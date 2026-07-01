@@ -36,6 +36,12 @@ sealed class Screen(
         icon = Icons.Default.LocationOn
     )
 
+    data object Settings : Screen(
+        route = "settings",
+        title = "Ajustes",
+        icon = Icons.Default.Store
+    )
+
     companion object {
         val bottomNavItems = listOf(Supermarkets, ShoppingList, History, Nearby)
     }

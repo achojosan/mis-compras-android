@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.okhttp.logging)
     implementation(libs.retrofit.kotlinx.serialization)
+    implementation(libs.androidx.datastore.preferences)
     
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

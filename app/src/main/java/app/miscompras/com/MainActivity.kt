@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -16,6 +15,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -23,20 +23,52 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import app.miscompras.com.data.local.datastore.UserPreferencesDataStore
 import app.miscompras.com.ui.navigation.NavGraph
 import app.miscompras.com.ui.navigation.Screen
+import app.miscompras.com.ui.theme.AccessibilityConfig
 import app.miscompras.com.ui.theme.MisComprasTheme
+import app.miscompras.com.ui.theme.ProvideAccessibilityConfig
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var dataStore: UserPreferencesDataStore
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        val initialConfig = runBlocking {
+            combine(
+                dataStore.fontScale,
+                dataStore.spacingScale,
+                dataStore.highContrast
+            ) { fontScale, spacingScale, highContrast ->
+                AccessibilityConfig(fontScale, spacingScale, highContrast)
+            }.first()
+        }
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val fontScale by dataStore.fontScale.collectAsState(initial = initialConfig.fontScale)
+            val spacingScale by dataStore.spacingScale.collectAsState(initial = initialConfig.spacingScale)
+            val highContrast by dataStore.highContrast.collectAsState(initial = initialConfig.highContrast)
+
+            val config = AccessibilityConfig(
+                fontScale = fontScale,
+                spacingScale = spacingScale,
+                highContrast = highContrast
+            )
+
             MisComprasTheme {
-                MainScreen()
+                ProvideAccessibilityConfig(config = config) {
+                    MainScreen()
+                }
             }
         }
     }

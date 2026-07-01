@@ -12,6 +12,7 @@ import app.miscompras.com.ui.screens.history.HistoryDetailScreen
 import app.miscompras.com.ui.screens.history.HistoryListScreen
 import app.miscompras.com.ui.screens.nearby.NearbyScreen
 import app.miscompras.com.ui.screens.products.AddProductScreen
+import app.miscompras.com.ui.screens.settings.SettingsScreen
 import app.miscompras.com.ui.screens.shopping.ShoppingListScreen
 import app.miscompras.com.ui.screens.supermarkets.AddSupermarketScreen
 import app.miscompras.com.ui.screens.supermarkets.SupermarketDetailScreen
@@ -27,6 +28,7 @@ object Routes {
     const val HISTORY = "history"
     const val HISTORY_DETAIL = "history/{historyId}"
     const val NEARBY = "nearby"
+    const val SETTINGS = "settings"
 
     fun supermarketDetail(supermarketId: Long) = "supermarket/$supermarketId"
     fun editSupermarket(supermarketId: Long) = "edit_supermarket/$supermarketId"
@@ -51,6 +53,9 @@ fun NavGraph(
                 },
                 onAddSupermarketClick = {
                     navController.navigate(Routes.ADD_SUPERMARKET)
+                },
+                onSettingsClick = {
+                    navController.navigate(Routes.SETTINGS)
                 }
             )
         }
@@ -117,6 +122,12 @@ fun NavGraph(
                 onAddSupermarketClick = { name, lat, lon, openingHours ->
                     navController.navigate(Routes.ADD_SUPERMARKET)
                 }
+            )
+        }
+
+        composable(Routes.SETTINGS) {
+            SettingsScreen(
+                onNavigateBack = { navController.popBackStack() }
             )
         }
     }

@@ -8,6 +8,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import app.miscompras.com.ui.screens.history.HistoryDetailScreen
+import app.miscompras.com.ui.screens.history.HistoryListScreen
 import app.miscompras.com.ui.screens.products.AddProductScreen
 import app.miscompras.com.ui.screens.shopping.ShoppingListScreen
 import app.miscompras.com.ui.screens.supermarkets.AddSupermarketScreen
@@ -22,11 +24,13 @@ object Routes {
     const val ADD_PRODUCT = "add_product/{supermarketId}"
     const val SHOPPING_LIST = "shopping_list"
     const val HISTORY = "history"
+    const val HISTORY_DETAIL = "history/{historyId}"
     const val NEARBY = "nearby"
 
     fun supermarketDetail(supermarketId: Long) = "supermarket/$supermarketId"
     fun editSupermarket(supermarketId: Long) = "edit_supermarket/$supermarketId"
     fun addProduct(supermarketId: Long) = "add_product/$supermarketId"
+    fun historyDetail(historyId: Long) = "history/$historyId"
 }
 
 @Composable
@@ -91,7 +95,20 @@ fun NavGraph(
         }
 
         composable(Routes.HISTORY.route) {
-            HistoryPlaceholder()
+            HistoryListScreen(
+                onHistoryItemClick = { historyId ->
+                    navController.navigate(Routes.historyDetail(historyId))
+                }
+            )
+        }
+
+        composable(
+            route = Routes.HISTORY_DETAIL,
+            arguments = listOf(navArgument("historyId") { type = NavType.LongType })
+        ) {
+            HistoryDetailScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
 
         composable(Routes.NEARBY.route) {

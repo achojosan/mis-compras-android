@@ -1,7 +1,5 @@
 package app.miscompras.com.ui.components
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,16 +11,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import app.miscompras.com.ui.theme.AccessibilityDefaults
-import kotlinx.coroutines.delay
 
 @Composable
 fun EmptyState(
@@ -32,23 +25,10 @@ fun EmptyState(
     modifier: Modifier = Modifier,
     action: @Composable () -> Unit = {}
 ) {
-    val alpha = remember { Animatable(0f) }
-    val translationY = remember { Animatable(40f) }
-
-    LaunchedEffect(Unit) {
-        delay(100)
-        alpha.animateTo(1f, animationSpec = tween(durationMillis = 500))
-        translationY.animateTo(0f, animationSpec = tween(durationMillis = 500))
-    }
-
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(AccessibilityDefaults.SectionSpacing * 2)
-            .graphicsLayer {
-                this.alpha = alpha.value
-                this.translationY = translationY.value
-            },
+            .padding(AccessibilityDefaults.SectionSpacing * 2),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

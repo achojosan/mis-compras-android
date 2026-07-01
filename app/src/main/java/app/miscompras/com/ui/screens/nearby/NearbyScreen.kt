@@ -3,9 +3,6 @@ package app.miscompras.com.ui.screens.nearby
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -94,11 +91,7 @@ fun NearbyScreen(
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
-            AnimatedVisibility(
-                visible = selectedPlaceIds.isNotEmpty(),
-                enter = slideInVertically(initialOffsetY = { it }),
-                exit = slideOutVertically(targetOffsetY = { it })
-            ) {
+            if (selectedPlaceIds.isNotEmpty()) {
                 SelectionBottomBar(
                     selectedCount = selectedPlaceIds.size,
                     totalCount = if (uiState is NearbyUiState.Success) (uiState as NearbyUiState.Success).places.size else 0,

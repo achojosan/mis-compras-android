@@ -1,6 +1,5 @@
 package app.miscompras.com.ui.screens.supermarkets
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -166,7 +165,7 @@ fun SupermarketItem(
                 modifier = Modifier.weight(1f)
             )
 
-            AnimatedVisibility(visible = showDelete) {
+            if (showDelete) {
                 IconButton(
                     onClick = onDelete,
                     modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)

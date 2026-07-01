@@ -30,9 +30,6 @@ import app.miscompras.com.ui.theme.AccessibilityConfig
 import app.miscompras.com.ui.theme.MisComprasTheme
 import app.miscompras.com.ui.theme.ProvideAccessibilityConfig
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,22 +39,12 @@ class MainActivity : ComponentActivity() {
     lateinit var dataStore: UserPreferencesDataStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val initialConfig = runBlocking {
-            combine(
-                dataStore.fontScale,
-                dataStore.spacingScale,
-                dataStore.highContrast
-            ) { fontScale, spacingScale, highContrast ->
-                AccessibilityConfig(fontScale, spacingScale, highContrast)
-            }.first()
-        }
-
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val fontScale by dataStore.fontScale.collectAsState(initial = initialConfig.fontScale)
-            val spacingScale by dataStore.spacingScale.collectAsState(initial = initialConfig.spacingScale)
-            val highContrast by dataStore.highContrast.collectAsState(initial = initialConfig.highContrast)
+            val fontScale by dataStore.fontScale.collectAsState(initial = 1.0f)
+            val spacingScale by dataStore.spacingScale.collectAsState(initial = 1.0f)
+            val highContrast by dataStore.highContrast.collectAsState(initial = false)
 
             val config = AccessibilityConfig(
                 fontScale = fontScale,

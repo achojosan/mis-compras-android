@@ -26,8 +26,7 @@ fun ProvideAccessibilityConfig(
     val density = LocalDensity.current
     val newDensity = Density(
         density = density.density,
-        fontScale = config.fontScale,
-        density.dpi
+        fontScale = config.fontScale
     )
     
     CompositionLocalProvider(

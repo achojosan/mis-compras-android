@@ -25,13 +25,13 @@ class SettingsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             combine(
-                dataStore.fontScale,
-                dataStore.spacingScale,
-                dataStore.highContrast,
-                dataStore.deletePurchased,
-                dataStore.themeMode,
-                dataStore.themeColor
-            ) { fontScale, spacingScale, highContrast, deletePurchased, themeMode, themeColor ->
+                combine(dataStore.fontScale, dataStore.spacingScale, dataStore.highContrast) { a, b, c ->
+                    Triple(a, b, c)
+                },
+                combine(dataStore.deletePurchased, dataStore.themeMode, dataStore.themeColor) { a, b, c ->
+                    Triple(a, b, c)
+                }
+            ) { (fontScale, spacingScale, highContrast), (deletePurchased, themeMode, themeColor) ->
                 SettingsUiState(
                     fontScale = fontScale,
                     spacingScale = spacingScale,

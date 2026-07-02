@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity() {
                 themeColor = themeColor
             ) {
                 ProvideAccessibilityConfig(config = config) {
-                    MainScreen()
+                    MainScreen(themeColor = themeColor)
                 }
             }
         }
@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen() {
+fun MainScreen(themeColor: ThemeColor = ThemeColor.Green) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -122,7 +122,8 @@ fun MainScreen() {
         ) {
             MainContent(
                 navController = navController,
-                currentDestination = currentDestination
+                currentDestination = currentDestination,
+                themeColor = themeColor
             )
         }
 
@@ -178,7 +179,8 @@ fun BrandedSplashScreen() {
 @Composable
 fun MainContent(
     navController: androidx.navigation.NavHostController,
-    currentDestination: androidx.navigation.NavDestination?
+    currentDestination: androidx.navigation.NavDestination?,
+    themeColor: ThemeColor = ThemeColor.Green
 ) {
     val isBottomNavScreen = Screen.bottomNavItems.any { screen ->
         currentDestination?.hierarchy?.any { it.route == screen.route } == true
@@ -190,7 +192,7 @@ fun MainContent(
             if (isBottomNavScreen) {
                 NavigationBar(
                     containerColor = MaterialTheme.colorScheme.surface,
-                    tonalElevation = 4.dp
+                    tonalElevation = 0.dp
                 ) {
                     Screen.bottomNavItems.forEach { screen ->
                         val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
@@ -223,7 +225,7 @@ fun MainContent(
                                 selectedTextColor = MaterialTheme.colorScheme.primary,
                                 unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
                                 unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                                indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
+                                indicatorColor = MaterialTheme.colorScheme.surfaceVariant
                             ),
                             onClick = {
                                 navController.navigate(screen.route) {

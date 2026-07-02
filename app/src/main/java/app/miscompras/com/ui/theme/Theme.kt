@@ -1,14 +1,11 @@
 package app.miscompras.com.ui.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 
 private val LightColorScheme = lightColorScheme(
     primary = Green800,
@@ -118,21 +115,99 @@ private val HighContrastDarkColorScheme = darkColorScheme(
     outlineVariant = WarmGray300
 )
 
+private data class ThemePrimaryColors(
+    val primary: Color,
+    val onPrimary: Color,
+    val primaryContainer: Color,
+    val onPrimaryContainer: Color
+)
+
+private fun primaryColorsFor(themeColor: ThemeColor): ThemePrimaryColors = when (themeColor) {
+    ThemeColor.Green -> ThemePrimaryColors(
+        primary = Green800, onPrimary = White,
+        primaryContainer = Green50, onPrimaryContainer = Green700
+    )
+    ThemeColor.Blue -> ThemePrimaryColors(
+        primary = Blue700, onPrimary = White,
+        primaryContainer = Blue50, onPrimaryContainer = Blue800
+    )
+    ThemeColor.Purple -> ThemePrimaryColors(
+        primary = Purple700, onPrimary = White,
+        primaryContainer = Purple50, onPrimaryContainer = Purple800
+    )
+    ThemeColor.Orange -> ThemePrimaryColors(
+        primary = ThemeOrange700, onPrimary = White,
+        primaryContainer = ThemeOrange50, onPrimaryContainer = ThemeOrange800
+    )
+    ThemeColor.Pink -> ThemePrimaryColors(
+        primary = Pink700, onPrimary = White,
+        primaryContainer = Pink50, onPrimaryContainer = Pink800
+    )
+    ThemeColor.Gray -> ThemePrimaryColors(
+        primary = Gray700, onPrimary = White,
+        primaryContainer = Gray50, onPrimaryContainer = Gray800
+    )
+    ThemeColor.Red -> ThemePrimaryColors(
+        primary = ThemeRed700, onPrimary = White,
+        primaryContainer = ThemeRed50, onPrimaryContainer = ThemeRed800
+    )
+}
+
+private fun darkPrimaryColorsFor(themeColor: ThemeColor): ThemePrimaryColors = when (themeColor) {
+    ThemeColor.Green -> ThemePrimaryColors(
+        primary = Green300, onPrimary = WarmGray900,
+        primaryContainer = Green700, onPrimaryContainer = Green200
+    )
+    ThemeColor.Blue -> ThemePrimaryColors(
+        primary = Blue300, onPrimary = WarmGray900,
+        primaryContainer = Blue700, onPrimaryContainer = Blue200
+    )
+    ThemeColor.Purple -> ThemePrimaryColors(
+        primary = Purple300, onPrimary = WarmGray900,
+        primaryContainer = Purple700, onPrimaryContainer = Purple200
+    )
+    ThemeColor.Orange -> ThemePrimaryColors(
+        primary = ThemeOrange300, onPrimary = WarmGray900,
+        primaryContainer = ThemeOrange700, onPrimaryContainer = ThemeOrange200
+    )
+    ThemeColor.Pink -> ThemePrimaryColors(
+        primary = Pink300, onPrimary = WarmGray900,
+        primaryContainer = Pink700, onPrimaryContainer = Pink200
+    )
+    ThemeColor.Gray -> ThemePrimaryColors(
+        primary = Gray300, onPrimary = WarmGray900,
+        primaryContainer = Gray700, onPrimaryContainer = Gray200
+    )
+    ThemeColor.Red -> ThemePrimaryColors(
+        primary = ThemeRed300, onPrimary = WarmGray900,
+        primaryContainer = ThemeRed700, onPrimaryContainer = ThemeRed200
+    )
+}
+
 @Composable
 fun MisComprasTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     highContrast: Boolean = false,
+    themeColor: ThemeColor = ThemeColor.Green,
     content: @Composable () -> Unit
 ) {
-    val context = LocalContext.current
     val colorScheme = when {
         highContrast && darkTheme -> HighContrastDarkColorScheme
         highContrast -> HighContrastLightColorScheme
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        darkTheme -> {
+            val p = darkPrimaryColorsFor(themeColor)
+            DarkColorScheme.copy(
+                primary = p.primary, onPrimary = p.onPrimary,
+                primaryContainer = p.primaryContainer, onPrimaryContainer = p.onPrimaryContainer
+            )
         }
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        else -> {
+            val p = primaryColorsFor(themeColor)
+            LightColorScheme.copy(
+                primary = p.primary, onPrimary = p.onPrimary,
+                primaryContainer = p.primaryContainer, onPrimaryContainer = p.onPrimaryContainer
+            )
+        }
     }
 
     MaterialTheme(

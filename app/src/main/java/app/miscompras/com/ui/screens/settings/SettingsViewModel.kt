@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import app.miscompras.com.data.local.datastore.ThemeMode
 import app.miscompras.com.data.local.datastore.UserPreferencesDataStore
 import app.miscompras.com.ui.theme.AccessibilityConfig
+import app.miscompras.com.ui.theme.ThemeColor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,14 +29,16 @@ class SettingsViewModel @Inject constructor(
                 dataStore.spacingScale,
                 dataStore.highContrast,
                 dataStore.deletePurchased,
-                dataStore.themeMode
-            ) { fontScale, spacingScale, highContrast, deletePurchased, themeMode ->
+                dataStore.themeMode,
+                dataStore.themeColor
+            ) { fontScale, spacingScale, highContrast, deletePurchased, themeMode, themeColor ->
                 SettingsUiState(
                     fontScale = fontScale,
                     spacingScale = spacingScale,
                     highContrast = highContrast,
                     deletePurchased = deletePurchased,
-                    themeMode = themeMode
+                    themeMode = themeMode,
+                    themeColor = themeColor
                 )
             }.collect { state ->
                 _uiState.value = state
@@ -72,6 +75,12 @@ class SettingsViewModel @Inject constructor(
             dataStore.setThemeMode(mode)
         }
     }
+
+    fun setThemeColor(color: ThemeColor) {
+        viewModelScope.launch {
+            dataStore.setThemeColor(color)
+        }
+    }
 }
 
 data class SettingsUiState(
@@ -79,7 +88,8 @@ data class SettingsUiState(
     val spacingScale: Float = 1.0f,
     val highContrast: Boolean = false,
     val deletePurchased: Boolean = true,
-    val themeMode: ThemeMode = ThemeMode.System
+    val themeMode: ThemeMode = ThemeMode.System,
+    val themeColor: ThemeColor = ThemeColor.Green
 ) {
     val accessibilityConfig = AccessibilityConfig(
         fontScale = fontScale,

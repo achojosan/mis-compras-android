@@ -1,6 +1,7 @@
 package app.miscompras.com.data.local.datastore
 
 import android.content.Context
+import app.miscompras.com.ui.theme.ThemeColor
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -31,6 +32,7 @@ class UserPreferencesDataStore(private val context: Context) {
         val HIGH_CONTRAST = booleanPreferencesKey("high_contrast")
         val DELETE_PURCHASED = booleanPreferencesKey("delete_purchased")
         val THEME_MODE = intPreferencesKey("theme_mode")
+        val THEME_COLOR = intPreferencesKey("theme_color")
     }
 
     val fontScale: Flow<Float> = context.dataStore.data.map { preferences ->
@@ -80,6 +82,16 @@ class UserPreferencesDataStore(private val context: Context) {
     suspend fun setThemeMode(mode: ThemeMode) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.THEME_MODE] = mode.value
+        }
+    }
+
+    val themeColor: Flow<ThemeColor> = context.dataStore.data.map { preferences ->
+        ThemeColor.fromInt(preferences[PreferencesKeys.THEME_COLOR] ?: 0)
+    }
+
+    suspend fun setThemeColor(color: ThemeColor) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.THEME_COLOR] = color.value
         }
     }
 }

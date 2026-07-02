@@ -12,6 +12,9 @@ import app.miscompras.com.ui.screens.history.HistoryDetailScreen
 import app.miscompras.com.ui.screens.history.HistoryListScreen
 import app.miscompras.com.ui.screens.products.AddProductScreen
 import app.miscompras.com.ui.screens.settings.SettingsScreen
+import app.miscompras.com.ui.screens.settings.AppearanceScreen
+import app.miscompras.com.ui.screens.settings.PurchaseSettingsScreen
+import app.miscompras.com.ui.screens.settings.InfoScreen
 import app.miscompras.com.ui.screens.shopping.ShoppingListScreen
 import app.miscompras.com.ui.screens.supermarkets.AddSupermarketScreen
 import app.miscompras.com.ui.screens.supermarkets.SupermarketDetailScreen
@@ -27,6 +30,9 @@ object Routes {
     const val HISTORY = "history"
     const val HISTORY_DETAIL = "history/{historyId}"
     const val SETTINGS = "settings"
+    const val SETTINGS_APPEARANCE = "settings/appearance"
+    const val SETTINGS_PURCHASE = "settings/purchase"
+    const val SETTINGS_INFO = "settings/info"
 
     fun supermarketDetail(supermarketId: Long) = "supermarket/$supermarketId"
     fun editSupermarket(supermarketId: Long) = "edit_supermarket/$supermarketId"
@@ -116,7 +122,29 @@ fun NavGraph(
         }
 
         composable(Routes.SETTINGS) {
-            SettingsScreen()
+            SettingsScreen(
+                onAppearanceClick = { navController.navigate(Routes.SETTINGS_APPEARANCE) },
+                onPurchaseClick = { navController.navigate(Routes.SETTINGS_PURCHASE) },
+                onInfoClick = { navController.navigate(Routes.SETTINGS_INFO) }
+            )
+        }
+
+        composable(Routes.SETTINGS_APPEARANCE) {
+            AppearanceScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Routes.SETTINGS_PURCHASE) {
+            PurchaseSettingsScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Routes.SETTINGS_INFO) {
+            InfoScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
     }
 }

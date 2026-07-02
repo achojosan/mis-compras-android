@@ -37,6 +37,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +57,7 @@ import app.miscompras.com.ui.navigation.Screen
 import app.miscompras.com.ui.theme.AccessibilityConfig
 import app.miscompras.com.ui.theme.MisComprasTheme
 import app.miscompras.com.ui.theme.ProvideAccessibilityConfig
+import app.miscompras.com.ui.theme.ThemeColor
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -74,6 +76,7 @@ class MainActivity : ComponentActivity() {
             val spacingScale by dataStore.spacingScale.collectAsState(initial = 1.0f)
             val highContrast by dataStore.highContrast.collectAsState(initial = false)
             val themeMode by dataStore.themeMode.collectAsState(initial = ThemeMode.System)
+            val themeColor by dataStore.themeColor.collectAsState(initial = ThemeColor.Green)
 
             val config = AccessibilityConfig(
                 fontScale = fontScale,
@@ -89,7 +92,8 @@ class MainActivity : ComponentActivity() {
 
             MisComprasTheme(
                 darkTheme = isDarkTheme,
-                highContrast = highContrast
+                highContrast = highContrast,
+                themeColor = themeColor
             ) {
                 ProvideAccessibilityConfig(config = config) {
                     MainScreen()
@@ -104,7 +108,7 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    var showBrandedSplash by remember { mutableStateOf(true) }
+    var showBrandedSplash by rememberSaveable { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         delay(600)

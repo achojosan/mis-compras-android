@@ -39,7 +39,12 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
@@ -56,6 +61,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -457,8 +463,7 @@ fun ProductItem(
                 },
             shape = RoundedCornerShape(12.dp),
             colors = CardDefaults.cardColors(
-                containerColor = if (product.isPurchased) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-                else MaterialTheme.colorScheme.surface,
+                containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.onSurface
             ),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.5.dp)
@@ -466,6 +471,10 @@ fun ProductItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .then(
+                        if (product.isPurchased) Modifier.graphicsLayer { alpha = 0.6f }
+                        else Modifier
+                    )
                     .padding(
                         start = AccessibilityDefaults.ItemSpacing / 2,
                         end = AccessibilityDefaults.ItemSpacing,
@@ -483,7 +492,7 @@ fun ProductItem(
                         imageVector = if (product.isPurchased) Icons.Default.CheckCircle
                         else Icons.Default.RadioButtonUnchecked,
                         contentDescription = if (product.isPurchased) "Marcar como pendiente" else "Marcar como comprado",
-                        tint = if (product.isPurchased) MaterialTheme.colorScheme.primary
+                        tint = if (product.isPurchased) MaterialTheme.colorScheme.onSurfaceVariant
                         else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(AccessibilityDefaults.IconSize)
                     )
@@ -496,7 +505,7 @@ fun ProductItem(
                         text = product.name,
                         style = MaterialTheme.typography.titleMedium,
                         textDecoration = if (product.isPurchased) TextDecoration.LineThrough else null,
-                        color = if (product.isPurchased) MaterialTheme.colorScheme.onSurfaceVariant
+                        color = if (product.isPurchased) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                         else MaterialTheme.colorScheme.onSurface
                     )
                     Row(
@@ -529,6 +538,7 @@ fun ProductItem(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProductDialog(
     product: Product,
@@ -539,6 +549,9 @@ fun EditProductDialog(
     var quantity by remember { mutableStateOf(product.quantity.toString()) }
     var unit by remember { mutableStateOf(product.unit) }
     var price by remember { mutableStateOf(product.price?.toString() ?: "") }
+    var showUnitMenu by remember { mutableStateOf(false) }
+
+    val commonUnits = listOf("unidades", "kg", "g", "L", "ml", "docena", "pack")
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -585,19 +598,44 @@ fun EditProductDialog(
                         )
                     )
 
-                    OutlinedTextField(
-                        value = unit,
-                        onValueChange = { unit = it },
-                        label = { Text("Unidad") },
-                        textStyle = MaterialTheme.typography.bodyLarge,
-                        shape = RoundedCornerShape(12.dp),
-                        singleLine = true,
-                        modifier = Modifier.weight(1f),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = MaterialTheme.colorScheme.primary,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant
+                    ExposedDropdownMenuBox(
+                        expanded = showUnitMenu,
+                        onExpandedChange = { showUnitMenu = it },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        OutlinedTextField(
+                            value = unit,
+                            onValueChange = {},
+                            readOnly = true,
+                            label = { Text("Unidad") },
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = showUnitMenu) },
+                            textStyle = MaterialTheme.typography.bodyLarge,
+                            shape = RoundedCornerShape(12.dp),
+                            singleLine = true,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant
+                            ),
+                            modifier = Modifier
+                                .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                                .fillMaxWidth()
                         )
-                    )
+
+                        ExposedDropdownMenu(
+                            expanded = showUnitMenu,
+                            onDismissRequest = { showUnitMenu = false }
+                        ) {
+                            commonUnits.forEach { option ->
+                                DropdownMenuItem(
+                                    text = { Text(option) },
+                                    onClick = {
+                                        unit = option
+                                        showUnitMenu = false
+                                    }
+                                )
+                            }
+                        }
+                    }
                 }
 
                 OutlinedTextField(

@@ -19,6 +19,9 @@ class ProductRepository @Inject constructor(
     fun getAllPendingProducts(): Flow<List<Product>> =
         productDao.getAllPendingProducts()
 
+    fun getAllProducts(): Flow<List<Product>> =
+        productDao.getAllProducts()
+
     fun getProductById(id: Long): Flow<Product?> =
         productDao.getProductById(id)
 

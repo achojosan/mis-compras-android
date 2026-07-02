@@ -41,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
@@ -263,6 +264,10 @@ fun ShoppingProductItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .then(
+                if (product.isPurchased) Modifier.graphicsLayer { alpha = 0.6f }
+                else Modifier
+            )
             .padding(vertical = AccessibilityDefaults.ItemSpacing / 2),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing / 2)
@@ -277,7 +282,9 @@ fun ShoppingProductItem(
             Text(
                 text = product.name,
                 style = MaterialTheme.typography.bodyLarge,
-                textDecoration = if (product.isPurchased) TextDecoration.LineThrough else null
+                textDecoration = if (product.isPurchased) TextDecoration.LineThrough else null,
+                color = if (product.isPurchased) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                else MaterialTheme.colorScheme.onSurface
             )
 
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -299,7 +306,8 @@ fun ShoppingProductItem(
                 Text(
                     text = product.unit,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = if (product.isPurchased) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+                    else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
@@ -307,7 +315,8 @@ fun ShoppingProductItem(
         Text(
             text = if (totalPrice != null) "${String.format("%.2f", totalPrice)}€" else "",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.primary,
+            color = if (product.isPurchased) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
+            else MaterialTheme.colorScheme.primary,
             fontWeight = FontWeight.SemiBold
         )
     }

@@ -15,6 +15,9 @@ interface ProductDao {
     @Query("SELECT * FROM products WHERE isPurchased = 0 ORDER BY name ASC")
     fun getAllPendingProducts(): Flow<List<Product>>
 
+    @Query("SELECT * FROM products ORDER BY name ASC")
+    fun getAllProducts(): Flow<List<Product>>
+
     @Query("SELECT * FROM products WHERE id = :id")
     fun getProductById(id: Long): Flow<Product?>
 

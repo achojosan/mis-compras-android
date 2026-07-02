@@ -39,16 +39,19 @@ class ShoppingListViewModel @Inject constructor(
     private fun loadShoppingList() {
         viewModelScope.launch {
             combine(
-                productRepository.getAllPendingProducts(),
+                productRepository.getAllProducts(),
                 supermarketRepository.getAllSupermarkets()
             ) { products, supermarkets ->
                 val groupedBySupermarket = products.groupBy { it.supermarketId }
                 val shoppingItems = groupedBySupermarket.map { (supermarketId, products) ->
                     val supermarket = supermarkets.find { it.id == supermarketId }
+                    val pendingTotal = products
+                        .filter { !it.isPurchased }
+                        .sumOf { (it.price ?: 0.0) * it.quantity }
                     ShoppingItem(
                         supermarket = supermarket,
                         products = products,
-                        total = products.sumOf { (it.price ?: 0.0) * it.quantity }
+                        total = pendingTotal
                     )
                 }.sortedBy { it.supermarket?.name ?: "" }
                 shoppingItems
@@ -79,11 +82,12 @@ class ShoppingListViewModel @Inject constructor(
     fun finishPurchase(shoppingItem: ShoppingItem) {
         viewModelScope.launch {
             val supermarket = shoppingItem.supermarket ?: return@launch
-            val products = shoppingItem.products
+            val pendingProducts = shoppingItem.products.filter { !it.isPurchased }
+            if (pendingProducts.isEmpty()) return@launch
             val deletePurchased = dataStore.deletePurchased.first()
 
             val productsJson = Json.encodeToString(
-                products.map {
+                pendingProducts.map {
                     PurchasedProductData(
                         name = it.name,
                         quantity = it.quantity,
@@ -102,12 +106,12 @@ class ShoppingListViewModel @Inject constructor(
             purchaseHistoryRepository.insertHistory(history)
 
             if (deletePurchased) {
-                products.forEach { product ->
+                pendingProducts.forEach { product ->
                     productRepository.deleteProduct(product)
                 }
             } else {
-                products.forEach { product ->
-                    productRepository.updatePurchaseStatus(product.id, false)
+                pendingProducts.forEach { product ->
+                    productRepository.updatePurchaseStatus(product.id, true)
                 }
             }
         }

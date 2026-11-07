@@ -1,54 +1,42 @@
 package app.miscompras.com.di
 
-import app.miscompras.com.data.remote.osm.OverpassApiService
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import app.miscompras.com.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    /**
+     * Cliente HTTP compartido. Sin interceptor de logs a propósito: las peticiones llevan
+     * la ubicación del usuario y no debe acabar en logcat. El User-Agent es genérico
+     * (Overpass y Open Food Facts piden identificar la app, no a la persona).
+     */
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .addInterceptor { chain ->
+            chain.proceed(
+                chain.request().newBuilder()
+                    .header("User-Agent", "MisCompras/${BuildConfig.VERSION_NAME} (Android)")
+                    .build()
+            )
         }
-
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
-    }
+        .build()
 
     @Provides
     @Singleton
     fun provideJson(): Json = Json {
         ignoreUnknownKeys = true
         isLenient = true
-    }
-
-    @Provides
-    @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://overpass-api.de/")
-            .client(okHttpClient)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideOverpassApiService(retrofit: Retrofit): OverpassApiService {
-        return retrofit.create(OverpassApiService::class.java)
     }
 }

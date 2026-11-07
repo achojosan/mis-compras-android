@@ -2,12 +2,15 @@ package app.miscompras.com.ui.screens.history
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,9 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.miscompras.com.domain.model.Supermarket
-import app.miscompras.com.ui.components.SupermarketLogo
+import app.miscompras.com.ui.components.FloatingTopBar
+import app.miscompras.com.ui.components.SupermarketLogoPlate
+import app.miscompras.com.ui.components.rememberTopBarFraction
 import app.miscompras.com.ui.screens.shopping.PurchasedProductData
 import app.miscompras.com.ui.theme.AccessibilityDefaults
+import app.miscompras.com.ui.theme.AppShapes
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -36,56 +42,82 @@ fun HistoryDetailScreen(
     viewModel: HistoryDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val listState = rememberLazyListState()
+    val barFraction = rememberTopBarFraction(listState)
 
-    when (val state = uiState) {
-        is HistoryDetailUiState.Loading -> {
-            androidx.compose.foundation.layout.Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = androidx.compose.ui.Alignment.Center
-            ) {
-                androidx.compose.material3.CircularProgressIndicator()
+    val title = (uiState as? HistoryDetailUiState.Success)?.let { state ->
+        state.supermarket?.name ?: state.history.supermarketName
+    } ?: "Compra"
+
+    androidx.compose.foundation.layout.Box(modifier = Modifier.fillMaxSize()) {
+        when (val state = uiState) {
+            is HistoryDetailUiState.Loading -> {
+                androidx.compose.foundation.layout.Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    androidx.compose.material3.CircularProgressIndicator()
+                }
+            }
+            is HistoryDetailUiState.Error -> {
+                androidx.compose.foundation.layout.Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(state.message, color = MaterialTheme.colorScheme.error)
+                }
+            }
+            is HistoryDetailUiState.Success -> {
+                HistoryDetailContent(
+                    supermarket = state.supermarket,
+                    supermarketName = state.history.supermarketName,
+                    products = state.products,
+                    totalAmount = state.history.totalAmount,
+                    purchasedAt = state.history.purchasedAt,
+                    listState = listState
+                )
             }
         }
-        is HistoryDetailUiState.Error -> {
-            androidx.compose.foundation.layout.Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = androidx.compose.ui.Alignment.Center
-            ) {
-                Text(state.message, color = MaterialTheme.colorScheme.error)
-            }
-        }
-        is HistoryDetailUiState.Success -> {
-            HistoryDetailContent(
-                supermarket = state.supermarket,
-                products = state.products,
-                totalAmount = state.history.totalAmount,
-                purchasedAt = state.history.purchasedAt
-            )
-        }
+
+        FloatingTopBar(
+            title = title,
+            backgroundFraction = barFraction,
+            onNavigateBack = onNavigateBack,
+            modifier = Modifier.align(Alignment.TopCenter)
+        )
     }
 }
 
 @Composable
 fun HistoryDetailContent(
     supermarket: Supermarket?,
+    supermarketName: String?,
     products: List<PurchasedProductData>,
     totalAmount: Double,
     purchasedAt: Long,
+    listState: LazyListState,
     modifier: Modifier = Modifier
 ) {
     val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
     val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("es", "ES"))
 
     LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(AccessibilityDefaults.ItemSpacing),
+        state = listState,
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(
+            start = AccessibilityDefaults.ItemSpacing,
+            end = AccessibilityDefaults.ItemSpacing,
+            top = AccessibilityDefaults.MinTouchTarget +
+                AccessibilityDefaults.SectionSpacing +
+                AccessibilityDefaults.ItemSpacing,
+            bottom = AccessibilityDefaults.ItemSpacing
+        ),
         verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
     ) {
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
+                shape = AppShapes.card,
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.surface,
                     contentColor = MaterialTheme.colorScheme.onSurface
@@ -102,15 +134,18 @@ fun HistoryDetailContent(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
                     ) {
-                        SupermarketLogo(
-                            supermarketName = supermarket?.name ?: "",
-                            customLogoPath = supermarket?.logoPath,
-                            size = 72.dp
+                        SupermarketLogoPlate(
+                            supermarketName = supermarket?.name ?: supermarketName ?: "",
+                            logoPath = supermarket?.logoPath,
+                            height = 76.dp,
+                            cornerRadius = 22.dp,
+                            contentPadding = 12.dp,
+                            shadowElevation = 3.dp
                         )
 
                         Column {
                             Text(
-                                text = supermarket?.name ?: "Supermercado",
+                                text = supermarket?.name ?: supermarketName ?: "Supermercado",
                                 style = MaterialTheme.typography.headlineSmall
                             )
                             Text(
@@ -157,7 +192,7 @@ fun HistoryProductItem(
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = AppShapes.card,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface

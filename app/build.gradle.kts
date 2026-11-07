@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,6 +7,13 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt.gradle)
+}
+
+// Datos de firma: viven en keystore.properties (ignorado por git). Sin ese fichero la
+// versión release se genera sin firmar, y las de debug no lo necesitan.
+val keystoreProps = Properties().apply {
+    val file = rootProject.file("keystore.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
 }
 
 android {
@@ -15,24 +24,28 @@ android {
         applicationId = "app.miscompras.com"
         minSdk = 31
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 9
+        versionName = "1.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
-        create("release") {
-            storeFile = file("miscompras.keystore")
-            storePassword = "CAMBIAME"
-            keyAlias = "miscompras"
-            keyPassword = "CAMBIAME"
+        if (keystoreProps.isNotEmpty()) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
         }
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            if (keystoreProps.isNotEmpty()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -49,6 +62,10 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+    androidResources {
+        noCompress += "tflite"
     }
 }
 
@@ -76,18 +93,24 @@ dependencies {
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
     
-    implementation(libs.play.services.location)
-    implementation(libs.kotlinx.coroutines.play.services)
-    
     implementation(libs.coil.compose)
     implementation(libs.coil.svg)
     
     implementation(libs.kotlinx.serialization.json)
     
-    implementation(libs.retrofit)
-    implementation(libs.okhttp.logging)
-    implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.camera.core)
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
+    implementation(libs.mlkit.barcode.scanning)
+    implementation(libs.mediapipe.tasks.vision)
+
+    implementation(libs.okhttp)
+    implementation(libs.play.services.location)
+    implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.zxing.core)
     
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

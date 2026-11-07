@@ -1,0 +1,3670 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-07T18:45:51Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 167301935,
+  "lat": 40.4110395,
+  "lon": -3.6967784,
+  "tags": {
+    "addr:housenumber": "80",
+    "addr:postcode": "28012",
+    "addr:street": "Calle de Atocha",
+    "brand": "Alcampo",
+    "brand:wikidata": "Q2832081",
+    "check_date": "2025-02-14",
+    "name": "Alcampo",
+    "opening_hours": "Mo-Sa 09:00-22:00; Su 10:00-16:00",
+    "shop": "supermarket",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 167302080,
+  "lat": 40.4125053,
+  "lon": -3.6955670,
+  "tags": {
+    "addr:housenumber": "1",
+    "addr:street": "Calle de Fúcar",
+    "check_date": "2025-02-13",
+    "name": "Alimentación Mantequería",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 167302600,
+  "lat": 40.4129173,
+  "lon": -3.6953428,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:street": "Calle de las Huertas",
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "check_date": "2025-04-28",
+    "name": "Dia",
+    "opening_hours": "Mo-Fr 09:00-21:30; Sa-Su 10:00-14:30",
+    "operator": "DIA",
+    "shop": "supermarket",
+    "wheelchair": "no",
+    "wheelchair:description": "Several steps from street, automatic sliding doors."
+  }
+},
+{
+  "type": "node",
+  "id": 178820979,
+  "lat": 40.4157426,
+  "lon": -3.7092046,
+  "tags": {
+    "name": "SuperSano",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 183916175,
+  "lat": 40.4177572,
+  "lon": -3.7092982,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 184049038,
+  "lat": 40.4180474,
+  "lon": -3.7087248,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 184049059,
+  "lat": 40.4187713,
+  "lon": -3.7088597,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 184049154,
+  "lat": 40.4196858,
+  "lon": -3.7080852,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 184049299,
+  "lat": 40.4178368,
+  "lon": -3.7034663,
+  "tags": {
+    "organic": "yes",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 184049333,
+  "lat": 40.4193933,
+  "lon": -3.7029579,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 184049626,
+  "lat": 40.4224112,
+  "lon": -3.7096572,
+  "tags": {
+    "organic": "only",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 622204631,
+  "lat": 40.4125936,
+  "lon": -3.7045819,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "16",
+    "addr:postcode": "28012",
+    "addr:street": "Plaza de Tirso de Molina",
+    "brand": "Lidl",
+    "brand:website": "https://www.lidl.es",
+    "brand:wikidata": "Q151954",
+    "brand:wikipedia": "en:Lidl",
+    "foot": "yes",
+    "level": "0",
+    "name": "Lidl",
+    "opening_hours": "Mo-Sa 09:00-22:00; Su 10:00-22:00",
+    "operator": "LiDL",
+    "shop": "supermarket",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 622204638,
+  "lat": 40.4082831,
+  "lon": -3.7010237,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "2",
+    "addr:postcode": "28012",
+    "addr:street": "Calle de Valencia",
+    "air_conditioning": "yes",
+    "brand": "Carrefour Market",
+    "brand:wikidata": "Q2689639",
+    "check_date": "2026-08-04",
+    "level": "-1;0",
+    "name": "Carrefour Market",
+    "opening_hours": "24/7",
+    "operator": "Carrefour",
+    "self_checkout": "yes",
+    "shop": "supermarket",
+    "website": "https://www.carrefour.es/_includes/redirect.aspx?tcmUri=tcm:5-4164",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 624783119,
+  "lat": 40.4203315,
+  "lon": -3.6980193,
+  "tags": {
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "name": "Dia",
+    "opening_hours": "Mo-Sa 08:30-23:00",
+    "operator": "Dia",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 949590929,
+  "lat": 40.4210009,
+  "lon": -3.7050468,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "1",
+    "addr:postcode": "28004",
+    "addr:street": "Plaza de Santa María Soledad Torres Acosta",
+    "check_date": "2023-10-04",
+    "old_name": "Sabeco",
+    "shop": "convenience",
+    "website": "https://www.coviran.es/",
+    "wheelchair": "yes",
+    "wheelchair:description": "Rampa con una pendiente superior a lo habitual"
+  }
+},
+{
+  "type": "node",
+  "id": 974786923,
+  "lat": 40.4102643,
+  "lon": -3.7010483,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "34",
+    "addr:postcode": "28012",
+    "addr:street": "Calle del Ave María",
+    "drink:club-mate": "retail",
+    "name": "Universo Vegano",
+    "phone": "+34 651 358 899",
+    "shop": "convenience",
+    "website": "https://universovegano.shop/"
+  }
+},
+{
+  "type": "node",
+  "id": 988698209,
+  "lat": 40.4131960,
+  "lon": -3.7076085,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:postcode": "28005",
+    "addr:street": "Calle de Toledo",
+    "brand": "Dia & Go",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:Supermercados DIA",
+    "name": "Dia & Go",
+    "old_name": "DIA Maxi;Dia Market",
+    "opening_hours": "Mo-Su 08:00-23:00",
+    "shop": "convenience",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 992768983,
+  "lat": 40.4256394,
+  "lon": -3.7030075,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "19",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de San Vicente Ferrer",
+    "description": "Tienda de alimentación 100% vegana. ",
+    "drink:club-mate": "retail",
+    "email": "info@veggieroom.es",
+    "name": "Veggie Room",
+    "old_name": "Los Sabores de Pueblo",
+    "opening_hours": "Mo-Fr 10:30-14:30,17:30-20:30; Sa 10:30-14:00",
+    "phone": "+34 911 439 173;+34 915213914",
+    "shop": "convenience",
+    "website": "https://www.veggieroom.es/"
+  }
+},
+{
+  "type": "node",
+  "id": 1010993672,
+  "lat": 40.4122872,
+  "lon": -3.7012279,
+  "tags": {
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "check_date": "2025-02-13",
+    "name": "Dia",
+    "shop": "supermarket",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1178486749,
+  "lat": 40.4100338,
+  "lon": -3.7064524,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 1178492356,
+  "lat": 40.4118363,
+  "lon": -3.7072181,
+  "tags": {
+    "addr:housenumber": "7",
+    "addr:street": "Calle de los Estudios",
+    "cuisine": "asian",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "name": "Nanyea",
+    "phone": "+34 913 652 883",
+    "shop": "convenience",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1191045657,
+  "lat": 40.4110750,
+  "lon": -3.7083931,
+  "tags": {
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "check_date": "2025-02-12",
+    "name": "Dia",
+    "old_name": "Diamante",
+    "shop": "supermarket",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1237726254,
+  "lat": 40.4220170,
+  "lon": -3.6974587,
+  "tags": {
+    "brand": "Supercor",
+    "brand:wikidata": "Q6135841",
+    "brand:wikipedia": "es:Supercor",
+    "name": "Supercor",
+    "operator": "El Corte Inglés",
+    "shop": "convenience",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1326907766,
+  "lat": 40.4109173,
+  "lon": -3.7079535,
+  "tags": {
+    "disused:shop": "clothes",
+    "name": "Alimentación y Bazar",
+    "old_name": "Da Bu Tong",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 1326907776,
+  "lat": 40.4108664,
+  "lon": -3.7085915,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "69",
+    "addr:postcode": "28005",
+    "addr:street": "Calle de Toledo",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "check_date": "2025-02-12",
+    "contact:website": "http://www.carrefour.es/tiendas-carrefour/supermercados/carrefour-express/Carrefour_Expres_calle_toledo_madrid.aspx",
+    "name": "Carrefour Express",
+    "old_name": "Ferretería Hoyos",
+    "operator": "Groupe Carrefour",
+    "operator:wikidata": "Q3117359",
+    "operator:wikipedia": "fr:Groupe Carrefour",
+    "shop": "convenience",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1329671724,
+  "lat": 40.4103858,
+  "lon": -3.7090060,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "77",
+    "addr:postcode": "28005",
+    "addr:street": "Calle de Toledo",
+    "brand": "Primaprix",
+    "brand:wikidata": "Q112691161",
+    "check_date": "2025-02-12",
+    "name": "Primaprix",
+    "shop": "supermarket",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1329671725,
+  "lat": 40.4104908,
+  "lon": -3.7081710,
+  "tags": {
+    "name": "Víctor José Aguilera",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 1329861098,
+  "lat": 40.4115649,
+  "lon": -3.7100383,
+  "tags": {
+    "name": "Alimentación",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 1642177894,
+  "lat": 40.4249663,
+  "lon": -3.7095059,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "4",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardino",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "name": "Carrefour Express",
+    "old_name": "A Todo México",
+    "phone": "+34 914 908 900",
+    "shop": "convenience",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1642177958,
+  "lat": 40.4247230,
+  "lon": -3.7094880,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "2",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardino",
+    "name": "Frutos Secos",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "puerta estrecha y escalón interior"
+  }
+},
+{
+  "type": "node",
+  "id": 1642177989,
+  "lat": 40.4245278,
+  "lon": -3.7094517,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "2",
+    "addr:place": "Plaza del Conde de Toreno",
+    "addr:postcode": "28015",
+    "old_name": "Suma",
+    "shop": "supermarket",
+    "wheelchair": "no",
+    "wheelchair:description": "escalón acceso"
+  }
+},
+{
+  "type": "node",
+  "id": 1669117644,
+  "lat": 40.4071316,
+  "lon": -3.6999115,
+  "tags": {
+    "name": "Alimentación Internacional",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 1783127570,
+  "lat": 40.4205139,
+  "lon": -3.7158273,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "24",
+    "addr:postcode": "28008",
+    "addr:street": "Cuesta de San Vicente",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "check_date": "2025-02-13",
+    "name": "Carrefour Express",
+    "old_name": "Bankia",
+    "opening_hours": "Mo-Sa 09:00-23:00; Su 10:00-23:00",
+    "payment:cash": "yes",
+    "payment:credit_cards": "yes",
+    "shop": "convenience",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2239998396,
+  "lat": 40.4217725,
+  "lon": -3.6958524,
+  "tags": {
+    "addr:housenumber": "17",
+    "addr:street": "Calle del Barquillo",
+    "brand": "Primaprix",
+    "brand:wikidata": "Q112691161",
+    "check_date": "2025-03-25",
+    "name": "Primaprix",
+    "old_name": "Caixabank",
+    "shop": "supermarket",
+    "source": "survey",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2294985270,
+  "lat": 40.4105514,
+  "lon": -3.7080953,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "12",
+    "addr:postcode": "28005",
+    "addr:street": "Calle de la Ruda",
+    "name": "25 Olivas",
+    "old_name": "La Tienda de la Cerveza",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2357662192,
+  "lat": 40.4112162,
+  "lon": -3.6949414,
+  "tags": {
+    "name": "Tiyoweh ecotienda",
+    "organic": "only",
+    "shop": "supermarket",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2433476922,
+  "lat": 40.4143768,
+  "lon": -3.7070561,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "check_date:opening_hours": "2024-10-19",
+    "name": "Carrefour Express",
+    "old_name": "Carrefour Express",
+    "opening_hours": "Mo-Su 09:00-22:00",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2433476945,
+  "lat": 40.4204146,
+  "lon": -3.7086751,
+  "tags": {
+    "air_conditioning": "yes",
+    "brand": "Dia Market",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:Supermercados DIA",
+    "name": "Dia Market",
+    "opening_hours": "08:00-23:00",
+    "shop": "supermarket",
+    "survey:date": "2024-04-28",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2433477072,
+  "lat": 40.4156102,
+  "lon": -3.7012139,
+  "tags": {
+    "brand": "Suma",
+    "brand:wikidata": "Q58012362",
+    "name": "Suma",
+    "old_name": "Spar",
+    "opening_hours": "Mo-Sa 09:00-22:00",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 2582277965,
+  "lat": 40.4265399,
+  "lon": -3.7068898,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "63",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "brand": "Covirán",
+    "brand:website": "https://www.coviran.es",
+    "brand:wikidata": "Q61070539",
+    "brand:wikipedia": "es:Covirán",
+    "name": "Covirán",
+    "name:es": "Covirán",
+    "name:pt": "Coviran",
+    "old_name": "Rotterdam",
+    "opening_hours": "Mo-Fr 08:00-22:00,Sa 09:00-22:00,Su,PH 10:00-16:00",
+    "shop": "supermarket",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2632233001,
+  "lat": 40.4225065,
+  "lon": -3.7075398,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "18",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "contact:phone": "+34 914 908 900",
+    "contact:website": "http://www.carrefour.es/tiendas-carrefour/supermercados/carrefour-express/san-bernardo-s.aspx",
+    "name": "Carrefour Express",
+    "opening_hours": "Mo-Su 08:30-24:00",
+    "shop": "convenience",
+    "survey:date": "2024-01-27",
+    "wheelchair": "yes",
+    "wheelchair:description": "Rampa de acceso"
+  }
+},
+{
+  "type": "node",
+  "id": 2645867705,
+  "lat": 40.4265679,
+  "lon": -3.7036558,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "12",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de San Andrés",
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "name": "Dia",
+    "shop": "supermarket",
+    "wheelchair": "limited",
+    "wheelchair:description": "Algunos pasillos estrechos."
+  }
+},
+{
+  "type": "node",
+  "id": 2653722464,
+  "lat": 40.4253778,
+  "lon": -3.7074951,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "51",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "old_name": "Latintours",
+    "old_name_1": "Studio G",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "Escalon >7cms"
+  }
+},
+{
+  "type": "node",
+  "id": 2653869292,
+  "lat": 40.4270941,
+  "lon": -3.7066008,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "71",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "check_date": "2023-09-24",
+    "old_name": "Allegra",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2653869293,
+  "lat": 40.4271819,
+  "lon": -3.7065606,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "73",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "check_date": "2023-09-24",
+    "name": "Sylhet",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2665094813,
+  "lat": 40.4214499,
+  "lon": -3.6987999,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "20",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de San Marcos",
+    "contact:facebook": "https://www.facebook.com/TasteOfAmerica.es",
+    "contact:twitter": "https://twitter.com/tasteofamericae",
+    "email": "chueca@tasteofamerica.es",
+    "name": "Taste of America",
+    "opening_hours": "Mo-Sa 10:00-21:00; Su,PH 12:30-17:30",
+    "phone": "+34 91 013 09 37",
+    "shop": "convenience",
+    "website": "https://www.tasteofamerica.es/content/19-madrid-chueca",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 2672814925,
+  "lat": 40.4227346,
+  "lon": -3.7038533,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "2",
+    "addr:postcode": "28004",
+    "addr:street": "Calle del Pez",
+    "name": "Centro Alimentación",
+    "opening_hours": "Mo-Su,PH 00:00-00:00",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2672814929,
+  "lat": 40.4239291,
+  "lon": -3.7056437,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "24",
+    "addr:postcode": "28004",
+    "addr:street": "Calle del Pez",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "check_date": "2025-02-14",
+    "check_date:opening_hours": "2025-02-14",
+    "name": "Carrefour Express",
+    "opening_hours": "Mo-Su 08:30-24:00",
+    "operator": "Carrefour",
+    "phone": "+34 902202000",
+    "shop": "convenience",
+    "website": "https://www.carrefour.es/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2680511809,
+  "lat": 40.4232769,
+  "lon": -3.7087500,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "13",
+    "addr:postcode": "28015",
+    "addr:street": "Plaza de los Mostenses",
+    "addr:unit": "2",
+    "name": "Wan Tong Market",
+    "old_name": "Super Wan Tong",
+    "origin": "asian",
+    "phone": "+34 91 559 54 63",
+    "shop": "convenience",
+    "wheelchair": "limited",
+    "wheelchair:description": "Rampa de acceso y pasillos un poco estrechos"
+  }
+},
+{
+  "type": "node",
+  "id": 2680511810,
+  "lat": 40.4235481,
+  "lon": -3.7085921,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "7",
+    "addr:postcode": "28015",
+    "addr:street": "Plaza de los Mostenses",
+    "name": "Most Limp",
+    "opening_hours": "Mo-Sa 10:00-14:30,17:00-21:00",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2680511811,
+  "lat": 40.4235395,
+  "lon": -3.7084568,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "7",
+    "addr:postcode": "28015",
+    "addr:street": "Plaza de los Mostenses",
+    "name": "Asia",
+    "shop": "convenience",
+    "wheelchair": "yes",
+    "wheelchair:description": "Rampa. Pero acera estrecha"
+  }
+},
+{
+  "type": "node",
+  "id": 2689631481,
+  "lat": 40.4238946,
+  "lon": -3.7098297,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "17",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de los Reyes",
+    "name": "Intertropico",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "Rampa con demasiada pendiente. Puerta estrecha"
+  }
+},
+{
+  "type": "node",
+  "id": 2689631482,
+  "lat": 40.4240165,
+  "lon": -3.7095566,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "13",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de los Reyes",
+    "shop": "convenience",
+    "wheelchair": "limited",
+    "wheelchair:description": "Escalón<7cms"
+  }
+},
+{
+  "type": "node",
+  "id": 2689676550,
+  "lat": 40.4180846,
+  "lon": -3.7084812,
+  "tags": {
+    "brand": "Suma",
+    "brand:wikidata": "Q58012362",
+    "name": "Suma",
+    "old_name": "Proxim",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 2690946402,
+  "lat": 40.4273268,
+  "lon": -3.7065365,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "77",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "check_date": "2023-09-28",
+    "old_name": "Viajes Araque",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 2692581956,
+  "lat": 40.4229553,
+  "lon": -3.7033106,
+  "tags": {
+    "access:covid19": "yes",
+    "addr:city": "Madrid",
+    "addr:housenumber": "39",
+    "addr:postcode": "28004",
+    "addr:street": "Corredera Baja de San Pablo",
+    "brand": "Dia Market",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:Supermercados DIA",
+    "delivery:covid19": "yes",
+    "drive_through:covid19": "no",
+    "name": "Dia Market",
+    "opening_hours": "Mo-Su 08:00-23:00",
+    "shop": "supermarket",
+    "stroller": "yes",
+    "website": "https://www.dia.es/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2692584320,
+  "lat": 40.4237712,
+  "lon": -3.7018481,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "13",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Colón",
+    "disused:shop": "alcohol",
+    "name": "La Tía Fingida",
+    "old_name": "Licores Nieto de Alba",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2697521924,
+  "lat": 40.4233976,
+  "lon": -3.7073544,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "30",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "shop": "convenience",
+    "survey:date": "2024-01-27",
+    "wheelchair": "no",
+    "wheelchair:description": "Escalón de acceso mayor de 7 cm y puerta de 80 cm"
+  }
+},
+{
+  "type": "node",
+  "id": 2697589094,
+  "lat": 40.4138048,
+  "lon": -3.7118307,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:postcode": "28005",
+    "addr:street": "Calle de Segovia",
+    "name": "Tiendita del Alamillo",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2704017911,
+  "lat": 40.4271933,
+  "lon": -3.7035526,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "22",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de San Andrés",
+    "check_date": "2023-09-24",
+    "name": "Alimentación La Plaza",
+    "old_name": "Alí Babá",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2714421808,
+  "lat": 40.4224207,
+  "lon": -3.7040163,
+  "tags": {
+    "access:covid19": "yes",
+    "addr:city": "Madrid",
+    "addr:housenumber": "25",
+    "addr:postcode": "28004",
+    "addr:street": "Corredera Baja de San Pablo",
+    "name": "Alimentación Manolo",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2717079181,
+  "lat": 40.4237777,
+  "lon": -3.7020253,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "15",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Colón",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2727060498,
+  "lat": 40.4177579,
+  "lon": -3.7075506,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "14",
+    "addr:postcode": "28013",
+    "addr:street": "Calle de las Hileras",
+    "check_date": "2023-10-05",
+    "old_name": "Discos Yunke",
+    "shop": "convenience",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2731037275,
+  "lat": 40.4242427,
+  "lon": -3.7071102,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "42",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "name": "Supermercado Pez",
+    "old_name": "Alimentación Rosa",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2777281756,
+  "lat": 40.4261918,
+  "lon": -3.6976970,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "1",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Mejía Lequerica",
+    "name": "Market Café",
+    "old_name": "Open 25",
+    "opening_hours": "PH,Mo-Su 00:00-24:00",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 2892533238,
+  "lat": 40.4108447,
+  "lon": -3.7136495,
+  "tags": {
+    "brand": "Maxi Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "check_date": "2025-06-04",
+    "name": "Maxi Dia",
+    "opening_hours": "Mo-Su 08:30-23:00",
+    "shop": "supermarket",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 2971949916,
+  "lat": 40.4123212,
+  "lon": -3.7080180,
+  "tags": {
+    "name": "Safwan Supermarket",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 3117345711,
+  "lat": 40.4196035,
+  "lon": -3.7028052,
+  "tags": {
+    "name": "Alimentación Tres Cruces",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 3161265258,
+  "lat": 40.4245957,
+  "lon": -3.6970625,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "68",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Pelayo",
+    "contact:instagram": "https://www.instagram.com/gonzalezygonzalezstore",
+    "email": "hola@gonzalez-gonzalez.es",
+    "name": "Casa González & González",
+    "opening_hours": "Mo-Fr 11:00-14:30, 17:00-20:30; Sa 11:00-15:00, 16:30-20:30",
+    "phone": "+34 910 567 001",
+    "shop": "convenience",
+    "website": "https://www.gonzalez-gonzalez.es"
+  }
+},
+{
+  "type": "node",
+  "id": 3235986181,
+  "lat": 40.4090064,
+  "lon": -3.7071896,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "15",
+    "addr:postcode": "28005",
+    "addr:street": "Calle Ribera de Curtidores",
+    "brand": "Alcampo",
+    "brand:wikidata": "Q2832081",
+    "name": "Alcampo",
+    "operator": "Alcampo",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 3235986182,
+  "lat": 40.4088325,
+  "lon": -3.7071926,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "17",
+    "addr:postcode": "28005",
+    "addr:street": "Calle Ribera de Curtidores",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "Escalones"
+  }
+},
+{
+  "type": "node",
+  "id": 3244468582,
+  "lat": 40.4255312,
+  "lon": -3.7042599,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "32",
+    "addr:postcode": "28004",
+    "addr:street": "Calle del Espíritu Santo",
+    "name": "Super Internacional",
+    "shop": "supermarket",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3247667990,
+  "lat": 40.4239202,
+  "lon": -3.7023411,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "1",
+    "addr:postcode": "28004",
+    "addr:street": "Plaza de San Ildefonso",
+    "name": "Spass dia 365",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3275123668,
+  "lat": 40.4062876,
+  "lon": -3.7069104,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "39",
+    "addr:postcode": "28005",
+    "addr:street": "Ribera de Curtidores",
+    "check_date": "2024-10-09",
+    "name": "Taste of America",
+    "opening_hours": "Mo-Sa 11:00-14:30,17:00-21:00; Su 11:00-15:00",
+    "shop": "convenience",
+    "source": "living there",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3461883594,
+  "lat": 40.4211690,
+  "lon": -3.7064345,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "12",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Silva",
+    "shop": "convenience",
+    "wheelchair": "yes",
+    "wheelchair:description": "escalón de 4 cm"
+  }
+},
+{
+  "type": "node",
+  "id": 3463716682,
+  "lat": 40.4238372,
+  "lon": -3.7089880,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "6",
+    "addr:postcode": "28015",
+    "addr:street": "Calle del Álamo",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "Rampa de acceso pero puerta menor de 90 cm"
+  }
+},
+{
+  "type": "node",
+  "id": 3463718806,
+  "lat": 40.4248777,
+  "lon": -3.7107201,
+  "tags": {
+    "name": "Alimentación",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "Escalón>7cms"
+  }
+},
+{
+  "type": "node",
+  "id": 3471768253,
+  "lat": 40.4268293,
+  "lon": -3.7017149,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "93",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Fuencarral",
+    "name": "Alimentación",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "Escalón alto"
+  }
+},
+{
+  "type": "node",
+  "id": 3471882711,
+  "lat": 40.4251195,
+  "lon": -3.7019076,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "12",
+    "addr:postcode": "28004",
+    "addr:street": "Corredera Alta de San Pablo",
+    "name": "Miniprecio",
+    "shop": "convenience",
+    "wheelchair": "limited",
+    "wheelchair:description": "Pasillos estrechos, entrada amplia en la que se puede pedir al dependiente"
+  }
+},
+{
+  "type": "node",
+  "id": 3471883839,
+  "lat": 40.4252741,
+  "lon": -3.7019902,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "13",
+    "addr:postcode": "28004",
+    "addr:street": "Corredera Alta de San Pablo",
+    "name": "Alimentación, frutos secos",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "Escalón muy alto"
+  }
+},
+{
+  "type": "node",
+  "id": 3471930071,
+  "lat": 40.4262141,
+  "lon": -3.7018141,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "29",
+    "addr:postcode": "28004",
+    "addr:street": "Corredera Alta de San Pablo",
+    "name": "Alimentación Nieto",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "Escalón alto"
+  }
+},
+{
+  "type": "node",
+  "id": 3471974462,
+  "lat": 40.4266324,
+  "lon": -3.7017552,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "1",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Velarde",
+    "brand": "Carrefour Bio",
+    "brand:wikidata": "Q55221138",
+    "name": "Carrefour Bio",
+    "old_name": "Be sweet;Topbooks",
+    "opening_hours": "Mo-Sa 10:00-22:00; Su,PH 11:00-21:00",
+    "organic": "only",
+    "phone": "+34 914 908 900",
+    "shop": "supermarket",
+    "website": "https://www.carrefour.es/tiendas-carrefour/supermercados/carrefour-bio/calle-velarde-madrid_-_s.aspx",
+    "wheelchair": "no",
+    "wheelchair:description": "Escalón muy alto"
+  }
+},
+{
+  "type": "node",
+  "id": 3472044374,
+  "lat": 40.4273240,
+  "lon": -3.7036770,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "8",
+    "addr:street": "Plaza del Dos de Mayo",
+    "name": "Alimentación",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "Escalón alto"
+  }
+},
+{
+  "type": "node",
+  "id": 3472044376,
+  "lat": 40.4273093,
+  "lon": -3.7035283,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "24",
+    "addr:street": "Calle de San Andrés",
+    "check_date": "2023-10-03",
+    "old_name": "Canines",
+    "old_name_1": "Yoguis",
+    "shop": "convenience",
+    "wheelchair": "no",
+    "wheelchair:description": "Escalón alto"
+  }
+},
+{
+  "type": "node",
+  "id": 3617826660,
+  "lat": 40.4267832,
+  "lon": -3.7001518,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "9",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Barceló",
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "name": "Dia",
+    "shop": "supermarket",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3626480438,
+  "lat": 40.4251599,
+  "lon": -3.7072704,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "54",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "name": "Carrefour Express",
+    "old_name": "Don Fruta",
+    "opening_hours": "Mo-Sa 09:00-23:00; Su 10:00-22:00",
+    "shop": "convenience",
+    "survey:date": "2024-01-27",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 3631805673,
+  "lat": 40.4253621,
+  "lon": -3.7034786,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "22",
+    "addr:postcode": "28004",
+    "addr:street": "Calle del Espíritu Santo",
+    "check_date": "2023-10-01",
+    "contact:phone": "+34 915 32 30 33",
+    "old_name": "Frutería Andrea",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3711713082,
+  "lat": 40.4159710,
+  "lon": -3.7091409,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "46",
+    "addr:postcode": "28013",
+    "addr:street": "Calle Mayor",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "contact:website": "http://www.carrefour.es/tiendas-carrefour/supermercados/carrefour-express/calle-mayor-madrid-s.aspx",
+    "name": "Carrefour Express",
+    "operator": "Groupe Carrefour",
+    "operator:wikidata": "Q3117359",
+    "operator:wikipedia": "fr:Groupe Carrefour",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 3746120289,
+  "lat": 40.4190068,
+  "lon": -3.7091927,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "6",
+    "addr:postcode": "28013",
+    "addr:street": "Calle de Campomanes",
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "name": "Dia",
+    "opening_hours": "Mo-Sa 09:00-22:00; Su 10:00-20:00",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 3946850020,
+  "lat": 40.4176832,
+  "lon": -3.7028948,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "9",
+    "addr:postcode": "28013",
+    "addr:street": "Calle de la Montera",
+    "name": "Carrefour City",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 3989828393,
+  "lat": 40.4221593,
+  "lon": -3.7058686,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "3",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de la Luna",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 4015339993,
+  "lat": 40.4188507,
+  "lon": -3.6997653,
+  "tags": {
+    "branch": "& Go",
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:Supermercados DIA",
+    "name": "Dia",
+    "opening_hours": "Mo-Sa 08:30-22:00; Su 10:00-22:00",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 4125784494,
+  "lat": 40.4146322,
+  "lon": -3.7053865,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:postcode": "28012",
+    "addr:street": "Calle de Atocha",
+    "brand": "Suma",
+    "brand:wikidata": "Q58012362",
+    "name": "Suma",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 4214503125,
+  "lat": 40.4265299,
+  "lon": -3.7036623,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "12",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de San Andrés",
+    "check_date": "2023-09-24",
+    "old_name": "Frutal",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 4225320813,
+  "lat": 40.4221955,
+  "lon": -3.7030053,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de la Puebla",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 4225413285,
+  "lat": 40.4233601,
+  "lon": -3.7075923,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "35",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "name": "Dia",
+    "opening_hours": "Mo-Sa 08:30-22:00; Su 10:00-22:00",
+    "shop": "supermarket",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 4225441901,
+  "lat": 40.4211230,
+  "lon": -3.7082244,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "5",
+    "addr:postcode": "28013",
+    "addr:street": "Calle de San Bernardo",
+    "shop": "convenience",
+    "survey:date": "2025-05-11"
+  }
+},
+{
+  "type": "node",
+  "id": 4237517689,
+  "lat": 40.4137777,
+  "lon": -3.6994717,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "19",
+    "addr:postcode": "28014",
+    "addr:street": "Calle de las Huertas",
+    "check_date": "2025-02-13",
+    "name": "Alimentación Quiroga",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 4273744903,
+  "lat": 40.4210982,
+  "lon": -3.7037105,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 4273746102,
+  "lat": 40.4210254,
+  "lon": -3.7035912,
+  "tags": {
+    "shop": "convenience",
+    "was:name": "Au Revoir Cinderella",
+    "was:shop": "shoes"
+  }
+},
+{
+  "type": "node",
+  "id": 4325214172,
+  "lat": 40.4186109,
+  "lon": -3.7082714,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "6",
+    "addr:postcode": "28013",
+    "addr:street": "Costanilla de los Ángeles",
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "contact:website": "https://dia.es",
+    "name": "Dia",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 4330920237,
+  "lat": 40.4167427,
+  "lon": -3.7107054,
+  "tags": {
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "name": "Dia",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 4355401699,
+  "lat": 40.4158007,
+  "lon": -3.7096940,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:street": "Calle Mayor",
+    "brand": "Covirán",
+    "brand:website": "https://www.coviran.es",
+    "brand:wikidata": "Q61070539",
+    "brand:wikipedia": "eu:Covirán",
+    "name": "Covirán",
+    "name:es": "Covirán",
+    "name:pt": "Coviran",
+    "shop": "supermarket",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 4384317860,
+  "lat": 40.4127810,
+  "lon": -3.7039784,
+  "tags": {
+    "addr:street": "Calle del Doctor Cortezo",
+    "check_date": "2025-02-14",
+    "diet:halal": "no",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 4384317862,
+  "lat": 40.4132182,
+  "lon": -3.7037337,
+  "tags": {
+    "addr:street": "Calle del Doctor Cortezo",
+    "name": "Aman Alimentación",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 4387730200,
+  "lat": 40.4125391,
+  "lon": -3.7029310,
+  "tags": {
+    "name": "Ya",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 4390452988,
+  "lat": 40.4146393,
+  "lon": -3.7065253,
+  "tags": {
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "name": "Dia",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 4390454903,
+  "lat": 40.4148769,
+  "lon": -3.7047861,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 4427472689,
+  "lat": 40.4138888,
+  "lon": -3.7082688,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "14",
+    "addr:postcode": "28005",
+    "addr:street": "Calle de Cuchilleros",
+    "check_date": "2026-08-04",
+    "name": "Amanda",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 4680244089,
+  "lat": 40.4095098,
+  "lon": -3.6935056,
+  "tags": {
+    "addr:housenumber": "112",
+    "addr:street": "Calle de Atocha",
+    "check_date": "2024-10-28",
+    "shop": "convenience",
+    "survey:date": "2022-07-22",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 4699333543,
+  "lat": 40.4151965,
+  "lon": -3.6990655,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "17",
+    "addr:postcode": "28014",
+    "addr:street": "Calle de Manuel Fernández y González",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 4699372988,
+  "lat": 40.4158579,
+  "lon": -3.6995764,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "7",
+    "addr:postcode": "28014",
+    "addr:street": "Calle de Echegaray",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 4725967132,
+  "lat": 40.4107424,
+  "lon": -3.6980795,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "15",
+    "addr:postcode": "28012",
+    "addr:street": "Calle de Santa Isabel",
+    "check_date": "2024-09-24",
+    "name": "El Bazar de mi Barrio",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 4738219968,
+  "lat": 40.4142259,
+  "lon": -3.7081696,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "8",
+    "addr:postcode": "28005",
+    "addr:street": "Calle de Cuchilleros",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 4739735334,
+  "lat": 40.4148357,
+  "lon": -3.6995311,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "21",
+    "addr:postcode": "28014",
+    "addr:street": "Calle de Echegaray",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 4761508070,
+  "lat": 40.4216887,
+  "lon": -3.7048653,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "1",
+    "addr:postcode": "28004",
+    "addr:street": "Corredera Baja de San Pablo",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 4805801941,
+  "lat": 40.4214060,
+  "lon": -3.7003809,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "17",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Hortaleza",
+    "brand": "Simply City",
+    "brand:wikidata": "Q5643014",
+    "brand:wikipedia": "es:Sabeco",
+    "contact:phone": "+34 915 21 25 18",
+    "contact:website": "https://www.simply.es",
+    "name": "Simply City",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 4809467821,
+  "lat": 40.4109729,
+  "lon": -3.7006791,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "20",
+    "addr:postcode": "28012",
+    "addr:street": "Calle del Ave María",
+    "delivery:covid19": "no",
+    "email": "lavidatienesentidos@gmail.com",
+    "name": "La vida tiene sentidos",
+    "opening_hours": "Tu-Th 11:00-15:00,18:00-21:30; Fr,Sa 11:00-15:00,18:00-23:30; Su 11:00-15:00",
+    "opening_hours:covid19": "Su 11:00-15:00; Tu-Th 11:00-15:00,18:00-21:30; Fr,Sa 11:00-15:00,18:00-23:30",
+    "phone": "+34 91 025 84 14",
+    "shop": "convenience",
+    "takeaway:covid19": "yes",
+    "website": "https://www.lavidatienesentidos.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 4872500350,
+  "lat": 40.4219968,
+  "lon": -3.6997780,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "38",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Hortaleza",
+    "contact:phone": "+34 915 221 545",
+    "contact:website": "http://ohmybio.es/",
+    "name": "Oh! My Bio",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 5169558921,
+  "lat": 40.4142415,
+  "lon": -3.7021027,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "name": "Carrefour Express",
+    "opening_hours": "Mo-Sa 09:00-00:00; Su 10:00-00:30",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 5198635746,
+  "lat": 40.4217756,
+  "lon": -3.6972977,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "24",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de la Libertad",
+    "description": "Supermercado de productos ecológicos.",
+    "name": "Veritas",
+    "opening_hours": "Mo-Sa 09:30-21:30",
+    "operator": "Veritas",
+    "phone": "+34 914212639",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 5223890867,
+  "lat": 40.4123890,
+  "lon": -3.7017889,
+  "tags": {
+    "name": "Nazir",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 5254250813,
+  "lat": 40.4246930,
+  "lon": -3.7013490,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "8",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de San Joaquín",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "contact:phone": "+34 914 908 900",
+    "contact:website": "https://www.carrefour.es/tiendas-carrefour/supermercados/carrefour-express/san-joaquin-8-madrid-s.aspx",
+    "name": "Carrefour Express",
+    "shop": "convenience",
+    "toilets:wheelchair": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 5292083623,
+  "lat": 40.4211373,
+  "lon": -3.6987918,
+  "tags": {
+    "name": "Alimentation Moderno",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 5412144558,
+  "lat": 40.4085034,
+  "lon": -3.7107788,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "92",
+    "addr:postcode": "28005",
+    "addr:street": "Calle de Toledo",
+    "check_date": "2024-02-29",
+    "name": "M Family",
+    "old_name": "Frutería Toledo",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 5498929496,
+  "lat": 40.4187857,
+  "lon": -3.7020262,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "32",
+    "addr:postcode": "28013",
+    "addr:street": "Calle de la Montera",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "check_date": "2023-12-15",
+    "contact:phone": "+34 914 908 900",
+    "contact:website": "https://www.carrefour.es/tiendas-carrefour/supermercados/carrefour-express/Montera-s.aspx",
+    "name": "Carrefour Express",
+    "opening_hours": "24/7",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 5622545022,
+  "lat": 40.4224075,
+  "lon": -3.6933812,
+  "tags": {
+    "addr:housenumber": "20",
+    "addr:street": "Calle del Almirante",
+    "check_date": "2024-10-08",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 5774871158,
+  "lat": 40.4246162,
+  "lon": -3.6981731,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "65",
+    "addr:street": "Calle de Hortaleza",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "name": "Carrefour Express",
+    "opening_hours": "Mo-Sa 09:00-23:00; Su,PH 10:00-23:00",
+    "shop": "convenience",
+    "website": "https://www.carrefour.es/tiendas-carrefour/supermercados/carrefour-express/Carrefour_Express_Calle_Hortaleza_65.aspx"
+  }
+},
+{
+  "type": "node",
+  "id": 5775448053,
+  "lat": 40.4272329,
+  "lon": -3.7007309,
+  "tags": {
+    "name": "Alimentación La Taza de Plata",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 5839478288,
+  "lat": 40.4213342,
+  "lon": -3.6981192,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 5839722385,
+  "lat": 40.4091351,
+  "lon": -3.7087396,
+  "tags": {
+    "addr:housenumber": "2",
+    "addr:street": "Calle Rodrigo Guevara",
+    "name": "La brocanterie",
+    "opening_hours": "Tu-Fr 11:00-14:00, 17:00-20:00; Sa-Su 11:00-14:30",
+    "phone": "+34911667680",
+    "shop": "convenience",
+    "website": "http://www.labrocanterie.es/site/"
+  }
+},
+{
+  "type": "node",
+  "id": 5878439983,
+  "lat": 40.4109575,
+  "lon": -3.6985105,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "28-30",
+    "addr:postcode": "28012",
+    "addr:street": "Calle de Santa Isabel",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "check_date": "2024-09-24",
+    "name": "Carrefour Express",
+    "opening_hours": "Mo-Sa 09:00-22:00; Su 10:00-21:00",
+    "shop": "convenience",
+    "website": "https://www.carrefour.es/_includes/redirect.aspx?tcmUri=tcm:5-41365",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 5878467801,
+  "lat": 40.4115521,
+  "lon": -3.6940988,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "12",
+    "addr:postcode": "28014",
+    "addr:street": "Calle de la Alameda",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "name": "Carrefour Express",
+    "opening_hours": "Mo-Sa 09:00-22:00; Su 10:00-15:00",
+    "shop": "convenience",
+    "website": "https://www.carrefour.es/_includes/redirect.aspx?tcmUri=tcm:5-16705",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6174490186,
+  "lat": 40.4112517,
+  "lon": -3.7073777,
+  "tags": {
+    "name": "Alimentación",
+    "name:ja": "カスコロ広場",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 6670230285,
+  "lat": 40.4162686,
+  "lon": -3.7021962,
+  "tags": {
+    "addr:housenumber": "3",
+    "addr:street": "Calle de Espoz y Mina",
+    "name": "Biocentro La Canela",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 6861465969,
+  "lat": 40.4076960,
+  "lon": -3.7037927,
+  "tags": {
+    "description": "Supermercado cooperativo y participativo",
+    "name": "Supercoop",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 6882073486,
+  "lat": 40.4144359,
+  "lon": -3.6987384,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "6",
+    "addr:postcode": "28014",
+    "addr:street": "Calle del León",
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "check_date": "2025-02-13",
+    "name": "Carrefour Express",
+    "shop": "convenience",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6918727592,
+  "lat": 40.4126634,
+  "lon": -3.7049309,
+  "tags": {
+    "addr:housenumber": "15",
+    "addr:postcode": "28012",
+    "addr:street": "Plaza de Tirso de Molina",
+    "brand": "Carrefour Market",
+    "brand:wikidata": "Q2689639",
+    "brand:wikipedia": "fr:Carrefour Market",
+    "check_date": "2025-02-12",
+    "internet_access": "wlan",
+    "level": "0",
+    "name": "Carrefour Market",
+    "opening_hours": "24/7",
+    "phone": "+34 914 908 900",
+    "shop": "convenience",
+    "website": "https://carrefour.es",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 6965525848,
+  "lat": 40.4081404,
+  "lon": -3.6996306,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 7074906786,
+  "lat": 40.4144974,
+  "lon": -3.6943695,
+  "tags": {
+    "addr:housenumber": "10",
+    "addr:street": "Paseo del Prado",
+    "check_date": "2025-06-10",
+    "name": "Vicens - Turrones artesanos",
+    "payment:cash": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "shop": "supermarket",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 7618567928,
+  "lat": 40.4250863,
+  "lon": -3.7023642,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "name": "Carrefour Express",
+    "shop": "convenience",
+    "source": "survey"
+  }
+},
+{
+  "type": "node",
+  "id": 7978219489,
+  "lat": 40.4161832,
+  "lon": -3.7022408,
+  "tags": {
+    "name": "Alimentación Solmina",
+    "phone": "+34 915 213041",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 8072220907,
+  "lat": 40.4219064,
+  "lon": -3.7054117,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "8",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de la Luna",
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "check_date": "2026-06-22",
+    "contact:website": "https://www.dia.es",
+    "name": "Dia",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 8095017485,
+  "lat": 40.4183060,
+  "lon": -3.7029695,
+  "tags": {
+    "name": "Alimentación You Yuan",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 8096955582,
+  "lat": 40.4250012,
+  "lon": -3.7072825,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "50",
+    "addr:postcode": "28015",
+    "addr:street": "Calle de San Bernardo",
+    "name:signed": "no",
+    "shop": "convenience",
+    "survey:date": "2024-01-27"
+  }
+},
+{
+  "type": "node",
+  "id": 8343337401,
+  "lat": 40.4115808,
+  "lon": -3.7066751,
+  "tags": {
+    "addr:housenumber": "15",
+    "addr:postcode": "28012",
+    "addr:street": "Calle del Duque de Alba",
+    "branch": "urban",
+    "brand": "BM",
+    "brand:wikidata": "Q62073462",
+    "name": "BM",
+    "opening_hours": "Mo-Su 09:00-22:00",
+    "phone": "+34 900 555 300",
+    "shop": "supermarket",
+    "website": "https://online.bmsupermercados.es/"
+  }
+},
+{
+  "type": "node",
+  "id": 8358875782,
+  "lat": 40.4115536,
+  "lon": -3.7080167,
+  "tags": {
+    "check_date": "2025-02-12",
+    "name": "Alimentación",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 8767670675,
+  "lat": 40.4082534,
+  "lon": -3.7047562,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "name": "Carrefour Express",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 8962697917,
+  "lat": 40.4107306,
+  "lon": -3.6955084,
+  "tags": {
+    "check_date": "2023-10-10",
+    "name": "Mi Alcampo",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 9050560232,
+  "lat": 40.4231977,
+  "lon": -3.6955267,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "36",
+    "addr:postcode": "28004",
+    "addr:street": "Calle del Barquillo",
+    "brand": "Simply City",
+    "brand:wikidata": "Q5643014",
+    "brand:wikipedia": "es:Sabeco",
+    "name": "Simply City",
+    "shop": "convenience",
+    "website": "https://www.carrefour.es/tiendas-carrefour/supermercados/carrefour-express/barquillo_-_s.aspx"
+  }
+},
+{
+  "type": "node",
+  "id": 9066413377,
+  "lat": 40.4211221,
+  "lon": -3.7098455,
+  "tags": {
+    "air_conditioning": "yes",
+    "cuisine": "asian",
+    "name": "Hualian Market",
+    "opening_hours": "Mo-Su 10:00-22:00",
+    "shop": "supermarket",
+    "survey:date": "2025-09-21",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 9071031417,
+  "lat": 40.4151266,
+  "lon": -3.6969740,
+  "tags": {
+    "check_date": "2025-02-13",
+    "name": "Udaco",
+    "shop": "supermarket",
+    "survey:date": "2022-07-23",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 9270477956,
+  "lat": 40.4229488,
+  "lon": -3.6971801,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "name": "Carrefour Express",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 9270549202,
+  "lat": 40.4212594,
+  "lon": -3.7005047,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "name": "Carrefour Express",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 9426324748,
+  "lat": 40.4160053,
+  "lon": -3.7003016,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 9426324750,
+  "lat": 40.4158494,
+  "lon": -3.7002829,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "brand:wikipedia": "fr:Carrefour Express",
+    "contact:website": "https://www.carrefour.es/tiendas-carrefour/supermercados/carrefour-express/calle-principe-s.aspx",
+    "name": "Carrefour Express",
+    "opening_hours": "Mo-Sa 09:00-23:00; Su 10:00-22:00",
+    "operator": "Groupe Carrefour",
+    "operator:wikidata": "Q3117359",
+    "operator:wikipedia": "fr:Groupe Carrefour",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 9863567130,
+  "lat": 40.4159371,
+  "lon": -3.7022345,
+  "tags": {
+    "opening_hours": "Mo-Sa 10:00-00:30",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 9879470221,
+  "lat": 40.4158994,
+  "lon": -3.7052567,
+  "tags": {
+    "name": "Open 25",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 9904995419,
+  "lat": 40.4095494,
+  "lon": -3.6935877,
+  "tags": {
+    "addr:housenumber": "112",
+    "addr:street": "Calle de Atocha",
+    "check_date": "2024-10-28",
+    "shop": "convenience",
+    "survey:date": "2022-07-22",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 9905746418,
+  "lat": 40.4081879,
+  "lon": -3.7017099,
+  "tags": {
+    "shop": "convenience",
+    "survey:date": "2022-07-23"
+  }
+},
+{
+  "type": "node",
+  "id": 9905748118,
+  "lat": 40.4082241,
+  "lon": -3.7016298,
+  "tags": {
+    "shop": "convenience",
+    "survey:date": "2022-07-23"
+  }
+},
+{
+  "type": "node",
+  "id": 9907522887,
+  "lat": 40.4204888,
+  "lon": -3.6991391,
+  "tags": {
+    "name": "Alimentación 365 días",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 9907522888,
+  "lat": 40.4216077,
+  "lon": -3.6957782,
+  "tags": {
+    "addr:housenumber": "15",
+    "addr:street": "Calle del Barquillo",
+    "branch": "Exprès",
+    "brand": "Supercor",
+    "brand:wikidata": "Q6135841",
+    "check_date": "2025-03-25",
+    "name": "Supercor",
+    "shop": "supermarket",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 9932041918,
+  "lat": 40.4075528,
+  "lon": -3.7005399,
+  "tags": {
+    "name": "Alimentación frutería",
+    "name:en": "Fruit market",
+    "name:es": "Alimentación frutería",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 9933054447,
+  "lat": 40.4137485,
+  "lon": -3.7026976,
+  "tags": {
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "check_date": "2025-02-14",
+    "level": "0",
+    "name": "Dia",
+    "opening_hours": "Mo-Su 08:00-23:00",
+    "shop": "supermarket",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 10072781884,
+  "lat": 40.4162904,
+  "lon": -3.7006602,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "3",
+    "addr:postcode": "28012",
+    "addr:street": "Calle de la Cruz",
+    "email": "bazarelchollo@outlook.es",
+    "name": "Bazar El Chollo",
+    "name:en": "Bazar El Chollo",
+    "opening_hours": "Mo-Sa 10:00-20:30",
+    "payment:cash": "yes",
+    "payment:contactless": "yes",
+    "payment:credit_cards": "yes",
+    "payment:mastercard": "yes",
+    "payment:visa": "yes",
+    "phone": "+34 91 523 30 47",
+    "shop": "convenience",
+    "website": "https://bazar-el-chollo-madrid.negocio.site/"
+  }
+},
+{
+  "type": "node",
+  "id": 10221217417,
+  "lat": 40.4220983,
+  "lon": -3.7105068,
+  "tags": {
+    "addr:housenumber": "33",
+    "addr:street": "Calle de Leganitos",
+    "check_date:opening_hours": "2026-05-15",
+    "name": "Hualian Market",
+    "opening_hours": "10:00-20:00",
+    "phone": "+34 91 559 95 40",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 10572482522,
+  "lat": 40.4206923,
+  "lon": -3.6997781,
+  "tags": {
+    "addr:housenumber": "20",
+    "addr:street": "Calle de las Infantas",
+    "check_date": "2023-01-21",
+    "name": "Super Mercado Mini Market",
+    "opening_hours": "24/7",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 10596302942,
+  "lat": 40.4251234,
+  "lon": -3.7011737,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "77",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Fuencarral",
+    "brand": "Mercadona",
+    "brand:wikidata": "Q377705",
+    "name": "Mercadona",
+    "opening_hours": "Mo-Sa 09:00-21:30",
+    "payment:cash": "yes",
+    "payment:credit_cards": "yes",
+    "phone": "+34913809735",
+    "shop": "supermarket",
+    "website": "https://www.mercadona.es/"
+  }
+},
+{
+  "type": "node",
+  "id": 10656149569,
+  "lat": 40.4092708,
+  "lon": -3.7101799,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "check_date": "2024-07-01",
+    "name": "Carrefour Express",
+    "shop": "convenience",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 10751087390,
+  "lat": 40.4120472,
+  "lon": -3.6995768,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "6",
+    "addr:postcode": "28012",
+    "addr:street": "Calle de Santa Isabel",
+    "branch": "Antón Martín",
+    "name": "El Súper de los Pastores",
+    "opening_hours": "Mo-Fr 10:00-20:00; Sa 10:00-15:00",
+    "operator": "El Súper de los Pastores",
+    "organic": "yes",
+    "phone": "+34 910 37 89 42",
+    "shop": "supermarket",
+    "website": "https://elsuperdelospastores.com"
+  }
+},
+{
+  "type": "node",
+  "id": 10863040139,
+  "lat": 40.4225402,
+  "lon": -3.7017837,
+  "tags": {
+    "addr:housenumber": "27",
+    "addr:street": "Calle de Valverde",
+    "check_date": "2023-05-02",
+    "name": "Eroski",
+    "opening_hours": "Mo-Sa 09:00-22:00; Su 11:00-20:00",
+    "payment:mastercard": "yes",
+    "payment:visa": "yes",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 11234075827,
+  "lat": 40.4264994,
+  "lon": -3.7016463,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:postcode": "28004",
+    "addr:street": "Corredera Alta de San Pablo",
+    "check_date": "2023-10-02",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 11241789494,
+  "lat": 40.4275015,
+  "lon": -3.7035010,
+  "tags": {
+    "addr:housenumber": "28",
+    "addr:street": "Calle de San Andrés",
+    "check_date": "2023-10-05",
+    "name": "Minic",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 11359779378,
+  "lat": 40.4208268,
+  "lon": -3.7092762,
+  "tags": {
+    "name": "Bazar Plaza Santo Domingo",
+    "shop": "convenience",
+    "survey:date": "2025-09-21"
+  }
+},
+{
+  "type": "node",
+  "id": 11359779379,
+  "lat": 40.4207912,
+  "lon": -3.7094952,
+  "tags": {
+    "name": "Supermarket Santo Domingo",
+    "opening_hours": "Su-Th 09:00-00:30, Fr,Sa,PH 09:00-01:30",
+    "shop": "supermarket",
+    "survey:date": "2023-11-18"
+  }
+},
+{
+  "type": "node",
+  "id": 11547328923,
+  "lat": 40.4192205,
+  "lon": -3.7063965,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "name": "Carrefour Express",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 11687663683,
+  "lat": 40.4176938,
+  "lon": -3.7047242,
+  "tags": {
+    "name": "Supermercado El Corte Inglés",
+    "opening_hours": "PH off",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 11835986558,
+  "lat": 40.4099286,
+  "lon": -3.7074680,
+  "tags": {
+    "addr:housenumber": "12",
+    "addr:place": "Plaza de Cascorro",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 11862728263,
+  "lat": 40.4214527,
+  "lon": -3.7020606,
+  "tags": {
+    "brand": "Dia Market",
+    "brand:wikidata": "Q925132",
+    "name": "Dia Market",
+    "opening_hours": "Mo-Sa 10:00-22:00,Su 11:00-21:00",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 11881817911,
+  "lat": 40.4071011,
+  "lon": -3.7011521,
+  "tags": {
+    "check_date": "2026-08-09",
+    "name": "Asian Food Corner S.L.",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12038495124,
+  "lat": 40.4155015,
+  "lon": -3.7023934,
+  "tags": {
+    "name": "Mi Alcampo",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12074113407,
+  "lat": 40.4231173,
+  "lon": -3.6977846,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "7",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Gravina",
+    "name": "Mini Super",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12074113409,
+  "lat": 40.4244546,
+  "lon": -3.6971551,
+  "tags": {
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Pelayo",
+    "check_date:opening_hours": "2025-11-17",
+    "name": "Mini Market",
+    "opening_hours:signed": "no",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12076262182,
+  "lat": 40.4171062,
+  "lon": -3.7086268,
+  "tags": {
+    "name": "Alimentación y bazar souvenir",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12076271535,
+  "lat": 40.4140005,
+  "lon": -3.7064508,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12076316185,
+  "lat": 40.4087066,
+  "lon": -3.7102690,
+  "tags": {
+    "addr:housenumber": "107",
+    "addr:street": "Calle de Toledo",
+    "check_date": "2024-08-21",
+    "name": "Mini Market Toledo",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12076318989,
+  "lat": 40.4175382,
+  "lon": -3.7086878,
+  "tags": {
+    "name": "Mini supermercado",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12082554618,
+  "lat": 40.4070076,
+  "lon": -3.7081273,
+  "tags": {
+    "addr:housenumber": "1",
+    "addr:street": "Plaza del Campillo del Mundo Nuevo",
+    "check_date": "2024-07-30",
+    "name": "La Invencible",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12098590210,
+  "lat": 40.4070469,
+  "lon": -3.7009456,
+  "tags": {
+    "check_date": "2024-08-08",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12123952985,
+  "lat": 40.4084735,
+  "lon": -3.7105395,
+  "tags": {
+    "addr:housenumber": "109",
+    "addr:street": "Calle de Toledo",
+    "brand": "Eroski",
+    "brand:wikidata": "Q1361349",
+    "check_date": "2024-08-21",
+    "name": "Eroski City",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 12126352239,
+  "lat": 40.4104608,
+  "lon": -3.6949350,
+  "tags": {
+    "addr:housenumber": "111",
+    "addr:street": "Calle de Atocha",
+    "check_date": "2024-08-22",
+    "name": "Aliif Alimentacion",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12237648787,
+  "lat": 40.4073584,
+  "lon": -3.7071350,
+  "tags": {
+    "addr:housenumber": "33",
+    "addr:street": "Calle Ribera de Curtidores",
+    "check_date": "2024-10-09",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12243675871,
+  "lat": 40.4136263,
+  "lon": -3.6957947,
+  "tags": {
+    "check_date": "2024-10-11",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12293776762,
+  "lat": 40.4096027,
+  "lon": -3.6936749,
+  "tags": {
+    "check_date": "2024-10-28",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12424925599,
+  "lat": 40.4071314,
+  "lon": -3.7061758,
+  "tags": {
+    "addr:housenumber": "12",
+    "addr:street": "Calle de Peña de Francia",
+    "check_date": "2024-12-17",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12424954961,
+  "lat": 40.4063182,
+  "lon": -3.7067675,
+  "tags": {
+    "addr:housenumber": "26",
+    "addr:street": "Calle del Casino",
+    "check_date": "2024-12-17",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12425288078,
+  "lat": 40.4093373,
+  "lon": -3.7018505,
+  "tags": {
+    "name": "Spice Bazar",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12543556075,
+  "lat": 40.4069780,
+  "lon": -3.7035967,
+  "tags": {
+    "addr:housenumber": "47",
+    "addr:street": "Calle de Embajadores",
+    "check_date": "2025-01-30",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 12582714298,
+  "lat": 40.4147603,
+  "lon": -3.7051153,
+  "tags": {
+    "check_date": "2025-02-12",
+    "name": "Irfan Mini Market",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12582714299,
+  "lat": 40.4148722,
+  "lon": -3.7054087,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "check_date": "2025-02-12",
+    "name": "Carrefour Express",
+    "opening_hours": "Mo-Sa 08:30-23:00; Su 10:00-23:00",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 12587473073,
+  "lat": 40.4118681,
+  "lon": -3.7001368,
+  "tags": {
+    "check_date": "2025-02-14",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 12598789187,
+  "lat": 40.4208293,
+  "lon": -3.7061843,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "1",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de los Tudescos",
+    "brand": "Carrefour Market",
+    "brand:wikidata": "Q2689639",
+    "brand:wikipedia": "fr:Carrefour Market",
+    "name": "Carrefour Market",
+    "opening_hours": "24/7",
+    "phone": "+34 914 90 89 00",
+    "shop": "supermarket",
+    "website": "https://www.carrefour.es/tiendas-carrefour/supermercados/carrefour-market/tudescos-madrid-s.aspx"
+  }
+},
+{
+  "type": "node",
+  "id": 12698474866,
+  "lat": 40.4208169,
+  "lon": -3.6957682,
+  "tags": {
+    "addr:housenumber": "9",
+    "addr:street": "Calle del Barquillo",
+    "check_date": "2025-03-25",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 12809645113,
+  "lat": 40.4253785,
+  "lon": -3.7075067,
+  "tags": {
+    "shop": "convenience",
+    "survey:date": "2025-05-04"
+  }
+},
+{
+  "type": "node",
+  "id": 12810197261,
+  "lat": 40.4148188,
+  "lon": -3.7032152,
+  "tags": {
+    "shop": "convenience",
+    "survey:date": "2025-05-04"
+  }
+},
+{
+  "type": "node",
+  "id": 12825444346,
+  "lat": 40.4078483,
+  "lon": -3.6975867,
+  "tags": {
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "brand:wikipedia": "es:DIA (supermercados)",
+    "name": "Dia",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 12825444347,
+  "lat": 40.4078312,
+  "lon": -3.6974766,
+  "tags": {
+    "brand": "Ahorramás",
+    "brand:wikidata": "Q58221883",
+    "check_date": "2023-10-03",
+    "name": "Ahorramás",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 12833444921,
+  "lat": 40.4127768,
+  "lon": -3.7136393,
+  "tags": {
+    "addr:housenumber": "33",
+    "addr:street": "Calle de Bailén",
+    "check_date": "2025-05-13",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 12853963695,
+  "lat": 40.4189704,
+  "lon": -3.7012337,
+  "tags": {
+    "addr:housenumber": "7",
+    "addr:street": "Calle de los Jardines",
+    "check_date": "2025-05-21",
+    "name": "Sol Phone House",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12853998842,
+  "lat": 40.4194719,
+  "lon": -3.7009374,
+  "tags": {
+    "addr:housenumber": "8",
+    "addr:street": "Calle del Caballero de Gracia",
+    "check_date": "2025-05-21",
+    "name": "Mini Super Market",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 12853998844,
+  "lat": 40.4195314,
+  "lon": -3.7012270,
+  "tags": {
+    "addr:housenumber": "6",
+    "addr:street": "Calle del Caballero de Gracia",
+    "check_date": "2025-05-21",
+    "name": "Xu",
+    "shop": "convenience",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 12986410626,
+  "lat": 40.4262261,
+  "lon": -3.7068372,
+  "tags": {
+    "shop": "convenience",
+    "survey:date": "2026-10-16"
+  }
+},
+{
+  "type": "node",
+  "id": 13158165855,
+  "lat": 40.4201128,
+  "lon": -3.7074282,
+  "tags": {
+    "name": "I ❤ dulces",
+    "shop": "convenience",
+    "survey:date": "2025-09-20"
+  }
+},
+{
+  "type": "node",
+  "id": 13159930058,
+  "lat": 40.4228216,
+  "lon": -3.7109836,
+  "tags": {
+    "shop": "convenience",
+    "survey:date": "2025-09-21"
+  }
+},
+{
+  "type": "node",
+  "id": 13163053444,
+  "lat": 40.4116307,
+  "lon": -3.7070029,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 13336133063,
+  "lat": 40.4261266,
+  "lon": -3.7068785,
+  "tags": {
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "name": "Dia",
+    "shop": "supermarket",
+    "survey:date": "2025-11-27"
+  }
+},
+{
+  "type": "node",
+  "id": 13716967826,
+  "lat": 40.4227473,
+  "lon": -3.6992284,
+  "tags": {
+    "shop": "convenience",
+    "survey:date": "2026-04-08"
+  }
+},
+{
+  "type": "node",
+  "id": 13810921385,
+  "lat": 40.4118644,
+  "lon": -3.7056020,
+  "tags": {
+    "brand": "Dia",
+    "brand:wikidata": "Q925132",
+    "name": "Dia",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 13912960251,
+  "lat": 40.4229924,
+  "lon": -3.6990586,
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "66",
+    "addr:postcode": "28004",
+    "addr:street": "Calle de Hortaleza",
+    "name": "JMP",
+    "shop": "convenience",
+    "survey:date": "2024"
+  }
+},
+{
+  "type": "node",
+  "id": 13919895184,
+  "lat": 40.4165950,
+  "lon": -3.7027023,
+  "tags": {
+    "brand": "Carrefour City",
+    "check_date": "2026-06-08",
+    "name": "Carrefour City",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 13959633502,
+  "lat": 40.4140470,
+  "lon": -3.7042691,
+  "tags": {
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 14088144029,
+  "lat": 40.4209246,
+  "lon": -3.7031085,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "name": "Carrefour Express",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 14102430201,
+  "lat": 40.4116821,
+  "lon": -3.7082983,
+  "tags": {
+    "addr:housenumber": "52",
+    "addr:street": "Calle de Toledo",
+    "name": "CUMBAO street market",
+    "opening_hours": "Mo-Su 11:00-21:00",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 14102435301,
+  "lat": 40.4115354,
+  "lon": -3.7067783,
+  "tags": {
+    "addr:housenumber": "15",
+    "addr:street": "Calle del Duque de Alba",
+    "name": "HOME ideal",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 14158479116,
+  "lat": 40.4149572,
+  "lon": -3.7024901,
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "name": "Carrefour Express",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 14251964205,
+  "lat": 40.4148303,
+  "lon": -3.6900322,
+  "tags": {
+    "name": "Mini market",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "way",
+  "id": 4346296,
+  "center": {
+    "lat": 40.4110938,
+    "lon": -3.7098471
+  },
+  "nodes": [
+    3800707176,
+    26472161,
+    8878503997,
+    8878503996,
+    8878503983,
+    8878503990,
+    3800703701,
+    3800703692,
+    8589159500,
+    8581157944,
+    26472158,
+    26472157,
+    3800707168,
+    3907346126,
+    3800707169,
+    26472160,
+    3800707173,
+    3800707174,
+    3800707172,
+    3800707171,
+    3800707170,
+    3800707175,
+    3800707177,
+    3800707176
+  ],
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:postcode": "28005",
+    "addr:street": "Calle del Humilladero",
+    "amenity": "marketplace",
+    "building": "retail",
+    "building:levels": "2",
+    "landuse": "retail",
+    "name": "Mercado de la Cebada",
+    "opening_hours": "Mo-Fr 09:00-14:00, 17:00-20:30; Sa 09:00-18:00",
+    "operator": "Mercado de la Cebada",
+    "roof:colour": "#AEBDC2",
+    "roof:shape": "flat",
+    "shop": "supermarket",
+    "wheelchair": "yes",
+    "wikidata": "Q6010611",
+    "wikimedia_commons": "Category:Mercado de la Cebada",
+    "wikipedia": "es:Mercado de la Cebada"
+  }
+},
+{
+  "type": "way",
+  "id": 680528669,
+  "center": {
+    "lat": 40.4115178,
+    "lon": -3.7052495
+  },
+  "nodes": [
+    6372020637,
+    3801348856,
+    14240992173,
+    3801339827,
+    6372020636,
+    6372020637
+  ],
+  "tags": {
+    "level": "0",
+    "shop": "convenience",
+    "survey:date": "2022-07-23"
+  }
+},
+{
+  "type": "way",
+  "id": 680589531,
+  "center": {
+    "lat": 40.4145730,
+    "lon": -3.7054174
+  },
+  "nodes": [
+    6372738899,
+    2540726799,
+    2540726795,
+    2540726793,
+    2540726791,
+    6372738752,
+    2540726809,
+    6372738899
+  ],
+  "tags": {
+    "level": "0",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "way",
+  "id": 686207603,
+  "center": {
+    "lat": 40.4122290,
+    "lon": -3.7005951
+  },
+  "nodes": [
+    3794195969,
+    6431838851,
+    6431838850,
+    2727495010,
+    3794195965,
+    3794195966,
+    3794195969
+  ],
+  "tags": {
+    "brand": "Carrefour Express",
+    "brand:wikidata": "Q2940190",
+    "check_date": "2025-02-13",
+    "name": "Carrefour Express",
+    "shop": "convenience",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 686207616,
+  "center": {
+    "lat": 40.4122845,
+    "lon": -3.7000989
+  },
+  "nodes": [
+    6431838220,
+    6431838219,
+    6431838218,
+    3791776563,
+    6431838220
+  ],
+  "tags": {
+    "level": "0",
+    "name": "Alimentacion",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "way",
+  "id": 686207624,
+  "center": {
+    "lat": 40.4118491,
+    "lon": -3.6996192
+  },
+  "nodes": [
+    6431838246,
+    6429337078,
+    6429337077,
+    6431838245,
+    3791776573,
+    3791776574,
+    3791776575,
+    3791776576,
+    3791776577,
+    6431838246
+  ],
+  "tags": {
+    "level": "0",
+    "name": "Yadu Food's Shop",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "way",
+  "id": 686273841,
+  "center": {
+    "lat": 40.4122343,
+    "lon": -3.7037541
+  },
+  "nodes": [
+    6432436908,
+    6432436907,
+    2955144568,
+    6432436910,
+    6432436908
+  ],
+  "tags": {
+    "level": "0",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "way",
+  "id": 690830064,
+  "center": {
+    "lat": 40.4115580,
+    "lon": -3.7073599
+  },
+  "nodes": [
+    4776957475,
+    6481780170,
+    1329909279,
+    6481780128,
+    4776957475
+  ],
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "2",
+    "addr:street": "Calle de San Millán",
+    "contact:facebook": "https://es-es.facebook.com/lahuertadealmeria/",
+    "name": "La Huerta de Almería",
+    "opening_hours": "Mo-Su 10:00-00:00",
+    "shop": "convenience",
+    "website": "https://huertadealmeria.com/"
+  }
+},
+{
+  "type": "way",
+  "id": 690830067,
+  "center": {
+    "lat": 40.4115390,
+    "lon": -3.7076194
+  },
+  "nodes": [
+    5223908440,
+    1329909264,
+    6481780132,
+    1329909115,
+    6481780133,
+    5223908440
+  ],
+  "tags": {
+    "level": "0",
+    "name": "Alimentación",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "way",
+  "id": 690876614,
+  "center": {
+    "lat": 40.4104983,
+    "lon": -3.7076901
+  },
+  "nodes": [
+    6482230816,
+    6482230815,
+    1326816940,
+    1326817079,
+    6482230814,
+    1326817036,
+    3250253219,
+    3250253216,
+    1326817014,
+    1326816974,
+    6482230816
+  ],
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "4",
+    "addr:postcode": "28005",
+    "addr:street": "Calle de la Ruda",
+    "level": "0",
+    "name": "Como en casa",
+    "shop": "convenience",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "way",
+  "id": 691032707,
+  "center": {
+    "lat": 40.4119546,
+    "lon": -3.7074380
+  },
+  "nodes": [
+    6483799933,
+    6483799932,
+    1329909095,
+    6483799931,
+    3250253268,
+    3250253273,
+    1329909235,
+    1329909010,
+    6483799928,
+    6483799933
+  ],
+  "tags": {
+    "level": "0",
+    "name": "Alimentacion",
+    "note": "Appears to have no proper name - just signed as \"Alimentation\"",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "way",
+  "id": 691032708,
+  "center": {
+    "lat": 40.4118439,
+    "lon": -3.7074303
+  },
+  "nodes": [
+    6483799936,
+    6483799935,
+    6483799934,
+    3250253257,
+    1329909009,
+    3250253258,
+    6483799937,
+    6483799936
+  ],
+  "tags": {
+    "addr:city": "Madrid",
+    "addr:housenumber": "10",
+    "addr:street": "Calle de los Estudios",
+    "level": "0",
+    "name": "Ecomanía",
+    "shop": "convenience",
+    "zero_waste": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 692496119,
+  "center": {
+    "lat": 40.4162502,
+    "lon": -3.7095375
+  },
+  "nodes": [
+    178821020,
+    6501212421,
+    6501212428,
+    3789791516,
+    6501212419,
+    178821020
+  ],
+  "tags": {
+    "level": "0",
+    "name": "Alimentación",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "way",
+  "id": 692639981,
+  "center": {
+    "lat": 40.4164916,
+    "lon": -3.7102148
+  },
+  "nodes": [
+    6502623194,
+    6502623193,
+    3635664847,
+    3635664846,
+    6502623198,
+    6503524270,
+    3635664826,
+    6502623195,
+    6502623194
+  ],
+  "tags": {
+    "level": "0",
+    "name": "Alimentación",
+    "shop": "convenience"
+  }
+}
+
+  ]
+}

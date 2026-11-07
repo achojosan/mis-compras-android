@@ -3,6 +3,10 @@ package app.miscompras.com.di
 import android.content.Context
 import androidx.room.Room
 import app.miscompras.com.data.local.database.AppDatabase
+import app.miscompras.com.data.local.database.MIGRATION_2_3
+import app.miscompras.com.data.local.database.MIGRATION_3_4
+import app.miscompras.com.data.local.database.MIGRATION_4_5
+import app.miscompras.com.data.local.database.dao.KnownItemDao
 import app.miscompras.com.data.local.database.dao.ProductDao
 import app.miscompras.com.data.local.database.dao.PurchaseHistoryDao
 import app.miscompras.com.data.local.database.dao.SupermarketDao
@@ -25,6 +29,7 @@ object DatabaseModule {
             AppDatabase::class.java,
             "mis_compras_database"
         )
+        .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
         .fallbackToDestructiveMigration()
         .build()
     }
@@ -42,5 +47,10 @@ object DatabaseModule {
     @Provides
     fun providePurchaseHistoryDao(database: AppDatabase): PurchaseHistoryDao {
         return database.purchaseHistoryDao()
+    }
+
+    @Provides
+    fun provideKnownItemDao(database: AppDatabase): KnownItemDao {
+        return database.knownItemDao()
     }
 }

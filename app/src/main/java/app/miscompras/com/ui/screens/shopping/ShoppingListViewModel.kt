@@ -10,11 +10,13 @@ import app.miscompras.com.domain.model.Product
 import app.miscompras.com.domain.model.PurchaseHistory
 import app.miscompras.com.domain.model.Supermarket
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -32,6 +34,10 @@ class ShoppingListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<ShoppingListUiState>(ShoppingListUiState.Loading)
     val uiState: StateFlow<ShoppingListUiState> = _uiState.asStateFlow()
 
+    // Eventos de un solo uso para mostrar avisos (Toast) al usuario.
+    private val _events = Channel<String>(Channel.BUFFERED)
+    val events = _events.receiveAsFlow()
+
     init {
         loadShoppingList()
     }
@@ -45,13 +51,11 @@ class ShoppingListViewModel @Inject constructor(
                 val groupedBySupermarket = products.groupBy { it.supermarketId }
                 val shoppingItems = groupedBySupermarket.map { (supermarketId, products) ->
                     val supermarket = supermarkets.find { it.id == supermarketId }
-                    val pendingTotal = products
-                        .filter { !it.isPurchased }
-                        .sumOf { (it.price ?: 0.0) * it.quantity }
+                    val fullTotal = products.sumOf { (it.price ?: 0.0) * it.quantity }
                     ShoppingItem(
                         supermarket = supermarket,
                         products = products,
-                        total = pendingTotal
+                        total = fullTotal
                     )
                 }.sortedBy { it.supermarket?.name ?: "" }
                 shoppingItems
@@ -67,7 +71,9 @@ class ShoppingListViewModel @Inject constructor(
 
     fun toggleProductPurchased(product: Product) {
         viewModelScope.launch {
-            productRepository.updatePurchaseStatus(product.id, !product.isPurchased)
+            val purchased = !product.isPurchased
+            productRepository.updatePurchaseStatus(product.id, purchased)
+            _events.send(if (purchased) "Marcado como comprado" else "Marcado como pendiente")
         }
     }
 
@@ -81,13 +87,26 @@ class ShoppingListViewModel @Inject constructor(
 
     fun finishPurchase(shoppingItem: ShoppingItem) {
         viewModelScope.launch {
-            val supermarket = shoppingItem.supermarket ?: return@launch
-            val pendingProducts = shoppingItem.products.filter { !it.isPurchased }
-            if (pendingProducts.isEmpty()) return@launch
+            val supermarket = shoppingItem.supermarket ?: run {
+                _events.send("No se encontró el supermercado")
+                return@launch
+            }
+
+            // Se registran los productos marcados; si el usuario no marcó
+            // ninguno, se registra la lista completa (comportamiento esperado
+            // al pulsar «Finalizar»).
+            val productsToRecord = shoppingItem.productsToRecord
+            if (productsToRecord.isEmpty()) {
+                _events.send("No hay productos para registrar")
+                return@launch
+            }
+
             val deletePurchased = dataStore.deletePurchased.first()
 
+            val totalAmount = shoppingItem.totalToRecord
+
             val productsJson = Json.encodeToString(
-                pendingProducts.map {
+                productsToRecord.map {
                     PurchasedProductData(
                         name = it.name,
                         quantity = it.quantity,
@@ -99,21 +118,24 @@ class ShoppingListViewModel @Inject constructor(
 
             val history = PurchaseHistory(
                 supermarketId = supermarket.id,
-                totalAmount = shoppingItem.total,
+                supermarketName = supermarket.name,
+                totalAmount = totalAmount,
                 productsJson = productsJson
             )
 
             purchaseHistoryRepository.insertHistory(history)
 
             if (deletePurchased) {
-                pendingProducts.forEach { product ->
+                productsToRecord.forEach { product ->
                     productRepository.deleteProduct(product)
                 }
             } else {
-                pendingProducts.forEach { product ->
+                productsToRecord.forEach { product ->
                     productRepository.updatePurchaseStatus(product.id, true)
                 }
             }
+
+            _events.send("Compra registrada: ${String.format("%.2f", totalAmount)} €")
         }
     }
 }
@@ -127,8 +149,27 @@ sealed class ShoppingListUiState {
 data class ShoppingItem(
     val supermarket: Supermarket?,
     val products: List<Product>,
+    // Total de la compra (todos los productos, marcados o no).
     val total: Double
-)
+) {
+    val purchasedProducts: List<Product>
+        get() = products.filter { it.isPurchased }
+
+    val pendingProducts: List<Product>
+        get() = products.filter { !it.isPurchased }
+
+    // Total real de lo marcado como comprado.
+    val purchasedTotal: Double
+        get() = purchasedProducts.sumOf { (it.price ?: 0.0) * it.quantity }
+
+    // Lo que se registra al finalizar: los marcados o, si no hay ninguno, toda
+    // la lista.
+    val productsToRecord: List<Product>
+        get() = purchasedProducts.ifEmpty { products }
+
+    val totalToRecord: Double
+        get() = productsToRecord.sumOf { (it.price ?: 0.0) * it.quantity }
+}
 
 @Serializable
 data class PurchasedProductData(

@@ -35,3 +35,7 @@ fun ProvideAccessibilityConfig(
         content = content
     )
 }
+
+/** Texto "Grande" (1,2) o "Muy grande" (1,4): las pantallas pasan a diseños apilados. */
+val AccessibilityConfig.isLargeText: Boolean
+    get() = fontScale >= 1.2f

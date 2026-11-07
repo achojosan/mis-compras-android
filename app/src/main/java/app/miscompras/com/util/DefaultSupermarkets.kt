@@ -6,6 +6,8 @@ data class DefaultSupermarket(
 )
 
 object DefaultSupermarkets {
+    private const val LOGO_ASSET_FOLDER = "logos/"
+
     val list = listOf(
         DefaultSupermarket("Mercadona", "logos/mercadona.svg"),
         DefaultSupermarket("Carrefour", "logos/carrefour.svg"),
@@ -18,4 +20,8 @@ object DefaultSupermarkets {
     fun getLogoAssetPath(name: String): String? {
         return list.find { it.name.equals(name, ignoreCase = true) }?.logoAssetPath
     }
+
+    /** Indica si una ruta guardada corresponde a un logo de asset (p. ej. "logos/lidl.svg"). */
+    fun isLogoAssetPath(path: String?): Boolean =
+        path != null && path.startsWith(LOGO_ASSET_FOLDER)
 }

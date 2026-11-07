@@ -1,6 +1,7 @@
 package app.miscompras.com.ui.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -24,6 +25,12 @@ sealed class Screen(
         icon = Icons.Default.ShoppingCart
     )
 
+    data object Recognize : Screen(
+        route = "recognize",
+        title = "Reconocer",
+        icon = Icons.Default.CameraAlt
+    )
+
     data object History : Screen(
         route = "history",
         title = "Gastos",
@@ -37,6 +44,6 @@ sealed class Screen(
     )
 
     companion object {
-        val bottomNavItems = listOf(Supermarkets, ShoppingList, History, Settings)
+        val bottomNavItems = listOf(Supermarkets, ShoppingList, Recognize, History, Settings)
     }
 }

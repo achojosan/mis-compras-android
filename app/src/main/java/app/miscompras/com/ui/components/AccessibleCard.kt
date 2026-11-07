@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import app.miscompras.com.ui.theme.AccessibilityDefaults
+import app.miscompras.com.ui.theme.AppShapes
 
 @Composable
 fun AccessibleCard(
@@ -31,7 +32,7 @@ fun AccessibleCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(AccessibilityDefaults.ItemSpacing / 2),
-        shape = RoundedCornerShape(16.dp),
+        shape = AppShapes.card,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.onSurface

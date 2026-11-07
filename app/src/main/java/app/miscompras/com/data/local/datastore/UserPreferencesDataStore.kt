@@ -33,6 +33,10 @@ class UserPreferencesDataStore(private val context: Context) {
         val DELETE_PURCHASED = booleanPreferencesKey("delete_purchased")
         val THEME_MODE = intPreferencesKey("theme_mode")
         val THEME_COLOR = intPreferencesKey("theme_color")
+        val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
+        val UPPERCASE_PRODUCT_NAMES = booleanPreferencesKey("uppercase_product_names")
+        val HIDE_OPEN_APP_DIALOG = booleanPreferencesKey("hide_open_app_dialog")
+        val SHOW_COUNTS = booleanPreferencesKey("show_counts")
     }
 
     val fontScale: Flow<Float> = context.dataStore.data.map { preferences ->
@@ -53,6 +57,49 @@ class UserPreferencesDataStore(private val context: Context) {
 
     val themeMode: Flow<ThemeMode> = context.dataStore.data.map { preferences ->
         ThemeMode.fromInt(preferences[PreferencesKeys.THEME_MODE] ?: 0)
+    }
+
+    val onboardingCompleted: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.ONBOARDING_COMPLETED] ?: false
+    }
+
+    /** Guarda los nombres de los productos nuevos en mayúsculas. Desactivado por defecto. */
+    val uppercaseProductNames: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.UPPERCASE_PRODUCT_NAMES] ?: false
+    }
+
+    /** Si el usuario decidió no volver a ver el aviso al abrir la app de una tienda. */
+    val hideOpenAppDialog: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.HIDE_OPEN_APP_DIALOG] ?: false
+    }
+
+    /** Muestra los recuentos (tiendas, productos, pendientes) en la pantalla principal. */
+    val showCounts: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.SHOW_COUNTS] ?: true
+    }
+
+    suspend fun setShowCounts(show: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.SHOW_COUNTS] = show
+        }
+    }
+
+    suspend fun setHideOpenAppDialog(hide: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.HIDE_OPEN_APP_DIALOG] = hide
+        }
+    }
+
+    suspend fun setOnboardingCompleted(completed: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.ONBOARDING_COMPLETED] = completed
+        }
+    }
+
+    suspend fun setUppercaseProductNames(enabled: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.UPPERCASE_PRODUCT_NAMES] = enabled
+        }
     }
 
     suspend fun setFontScale(scale: Float) {

@@ -30,15 +30,18 @@ class SettingsViewModel @Inject constructor(
                 },
                 combine(dataStore.deletePurchased, dataStore.themeMode, dataStore.themeColor) { a, b, c ->
                     Triple(a, b, c)
-                }
-            ) { (fontScale, spacingScale, highContrast), (deletePurchased, themeMode, themeColor) ->
+                },
+                combine(dataStore.uppercaseProductNames, dataStore.showCounts) { a, b -> a to b }
+            ) { (fontScale, spacingScale, highContrast), (deletePurchased, themeMode, themeColor), (uppercaseProductNames, showCounts) ->
                 SettingsUiState(
                     fontScale = fontScale,
                     spacingScale = spacingScale,
                     highContrast = highContrast,
                     deletePurchased = deletePurchased,
                     themeMode = themeMode,
-                    themeColor = themeColor
+                    themeColor = themeColor,
+                    uppercaseProductNames = uppercaseProductNames,
+                    showCounts = showCounts
                 )
             }.collect { state ->
                 _uiState.value = state
@@ -81,6 +84,18 @@ class SettingsViewModel @Inject constructor(
             dataStore.setThemeColor(color)
         }
     }
+
+    fun setShowCounts(show: Boolean) {
+        viewModelScope.launch {
+            dataStore.setShowCounts(show)
+        }
+    }
+
+    fun setUppercaseProductNames(enabled: Boolean) {
+        viewModelScope.launch {
+            dataStore.setUppercaseProductNames(enabled)
+        }
+    }
 }
 
 data class SettingsUiState(
@@ -89,7 +104,9 @@ data class SettingsUiState(
     val highContrast: Boolean = false,
     val deletePurchased: Boolean = true,
     val themeMode: ThemeMode = ThemeMode.System,
-    val themeColor: ThemeColor = ThemeColor.Green
+    val themeColor: ThemeColor = ThemeColor.Green,
+    val uppercaseProductNames: Boolean = false,
+    val showCounts: Boolean = true
 ) {
     val accessibilityConfig = AccessibilityConfig(
         fontScale = fontScale,

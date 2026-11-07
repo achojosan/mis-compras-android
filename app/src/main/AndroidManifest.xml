@@ -2,9 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <!--
+        Apps oficiales de supermercados que la app puede abrir. Android 11+ exige
+        declarar los paquetes para poder consultarlos (getLaunchIntentForPackage)
+        y lanzarlos desde la ficha de tienda.
+    -->
+    <queries>
+        <package android:name="es.mercadona.tienda" />
+        <package android:name="com.munrodev.crfmobile" />
+        <package android:name="com.lidl.eci.lidlplus" />
+        <package android:name="es.aldi.android" />
+        <package android:name="es.dia" />
+        <package android:name="com.elcorteingles.app" />
+        <package android:name="com.osp.alcampo" />
+        <package android:name="com.consum" />
+        <package android:name="com.tempos21.eroskiclub.pro" />
+        <package android:name="com.uvesco.bm" />
+    </queries>
 
     <application
         android:name=".MisComprasApplication"
@@ -26,6 +47,14 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Accesos directos a una tienda: miscompras://supermarket/{id} -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="miscompras" android:host="supermarket" />
             </intent-filter>
         </activity>
     </application>

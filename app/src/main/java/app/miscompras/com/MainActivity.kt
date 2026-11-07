@@ -6,18 +6,22 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,10 +30,8 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,6 +44,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -54,6 +57,7 @@ import app.miscompras.com.data.local.datastore.ThemeMode
 import app.miscompras.com.data.local.datastore.UserPreferencesDataStore
 import app.miscompras.com.ui.navigation.NavGraph
 import app.miscompras.com.ui.navigation.Screen
+import app.miscompras.com.ui.screens.onboarding.OnboardingScreen
 import app.miscompras.com.ui.theme.AccessibilityConfig
 import app.miscompras.com.ui.theme.MisComprasTheme
 import app.miscompras.com.ui.theme.ProvideAccessibilityConfig
@@ -77,6 +81,7 @@ class MainActivity : ComponentActivity() {
             val highContrast by dataStore.highContrast.collectAsState(initial = false)
             val themeMode by dataStore.themeMode.collectAsState(initial = ThemeMode.System)
             val themeColor by dataStore.themeColor.collectAsState(initial = ThemeColor.Green)
+            val onboardingCompleted by dataStore.onboardingCompleted.collectAsState(initial = null)
 
             val config = AccessibilityConfig(
                 fontScale = fontScale,
@@ -96,7 +101,10 @@ class MainActivity : ComponentActivity() {
                 themeColor = themeColor
             ) {
                 ProvideAccessibilityConfig(config = config) {
-                    MainScreen(themeColor = themeColor)
+                    MainScreen(
+                        themeColor = themeColor,
+                        onboardingCompleted = onboardingCompleted
+                    )
                 }
             }
         }
@@ -104,10 +112,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(themeColor: ThemeColor = ThemeColor.Green) {
-    val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
+fun MainScreen(
+    themeColor: ThemeColor = ThemeColor.Green,
+    onboardingCompleted: Boolean? = true
+) {
     var showBrandedSplash by rememberSaveable { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
@@ -115,25 +123,38 @@ fun MainScreen(themeColor: ThemeColor = ThemeColor.Green) {
         showBrandedSplash = false
     }
 
+    val showContent = !showBrandedSplash && onboardingCompleted != null
+
     Box(modifier = Modifier.fillMaxSize()) {
-        AnimatedVisibility(
-            visible = !showBrandedSplash,
-            enter = fadeIn(animationSpec = tween(400))
-        ) {
-            MainContent(
-                navController = navController,
-                currentDestination = currentDestination,
-                themeColor = themeColor
-            )
+        if (showContent) {
+            if (onboardingCompleted == false) {
+                OnboardingScreen()
+            } else {
+                MainContentRoot(themeColor = themeColor)
+            }
         }
 
         AnimatedVisibility(
-            visible = showBrandedSplash,
+            visible = !showContent,
+            enter = fadeIn(animationSpec = tween(400)),
             exit = fadeOut(animationSpec = tween(300))
         ) {
             BrandedSplashScreen()
         }
     }
+}
+
+@Composable
+fun MainContentRoot(themeColor: ThemeColor = ThemeColor.Green) {
+    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    MainContent(
+        navController = navController,
+        currentDestination = currentDestination,
+        themeColor = themeColor
+    )
 }
 
 @Composable
@@ -190,55 +211,21 @@ fun MainContent(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             if (isBottomNavScreen) {
-                NavigationBar(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    tonalElevation = 0.dp
-                ) {
-                    Screen.bottomNavItems.forEach { screen ->
-                        val selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true
-                        val animatedSize by animateFloatAsState(
-                            targetValue = if (selected) 28f else 22f,
-                            animationSpec = tween(durationMillis = 200),
-                            label = "iconSize"
-                        )
-
-                        NavigationBarItem(
-                            icon = {
-                                Icon(
-                                    imageVector = screen.icon,
-                                    contentDescription = screen.title,
-                                    modifier = Modifier
-                                        .size(animatedSize.dp)
-                                        .clip(RoundedCornerShape(8.dp))
-                                )
-                            },
-                            label = {
-                                Text(
-                                    text = screen.title,
-                                    style = MaterialTheme.typography.labelMedium,
-                                    fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal
-                                )
-                            },
-                            selected = selected,
-                            colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = MaterialTheme.colorScheme.primary,
-                                selectedTextColor = MaterialTheme.colorScheme.primary,
-                                unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                                unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                                indicatorColor = MaterialTheme.colorScheme.surfaceVariant
-                            ),
-                            onClick = {
-                                navController.navigate(screen.route) {
-                                    popUpTo(navController.graph.startDestinationId) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
-                                }
+                FloatingBottomBar(
+                    items = Screen.bottomNavItems,
+                    isSelected = { screen ->
+                        currentDestination?.hierarchy?.any { it.route == screen.route } == true
+                    },
+                    onSelect = { screen ->
+                        navController.navigate(screen.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
                             }
-                        )
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
-                }
+                )
             }
         }
     ) { innerPadding ->
@@ -246,5 +233,90 @@ fun MainContent(
             navController = navController,
             modifier = Modifier.padding(innerPadding)
         )
+    }
+}
+
+/**
+ * Barra de navegación flotante, solo con iconos, al estilo de iOS: una cápsula
+ * con sombra y borde sutil donde el destino activo se resalta con un fondo
+ * tintado del color del tema.
+ */
+@Composable
+private fun FloatingBottomBar(
+    items: List<Screen>,
+    isSelected: (Screen) -> Boolean,
+    onSelect: (Screen) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .navigationBarsPadding()
+            .padding(horizontal = 24.dp, vertical = 8.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(28.dp),
+            color = MaterialTheme.colorScheme.surface,
+            shadowElevation = 8.dp,
+            border = BorderStroke(
+                1.dp,
+                MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f)
+            )
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp, vertical = 10.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                items.forEach { screen ->
+                    val selected = isSelected(screen)
+                    val background by animateColorAsState(
+                        targetValue = if (selected) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            Color.Transparent
+                        },
+                        animationSpec = tween(durationMillis = 200),
+                        label = "bottomItemBackground"
+                    )
+                    val tint by animateColorAsState(
+                        targetValue = if (selected) {
+                            MaterialTheme.colorScheme.onPrimary
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        },
+                        animationSpec = tween(durationMillis = 200),
+                        label = "bottomItemTint"
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(22.dp))
+                            .clickable { onSelect(screen) }
+                            .padding(vertical = 6.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(44.dp)
+                                .clip(RoundedCornerShape(14.dp))
+                                .background(background),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = screen.icon,
+                                contentDescription = screen.title,
+                                tint = tint,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey
             entity = Supermarket::class,
             parentColumns = ["id"],
             childColumns = ["supermarketId"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.SET_NULL
         )
     ],
     indices = [Index("supermarketId")]
@@ -20,7 +20,10 @@ import androidx.room.PrimaryKey
 data class PurchaseHistory(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val supermarketId: Long,
+    // Nulo si el supermercado fue eliminado; el historial se conserva igualmente.
+    val supermarketId: Long?,
+    // Copia del nombre para poder mostrar el gasto aunque la tienda ya no exista.
+    val supermarketName: String? = null,
     val totalAmount: Double,
     val purchasedAt: Long = System.currentTimeMillis(),
     val productsJson: String

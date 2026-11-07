@@ -18,6 +18,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import app.miscompras.com.ui.theme.AccessibilityDefaults
+import app.miscompras.com.ui.theme.AppShapes
 
 enum class ButtonStyle {
     Filled,
@@ -33,7 +34,7 @@ fun AccessibleButton(
     contentDescription: String? = null,
     style: ButtonStyle = ButtonStyle.Filled
 ) {
-    val shape = RoundedCornerShape(16.dp)
+    val shape = AppShapes.button
     val contentPadding = PaddingValues(
         horizontal = AccessibilityDefaults.ButtonPadding * 1.5f,
         vertical = AccessibilityDefaults.ButtonPadding

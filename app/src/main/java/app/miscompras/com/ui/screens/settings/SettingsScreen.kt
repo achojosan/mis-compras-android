@@ -14,6 +14,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.SystemUpdate
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,14 +24,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import app.miscompras.com.BuildConfig
+import app.miscompras.com.update.UpdateState
+import app.miscompras.com.update.UpdateViewModel
+import app.miscompras.com.ui.util.ToastEffect
 
 @Composable
 fun SettingsScreen(
     onKnownItemsClick: () -> Unit,
     onAppearanceClick: () -> Unit,
     onPurchaseClick: () -> Unit,
-    onInfoClick: () -> Unit
+    onInfoClick: () -> Unit,
+    updateViewModel: UpdateViewModel = hiltViewModel()
 ) {
+    val updatesEnabled by updateViewModel.enabled.collectAsState()
+    val updateState by updateViewModel.state.collectAsState()
+    ToastEffect(events = updateViewModel.messages)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,6 +96,23 @@ fun SettingsScreen(
                     title = "Mis artículos",
                     subtitle = "Artículos que la app sabe reconocer",
                     onClick = onKnownItemsClick
+                )
+            }
+
+            SettingsGroup(title = "Actualizaciones") {
+                SettingsSwitchRow(
+                    icon = Icons.Default.SystemUpdate,
+                    title = "Avisarme de nuevas versiones",
+                    subtitle = "Una consulta al día a GitHub al abrir la app. Puedes desactivarla.",
+                    checked = updatesEnabled,
+                    onCheckedChange = updateViewModel::setEnabled
+                )
+                SettingsRow(
+                    icon = Icons.Default.Refresh,
+                    title = "Buscar actualizaciones",
+                    subtitle = if (updateState is UpdateState.Checking) "Buscando…" else "Versión instalada: ${BuildConfig.VERSION_NAME}",
+                    onClick = updateViewModel::checkNow,
+                    showDivider = true
                 )
             }
 

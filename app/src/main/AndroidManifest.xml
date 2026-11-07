@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Actualizador integrado (versión distribuida como APK). Google Play restringe este permiso:
+         una versión para Play debería compilarse sin el actualizador. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.UPDATE_PACKAGES_WITHOUT_USER_ACTION" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <!--
@@ -57,6 +61,11 @@
                 <data android:scheme="miscompras" android:host="supermarket" />
             </intent-filter>
         </activity>
+
+        <!-- Recibe el resultado de la instalación de una actualización -->
+        <receiver
+            android:name=".update.UpdateInstallReceiver"
+            android:exported="false" />
     </application>
 
 </manifest>

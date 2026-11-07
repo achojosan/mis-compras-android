@@ -56,6 +56,7 @@ import androidx.navigation.compose.rememberNavController
 import app.miscompras.com.data.local.datastore.ThemeMode
 import app.miscompras.com.data.local.datastore.UserPreferencesDataStore
 import app.miscompras.com.ui.navigation.NavGraph
+import app.miscompras.com.update.UpdateHost
 import app.miscompras.com.ui.navigation.Screen
 import app.miscompras.com.ui.screens.onboarding.OnboardingScreen
 import app.miscompras.com.ui.theme.AccessibilityConfig
@@ -155,6 +156,7 @@ fun MainContentRoot(themeColor: ThemeColor = ThemeColor.Green) {
         currentDestination = currentDestination,
         themeColor = themeColor
     )
+    UpdateHost()
 }
 
 @Composable

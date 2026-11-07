@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -37,6 +38,8 @@ class UserPreferencesDataStore(private val context: Context) {
         val UPPERCASE_PRODUCT_NAMES = booleanPreferencesKey("uppercase_product_names")
         val HIDE_OPEN_APP_DIALOG = booleanPreferencesKey("hide_open_app_dialog")
         val SHOW_COUNTS = booleanPreferencesKey("show_counts")
+        val UPDATE_CHECKS = booleanPreferencesKey("update_checks")
+        val LAST_UPDATE_CHECK = longPreferencesKey("last_update_check")
     }
 
     val fontScale: Flow<Float> = context.dataStore.data.map { preferences ->
@@ -82,6 +85,24 @@ class UserPreferencesDataStore(private val context: Context) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.SHOW_COUNTS] = show
         }
+    }
+
+    /** Avisar de versiones nuevas (una consulta al día a GitHub). Activado por defecto. */
+    val updateChecksEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.UPDATE_CHECKS] ?: true
+    }
+
+    suspend fun setUpdateChecksEnabled(enabled: Boolean) {
+        context.dataStore.edit { it[PreferencesKeys.UPDATE_CHECKS] = enabled }
+    }
+
+    /** Marca de tiempo (ms) de la última comprobación que NO dejó un aviso pendiente. */
+    val lastUpdateCheck: Flow<Long> = context.dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.LAST_UPDATE_CHECK] ?: 0L
+    }
+
+    suspend fun setLastUpdateCheck(timestamp: Long) {
+        context.dataStore.edit { it[PreferencesKeys.LAST_UPDATE_CHECK] = timestamp }
     }
 
     suspend fun setHideOpenAppDialog(hide: Boolean) {

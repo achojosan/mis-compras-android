@@ -14,3 +14,17 @@
 .cxx
 local.properties
 *.keystore
+
+# IDE
+.idea/
+.kotlin/
+
+# Firma de la app: NUNCA al repositorio (ver keystore.properties.example)
+keystore.properties
+*.keystore
+*.jks
+
+# Artefactos de compilación y material de marketing pesado
+*.apk
+*.aab
+brag-output/

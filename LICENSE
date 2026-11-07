@@ -1,0 +1,84 @@
+Required Notice: Copyright (c) 2026 Josan (@achojosan) (https://github.com/achojosan)
+
+# PolyForm Strict License 1.0.0
+
+<https://polyformproject.org/licenses/strict/1.0.0>
+
+## Acceptance
+
+In order to get any license under these terms, you must agree to them as both strict obligations and conditions to all your licenses.
+
+## Copyright License
+
+The licensor grants you a copyright license for the software to do everything you might do with the software that would otherwise infringe the licensor's copyright in it for any permitted purpose, other than distributing the software or making changes or new works based on the software.
+
+## Patent License
+
+The licensor grants you a patent license for the software that covers patent claims the licensor can license, or becomes able to license, that you would infringe by using the software.
+
+## Noncommercial Purposes
+
+Any noncommercial purpose is a permitted purpose.
+
+## Personal Uses
+
+Personal use for research, experiment, and testing for the benefit of public knowledge, personal study, private entertainment, hobby projects, amateur pursuits, or religious observance, without any anticipated commercial application, is use for a permitted purpose.
+
+## Noncommercial Organizations
+
+Use by any charitable organization, educational institution, public research organization, public safety or health organization, environmental protection organization, or government institution is use for a permitted purpose regardless of the source of funding or obligations resulting from the funding.
+
+## Fair Use
+
+You may have "fair use" rights for the software under the law. These terms do not limit them.
+
+## No Other Rights
+
+These terms do not allow you to sublicense or transfer any of your licenses to anyone else, or prevent the licensor from granting licenses to anyone else.  These terms do not imply any other licenses.
+
+## Patent Defense
+
+If you make any written claim that the software infringes or contributes to infringement of any patent, your patent license for the software granted under these terms ends immediately. If your company makes such a claim, your patent license ends immediately for work on behalf of your company.
+
+## Violations
+
+The first time you are notified in writing that you have violated any of these terms, or done anything with the software not covered by your licenses, your licenses can nonetheless continue if you come into full compliance with these terms, and take practical steps to correct past violations, within 32 days of receiving notice.  Otherwise, all your licenses end immediately.
+
+## No Liability
+
+***As far as the law allows, the software comes as is, without any warranty or condition, and the licensor will not be liable to you for any damages arising out of these terms or the use or nature of the software, under any kind of legal claim.***
+
+## Definitions
+
+The **licensor** is the individual or entity offering these terms, and the **software** is the software the licensor makes available under these terms.
+
+**You** refers to the individual or entity agreeing to these terms.
+
+**Your company** is any legal entity, sole proprietorship, or other kind of organization that you work for, plus all organizations that have control over, are under the control of, or are under common control with that organization.  **Control** means ownership of substantially all the assets of an entity, or the power to direct its management and policies by vote, contract, or otherwise.  Control can be direct or indirect.
+
+**Your licenses** are all the licenses granted to you for the software under these terms.
+
+**Use** means anything you do with the software requiring one of your licenses.
+
+
+---
+
+## Permiso adicional / Additional permission
+
+*Este apartado lo añade el licenciante y **no forma parte del texto oficial** de la PolyForm Strict License 1.0.0.*
+
+Además de lo que concede la licencia anterior, el licenciante concede a cualquier persona, **sin fines comerciales**:
+
+1. Compartir el enlace a la web (https://achojosan.github.io/mis-compras-android/) y a las versiones oficiales (https://github.com/achojosan/mis-compras-android/releases).
+2. Copiar y entregar a otras personas el archivo APK oficial **sin modificar**, tal como se publica en esas versiones, para que lo instalen y usen.
+
+No se concede permiso para modificar el software, crear obras derivadas, extraer o reutilizar su código o sus recursos, publicarlo en otras tiendas de aplicaciones ni usarlo con fines comerciales.
+
+*In addition to the license above, the licensor grants anyone, for noncommercial purposes only, the right to share links to the website and to the official releases, and to copy and give to others the official, unmodified APK as published in those releases, so they can install and use it. No permission is granted to modify the software, create derivative works, extract or reuse its code or assets, publish it on other app stores, or use it commercially.*
+
+## Contenido y terceros
+
+- Los textos, las imágenes, las capturas de pantalla, el banner y el resto del material de la web y del README son © 2026 Josan. **Todos los derechos reservados.**
+- Los logotipos de las cadenas de supermercados pertenecen a sus propietarios y quedan fuera de esta licencia; Mis Compras es independiente y no está afiliada a ninguna.
+- Las bibliotecas y datos de terceros mantienen sus propias licencias (por ejemplo, MediaPipe, ZXing y OkHttp con Apache 2.0; los mapas de OpenStreetMap y los datos de Open Food Facts con ODbL). La tipografía Bricolage Grotesque de la web va con su licencia SIL OFL 1.1 en `docs/fonts/OFL.txt`.
+- GitHub permite que otros usuarios vean y bifurquen los repositorios públicos dentro de su plataforma, según sus condiciones de uso; eso no concede ningún derecho adicional sobre el software.

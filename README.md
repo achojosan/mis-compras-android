@@ -153,11 +153,20 @@ El proyecto cumple con tamaños de página de **16 KB** (requisito de Android 15
 - Mapas: © [colaboradores de OpenStreetMap](https://www.openstreetmap.org/copyright) (licencia ODbL).
 - Productos: [Open Food Facts](https://world.openfoodfacts.org) (licencia ODbL).
 - Modelo de reconocimiento visual: MobileNet V3 small de los modelos de [MediaPipe](https://ai.google.dev/edge/mediapipe) (Google).
+- Tipografía de la web: Bricolage Grotesque, © The Bricolage Grotesque Project Authors (SIL OFL 1.1).
 - Los logotipos de las cadenas pertenecen a sus propietarios y se usan solo para identificar cada tienda. Mis Compras es independiente y no está afiliada a ninguna de ellas.
 
 ## Licencia
 
-Todavía no se ha elegido una licencia: hasta entonces, todos los derechos reservados.
+El código y el material de este repositorio se publican bajo la **[PolyForm Strict License 1.0.0](LICENSE)** (SPDX: `PolyForm-Strict-1.0.0`), más un permiso adicional.
+
+| Puedes | No puedes |
+|---|---|
+| Instalar y usar la app para fines **no comerciales** (personales, hobby, estudio, organizaciones sin ánimo de lucro) | Usarla con fines comerciales |
+| Leer el código | Copiarlo, modificarlo, crear versiones derivadas ni reutilizar su código o sus recursos |
+| Compartir el enlace a la web o a las [versiones oficiales](https://github.com/achojosan/mis-compras-android/releases) y entregar a otras personas el **APK oficial sin modificar** | Redistribuir una versión modificada ni publicarla en otras tiendas de aplicaciones |
+
+Los textos, imágenes, capturas y el banner son © 2026 Josan, **todos los derechos reservados**. Los logotipos de las cadenas son de sus propietarios, y las bibliotecas y datos de terceros mantienen sus licencias. GitHub permite ver y bifurcar los repositorios públicos dentro de su plataforma, pero eso no concede más derechos. Esto no es asesoramiento legal.
 
 ---
 

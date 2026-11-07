@@ -24,7 +24,7 @@ Se usa de pie en el supermercado, con una mano, a veces con poca luz, el móvil 
 - Android 12 o superior; APK de unos 78 MB (solo arm64); se actualiza desde la propia app (una consulta diaria a GitHub, desactivable).
 - **Gratuita**, sin cuentas, sin anuncios, sin compras dentro de la app (confirmado por el autor).
 - Solo en español. Funciona sin conexión salvo tres consultas opcionales: tiendas cercanas (coordenadas aproximadas a OpenStreetMap), autocompletar un código (Open Food Facts) y avisar de versiones (GitHub).
-- Sin versión para iPhone por ahora. Sin licencia elegida (todos los derechos reservados).
+- Sin versión para iPhone por ahora. Licencia: **PolyForm Strict 1.0.0** (solo uso no comercial, sin copia ni derivados) con permiso adicional para compartir el enlace y el APK oficial sin modificar; textos e imágenes con todos los derechos reservados.
 - Limitación honesta: la precisión del reconocimiento con latas casi idénticas aún no está calibrada con productos reales; algunas cadenas renuevan el QR de su app, y una copia no valdría.
 
 ## Brand Commitments

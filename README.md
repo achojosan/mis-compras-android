@@ -13,7 +13,7 @@ Organiza tus supermercados, reconoce los productos con la cámara y lleva tu tar
 ![Reconocimiento en el móvil](https://img.shields.io/badge/IA-en%20el%20dispositivo-FFA000)
 [![CI](https://github.com/achojosan/mis-compras-android/actions/workflows/ci.yml/badge.svg)](https://github.com/achojosan/mis-compras-android/actions/workflows/ci.yml)
 
-**Hecha en Extremadura 🌿**
+**Hecha en Extremadura**
 
 </div>
 
@@ -25,7 +25,7 @@ Organiza tus supermercados, reconoce los productos con la cámara y lleva tu tar
 
 ---
 
-> 🌐 **Página de presentación y descarga:** [`docs/index.html`](docs/index.html) (lista para publicar con GitHub Pages desde la carpeta `docs/`).
+> **Página de presentación y descarga:** [`docs/index.html`](docs/index.html) (lista para publicar con GitHub Pages desde la carpeta `docs/`).
 
 ## ¿Por qué existe?
 
@@ -37,7 +37,7 @@ Y alrededor de esa idea, todo lo que hace falta para hacer la compra sin complic
 
 ## Lo que hace
 
-### 🔍 Reconoce los productos
+### Reconoce los productos
 - **Código de barras primero**, leído en el propio móvil (EAN, UPC…). Si lo comparte un solo artículo, es inmediato.
 - **Si no hay código, o varios artículos lo comparten**, compara el aspecto con las fotos que tú mismo registraste (por ejemplo, la pegatina de cada sabor). Funciona sin internet.
 - Al reconocer algo: **vibración corta** y ficha con el nombre en tamaño enorme. Si no reconoce nada, lo avisa con una doble vibración y te deja registrarlo.
@@ -45,26 +45,26 @@ Y alrededor de esa idea, todo lo que hace falta para hacer la compra sin complic
 
 ```mermaid
 flowchart LR
-    C[📷 Cámara] --> B{¿Código<br/>de barras?}
+    C[Cámara] --> B{¿Código<br/>de barras?}
     B -->|único| R
     B -->|varios iguales<br/>o ninguno| V[Aspecto del producto<br/>MobileNet V3 en el móvil]
-    V -->|parecido ≥ 0,80, ventaja ≥ 0,05<br/>y 3 fotogramas seguidos| R[✅ Reconocido]
-    V -->|6 s sin resultado| N[❓ «No lo reconozco»<br/>→ registrarlo]
-    R --> H[📳 Vibración + ficha grande]
+    V -->|parecido ≥ 0,80, ventaja ≥ 0,05<br/>y 3 fotogramas seguidos| R[Reconocido]
+    V -->|6 s sin resultado| N[«No lo reconozco»<br/>→ registrarlo]
+    R --> H[Vibración + ficha grande]
 ```
 
-### 🏪 Tus supermercados
+### Tus supermercados
 - **Al instalarla, busca por ti** las cadenas que tienes cerca (con tu ubicación, solo en ese momento) y las añade: eliges cuáles.
 - Ficha de cada tienda con **horario y «abierto/cerrado ahora»**, botón **Cómo llegar** y acceso a **la app oficial** de la cadena (Mercadona, Carrefour, Lidl, Aldi, Dia, Hipercor / El Corte Inglés, Alcampo, Consum, Eroski y BM).
 - **Tarjeta de cliente**: la escaneas una vez (o escribes el número) y se muestra a pantalla completa, con el brillo al máximo, lista para la caja.
 - **Acceso directo** en la pantalla de inicio a cualquier tienda.
 
-### 🛒 La lista y los gastos
+### La lista y los gastos
 - Productos agrupados por tienda, con total estimado, cantidades editables y marcado de lo comprado.
 - **Compartir la lista** (solo lo pendiente) por WhatsApp, correo…, o copiarla y abrir la app de la tienda.
 - Historial de compras por meses, repetir una compra anterior con un toque.
 
-### ♿ Accesible de verdad
+### Accesible de verdad
 - **Tamaño de texto** pequeño, normal, grande y **muy grande**: las pantallas cambian a un diseño apilado para que ninguna tarjeta se deforme.
 - Espaciado, **alto contraste**, modo claro/oscuro/sistema y 7 colores de tema.
 - Botones y zonas táctiles grandes (≥ 56 dp).
@@ -79,7 +79,7 @@ flowchart LR
   </tr>
 </table>
 
-## 🔒 Privacidad: qué sale del móvil
+## Privacidad: qué sale del móvil
 
 Sin cuentas, sin anuncios, sin analíticas. Tus tiendas, productos, fotos y tarjeta **se guardan solo en el móvil**. Las imágenes de la cámara se procesan en el dispositivo y nunca se suben.
 
@@ -92,7 +92,7 @@ La app hace solo estas dos consultas a internet, y solo cuando tú lo pides:
 
 El permiso de ubicación puede ser **aproximado**. Aparte, el sistema Android puede incluir los datos de la app en su copia de seguridad, como con cualquier otra app.
 
-## 🛠️ Para desarrolladores
+## Para desarrolladores
 
 **Requisitos:** Android Studio reciente (o JDK 21) y un móvil o emulador con **Android 12 (API 31)** o superior.
 
@@ -133,7 +133,7 @@ La lógica delicada es **pura Kotlin y está probada** (más de 40 tests con dat
 
 El proyecto cumple con tamaños de página de **16 KB** (requisito de Android 15+): se comprobó que las librerías nativas van alineadas.
 
-## ⚠️ Limitaciones conocidas
+## Limitaciones conocidas
 
 - Los umbrales del reconocimiento visual (`RecognitionConfig`) son una primera estimación; hay que **calibrarlos con latas reales** de aspecto casi idéntico.
 - Los servidores públicos de Overpass se saturan a veces: la app prueba un segundo servidor y, si no hay suerte, deja continuar sin tiendas.

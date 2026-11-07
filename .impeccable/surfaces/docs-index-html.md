@@ -7,16 +7,16 @@ related_targets: []
 
 # Landing (docs/index.html)
 
-Modo: Persuade. Visitante: cualquiera que haga la compra, con atención a quien tiene dificultades visuales o cognitivas; decide si instalar un APK gratuito fuera de Google Play. Acción: descargar. Prueba: capturas reales de la app (datos de demostración), huella de firma, tabla de privacidad. Restricciones: HTML/CSS estático, sin JS ni fuentes externas, español, GitHub Pages.
+Modo: Persuade. Visitante: cualquiera que haga la compra, con atención a quien tiene dificultades visuales o cognitivas; decide si instalar un APK gratuito fuera de Google Play. Acción: descargar. Enfoque (segunda ronda): «toda tu compra en un sitio»: tiendas cercanas, tarjeta de cliente, lista por tienda, gastos y letras grandes; el reconocimiento de productos es una función más. Prueba: capturas reales (datos de demostración), huella de firma, tabla de privacidad. Restricciones: HTML/CSS estático, sin JS, fuente alojada en la propia web (Bricolage Grotesque, OFL), español, GitHub Pages.
 
-Dirección elegida: la opción clásica de la categoría, ejecutada a fondo (referencia de oficio: Bring!). Momento memorable: dos latas iguales y dos pantallas reales con el nombre enorme de cada sabor.
+Dirección elegida por el usuario: «Cartera de tarjetas» (la favorita de mi lista, no la asignada). Momento memorable: las tarjetas de la cartera se apilan al desplazarse y cada una enseña una función con su móvil real asomando por abajo.
 
-Pendiente: sustituir las capturas por otras en móvil real cuando existan; fotos reales de latas no disponibles.
+Pendiente: capturas en móvil real cuando existan.
 
 ## Direction contract
-THESIS: una página de app clásica y nítida: una promesa, un móvil real, un botón. Rechaza tarjetas icono+título, kickers sobre el titular, brillos y fondos crema con serifa; la prueba es la interfaz real.
-OWN-WORLD: campo verde de marca a pantalla completa en la cabecera, suelo neutro teñido de verde, tinta verde oscuro, ámbar solo para foco y números de paso; display system-ui 800, cuerpo 19 px; sombras neutras con desplazamiento; móviles reales en bisel oscuro liso; franjas verde/blanco/negro solo en el pie.
-STORY: entiende que la app dice qué es un producto al apuntarlo, cree porque ve pantallas reales, límites honestos y un APK verificable, e instala.
-FIRST VIEWPORT: campo verde; a la izquierda H1 «Apunta al producto. El móvil te dice qué es.» (~4.5 rem) con una frase de apoyo y botón blanco «Descargar gratis para Android» (≥56 px) más enlace «Cómo se instala»; debajo, hechos en una línea; a la derecha un móvil real de 300 px con la ficha «Lata gato · Salmón».
-FORM: salida estándar de la categoría (la puerta del usuario, no está en la lista ordenada); seed:d7799f3413931fdf.
+THESIS: la web es un monedero: cada función es una tarjeta de color que se apila sobre la anterior; rechaza la rejilla de tarjetas iguales con icono y el héroe centrado en una sola función.
+OWN-WORLD: suelo neutro frío teñido de verde; seis tarjetas de esquinas muy redondeadas, cada una de un color propio (verde, azul tinta, terracota, ámbar, blanca, tinta oscura) con texto de alto contraste; titulares en Bricolage Grotesque 800 algo condensada; móviles reales asomando por el borde inferior de cada tarjeta; sombras neutras con desplazamiento.
+STORY: entiende que todo lo de la compra cabe en una app, cree porque ve cada función en su pantalla real y límites honestos, e instala.
+FIRST VIEWPORT: a la izquierda H1 «Toda tu compra en un sitio.» (~5 rem), una frase de apoyo y botón verde «Descargar gratis para Android» (≥56 px); a la derecha tres miniaturas de tarjeta en abanico (Tiendas, Tarjeta de cliente, Lista) con recortes reales de la interfaz.
+FORM: «Cartera de tarjetas», mi candidata nº 1 (carta «pick»; el sorteo asignó la nº 5); seed:fc06968cf4b66893.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

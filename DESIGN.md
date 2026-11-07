@@ -2,49 +2,45 @@
 
 > Alcance: la landing estática de GitHub Pages (`docs/index.html` + `docs/assets/site.css`). La interfaz de la app Android tiene su propio tema en Compose y no se rige por este documento.
 
-## Dirección
-La opción **clásica de la categoría, ejecutada a fondo** (nivel de oficio de referencia: Bring!). Una promesa, un móvil real, un botón. La prueba es la interfaz verdadera de la app, no ilustraciones. Sin kickers sobre el titular, sin tarjetas de icono + título, sin degradados de texto ni brillos.
+## Dirección: «Cartera de tarjetas»
+La web es un monedero. Cada función de la app es una tarjeta de color con esquinas muy redondeadas que se apila sobre la anterior al desplazarse; el móvil real de cada función asoma por su borde inferior. El enfoque es **«toda tu compra en un sitio»** (tiendas, tarjeta de cliente, lista, gastos, letras grandes) y el reconocimiento de productos es una tarjeta más, la última.
+Se rechaza la rejilla de tarjetas iguales con icono, el kicker sobre el titular, los brillos y los degradados de texto.
 
 ## Color
-Estrategia *Committed*: un verde de marca ocupa la cabecera completa; el resto es un suelo neutro teñido de verde.
+Estrategia *Full palette*: seis tarjetas con color propio sobre un suelo neutro teñido de verde.
 
-| Rol | Claro | Oscuro |
+| Tarjeta | Fondo | Texto |
 |---|---|---|
-| `--field` (cabecera) | `#145A29` | `#0F4A21` |
-| `--field-deep` (instalar, pie) | `#0B2F18` | `#071A0E` |
-| `--ground` | `#F4F7F3` | `#0D1510` |
-| `--ink` | `#13241A` | `#E9F1EA` |
-| `--ink-2` (secundario, teñido) | `#3C5143` | `#B5C7B9` |
-| `--line` | `#D5DED6` | `#2A3A2E` |
-| `--accent` (foco y números de paso) | `#FFC83D` | igual |
+| Tus supermercados | `#145A29` verde | blanco |
+| Tarjeta de cliente | `#1E3A8A` azul tinta | blanco |
+| La lista | `#A93C1A` terracota | blanco |
+| Gastos | `#FFC83D` ámbar | `#1B1405` |
+| Letras grandes | blanca (`#1D2923` en oscuro) | tinta |
+| Reconoce productos | `#16221B` tinta | blanco |
 
-Todo el texto cumple ≥ 4,5:1 (el cuerpo supera 7:1). Tinte siempre desde el verde, nunca gris neutro. Franjas verde `#00843D` · blanco · negro `#111` solo en el pie (guiño a la bandera de Extremadura).
+Suelo `#E8EDE9` (oscuro `#0C110E`), tinta `#13201A` / secundaria `#3B4F43`, sección de instalar y pie `#0B2F18`. Ámbar para foco y números de paso. Todo el texto cumple ≥ 4,5:1. Franjas verde `#00843D` · blanco · negro `#111` solo en el pie (guiño a la bandera de Extremadura).
 
 ## Tipografía
-Pila del sistema (`system-ui`): sin fuentes externas ni peticiones de terceros, coherente con la política de privacidad.
-- Cuerpo **19 px / 1,6**, medida máx. ~36–46 em (≤ 70 caracteres).
-- Display: peso 800, interlineado 1,08, tracking −0,02 em, `text-wrap: balance`. H1 `clamp(2.5rem, 1.4rem + 3.6vw, 4.4rem)` (≤ 6 rem); H2 hasta 3,1 rem; H3 hasta 1,75 rem.
-- `text-wrap: pretty` en párrafos y listas. Cifras tabulares en la huella SHA‑256.
+- **Bricolage Grotesque** (OFL 1.1, de Mathieu Triay), alojada en `docs/fonts/` junto a su `OFL.txt`: sin peticiones a terceros. Titulares en peso 800 y `font-stretch: 88%`, `text-wrap: balance`. Titular principal hasta 5,6 rem.
+- Cuerpo en la tipografía del sistema, **19 px / 1,6** (legibilidad ante todo para baja visión), medida ≤ ~70 caracteres.
 
 ## Espacio y forma
-Secciones con 104 px de relleno vertical (64 px en móvil) y 20 px laterales como *padding*. Contenedor 1160 px (820 px en preguntas). Radios: botón 16, panel 22, móvil 40/32. Sombras siempre con desplazamiento y desenfoque, neutras (`rgba(0,0,0,…)`), nunca halos de color.
+Tarjetas: radio 36 px (28 en móvil), sombra neutra con desplazamiento, 500 px de alto mínimo, el móvil sale por abajo con el borde inferior recortado. Secciones con 104 px de relleno (64 en móvil) y 20 px laterales. Botón principal 60 px de alto, radio 18.
 
 ## Componentes
-- **Botón principal**: blanco sobre verde, 60 px de alto, peso 800; en móvil, ancho completo. Foco: anillo ámbar de 3 px.
-- **Móvil**: bisel `#101512` liso con captura real; se recorta la barra de estado con `object-fit: cover; object-position: bottom`.
-- **Pasos**: lista ordenada con número circular (verde en claro, ámbar en la sección oscura); el texto es un bloque, no una cuadrícula.
-- **Filas de función**: texto + captura, alternando lados; separadas por una línea, sin tarjetas.
-- **Tabla de privacidad**: tabla real con `<caption>` y `th scope`; en móvil se apila con etiquetas `data-l`.
-- **Preguntas**: `<details>` con `+` / `–` como indicador.
+- **Abanico de la cabecera**: tres miniaturas de tarjeta (3:2) con recortes reales de la interfaz (tiendas, tarjeta de cliente, lista), inclinadas y superpuestas.
+- **Tarjeta (`.pass`)**: texto a un lado, móvil real al otro, alternando lados; en el modo escritorio con altura suficiente se apila con `position: sticky` (14 px de asomo por tarjeta), sin JavaScript.
+- **Móvil**: bisel `#101512` liso; se recorta la barra de estado con margen negativo proporcional.
+- **Pasos**: lista con número circular ámbar. **Tabla de privacidad**: tabla real con `<caption>` y `th scope`; apilada con etiquetas `data-l` en móvil. **Preguntas**: `<details>` con `+` / `–`.
 
 ## Movimiento
-Un único momento: el móvil de la cabecera sube 28 px al cargar (`cubic-bezier(.16,1,.3,1)`, `transform` solo, contenido visible por defecto). `prefers-reduced-motion` lo desactiva todo.
+Un único momento: al cargar, las tres miniaturas «se reparten» (suben 30 px). Más el apilado sticky, que es CSS puro. `prefers-reduced-motion` lo desactiva todo.
 
 ## Superficies del navegador
-`::selection` ámbar, `caret-color` y `accent-color` verdes, `scrollbar-color`, subrayado con `text-underline-offset`, `color-scheme: light dark` y `theme-color` por esquema.
+`::selection` ámbar, `caret-color` / `accent-color` / `scrollbar-color` verdes, subrayado con `text-underline-offset`, `color-scheme: light dark`, `theme-color` por esquema, cifras tabulares en la huella SHA‑256.
 
 ## Accesibilidad
-Enlace «Saltar al contenido», un solo `h1`, jerarquía de títulos sin saltos, `alt` descriptivo en cada captura, objetivos táctiles ≥ 48 px, foco visible, sin JavaScript.
+Enlace «Saltar al contenido», un `h1`, títulos en orden, `alt` descriptivo en cada captura, objetivos táctiles ≥ 48 px, foco visible, sin JavaScript y funcional en modo oscuro y a 200 % de zoom.
 
 ## Procedencia de las imágenes
-Las 7 capturas de `docs/img/` son **capturas reales** de la app en un emulador Pixel_10 con datos de demostración; cada PNG lleva su origen incrustado (`impeccable embed-prompt`). No hay imágenes generadas.
+Las 8 capturas de `docs/img/` son **capturas reales** de la app en un emulador Pixel_10 con datos de demostración; cada PNG lleva su origen incrustado. No hay imágenes generadas.

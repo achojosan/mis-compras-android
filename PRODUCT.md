@@ -31,7 +31,7 @@ Se usa de pie en el supermercado, con una mano, a veces con poca luz, el móvil 
 - Nombre: **Mis Compras**. Idioma: español (es-ES).
 - **«Hecha en Extremadura»** debe constar (petición expresa del autor); autor: Josan (@achojosan), contacto achojosan@proton.me.
 - Conservar el contenido de la **guía de instalación** (incluida la nota de Play Protect y la huella SHA-256 de la firma) y de **privacidad** (qué sale del móvil).
-- **Preferencia fija para la landing (confirmada):** la opción clásica de la categoría, ejecutada a fondo y sin ironía, al nivel de oficio de **Bring!** (claridad: una promesa, un móvil real, un botón).
+- **Landing, segunda ronda (confirmada):** el enfoque de la web pasa a ser **«toda tu compra en un sitio»** (tiendas cercanas con horario, tarjeta de cliente, lista por tienda, gastos, accesibilidad); el reconocimiento de productos es **una función más**, no el protagonista. Se explora **otra dirección visual**; el estilo clásico anterior ya no es vinculante.
 - No hay otro compromiso visual vinculante: el diseño anterior se reemplaza por completo.
 
 ## Evidence on Hand

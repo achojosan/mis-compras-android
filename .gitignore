@@ -28,3 +28,18 @@ keystore.properties
 *.apk
 *.aab
 brag-output/
+
+# impeccable-ignore-start
+# Salida efímera y estado de ejecución de la herramienta de diseño (los briefs de surfaces/ sí se versionan)
+**/.impeccable/config.local.json
+**/.impeccable/hook.cache.json
+**/.impeccable/hook.pending.json
+**/.impeccable/*.png
+**/.impeccable/review/
+**/.impeccable/questions/
+**/.impeccable/live/server.json
+**/.impeccable/live/sessions/
+**/.impeccable/live/previews/
+**/.impeccable/live/annotations/
+**/.impeccable/live/cache/
+# impeccable-ignore-end

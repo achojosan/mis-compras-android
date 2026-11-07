@@ -24,8 +24,8 @@ android {
         applicationId = "app.miscompras.com"
         minSdk = 31
         targetSdk = 35
-        versionCode = 9
-        versionName = "1.8"
+        versionCode = 10
+        versionName = "1.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -43,6 +43,9 @@ android {
 
     buildTypes {
         release {
+            // El APK de descarga solo lleva librerías para arm64 (prácticamente todos los móviles con
+            // Android 12+); con todas las arquitecturas pasaba de 150 MB. Debug las conserva para emuladores x86.
+            ndk { abiFilters += listOf("arm64-v8a") }
             if (keystoreProps.isNotEmpty()) {
                 signingConfig = signingConfigs.getByName("release")
             }

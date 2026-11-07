@@ -25,7 +25,7 @@ Organiza tus supermercados, reconoce los productos con la cámara y lleva tu tar
 
 ---
 
-> **Página de presentación y descarga:** [`docs/index.html`](docs/index.html) (lista para publicar con GitHub Pages desde la carpeta `docs/`).
+> **Página de presentación y descarga:** <https://achojosan.github.io/mis-compras-android/> (el código está en [`docs/`](docs/index.html)).
 
 ## ¿Por qué existe?
 

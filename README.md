@@ -25,6 +25,8 @@ Organiza tus supermercados, reconoce los productos con la cámara y lleva tu tar
 
 ---
 
+> 🌐 **Página de presentación y descarga:** [`docs/index.html`](docs/index.html) (lista para publicar con GitHub Pages desde la carpeta `docs/`).
+
 ## ¿Por qué existe?
 
 Hay quien no puede fiarse de los ojos para distinguir un producto de otro. Dos latas de comida para gatos con **el mismo envase** y solo una pegatina distinta en la tapa para indicar el sabor; dos botes casi idénticos; una etiqueta demasiado pequeña. Mis Compras nació para resolver eso:

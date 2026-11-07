@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mis Compras · la lista de la compra que se entiende a simple vista</title>
+<meta name="description" content="App Android para hacer la compra: reconoce productos con la cámara, busca tus supermercados, guarda tu tarjeta de cliente y se adapta a quien la usa. Hecha en Extremadura.">
+<meta property="og:title" content="Mis Compras — la lista de la compra que se entiende a simple vista">
+<meta property="og:description" content="Apunta la cámara a un producto y el móvil te dice qué es, con letras enormes. Hecha en Extremadura.">
+<meta property="og:image" content="assets/social-preview.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2E7D32">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232E7D32'/%3E%3Cpath fill='%23FFFCF5' d='M9 9h2l2 8h8l2-6H12l-.5-2H7.5V7H11l.5 2h12.5l-3 8H12.4l-.4-1.5L9.8 9z M13 22a1.5 1.5 0 1 0 0 .01zM21 22a1.5 1.5 0 1 0 0 .01z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<!-- ======= Cabecera + hero ======= -->
+<header class="hero">
+  <nav class="nav" aria-label="Principal">
+    <div class="wrap">
+      <a class="brand" href="#"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0020 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></i>Mis Compras</a>
+      <a class="link" href="#instalar">Instalar</a>
+    </div>
+  </nav>
+
+  <div class="wrap grid" id="contenido">
+    <div>
+      <span class="eyebrow">App Android · Hecha en Extremadura</span>
+      <h1>La lista de la compra que se entiende a simple vista</h1>
+      <p class="lead">Apunta la cámara a un producto, el móvil vibra y te dice qué es con letras enormes. Pensada para quien no puede fiarse de los ojos para distinguir una lata de otra.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/achojosan/mis-compras-android/releases/latest" id="descargar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Descargar para Android
+        </a>
+        <a class="btn ghost" href="#funciones">Ver qué hace</a>
+      </div>
+      <p class="meta">Versión 1.9 · unos 78 MB · Android 12 o superior</p>
+      <ul class="badges" aria-label="Características">
+        <li>Sin cuentas</li><li>Sin anuncios</li><li>Reconoce sin internet</li>
+      </ul>
+    </div>
+    <div class="phones" aria-hidden="true">
+      <div class="phone p1"><img src="screenshots/tiendas.png" alt="" width="560" height="1257"></div>
+      <div class="phone p2"><img src="screenshots/ficha-tienda.png" alt="" width="560" height="1257"></div>
+    </div>
+  </div>
+  <img class="hills" src="assets/hills.svg" alt="" aria-hidden="true">
+</header>
+
+<main>
+<!-- ======= El problema ======= -->
+<section class="problem" aria-labelledby="t-problema">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow">Por qué existe</span>
+      <h2 id="t-problema">Dos latas iguales. Solo cambia la pegatina.</h2>
+      <p class="lead">Hay quien no puede fiarse de los ojos para distinguir un producto de otro: latas de comida para gatos con el mismo envase y solo una pegatina para indicar el sabor, botes casi idénticos, etiquetas diminutas.</p>
+      <blockquote>Apuntas la cámara → el móvil <strong>vibra</strong> → una pantalla con <strong>letras enormes</strong> te dice qué es.</blockquote>
+    </div>
+    <div class="cans" aria-hidden="true">
+      <div class="can a"><div class="tin"><b>Salmón</b></div>Lata gato<small>Salmón</small></div>
+      <div class="can b"><div class="tin"><b>Pollo</b></div>Lata gato<small>Pollo</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Funciones ======= -->
+<section id="funciones" aria-labelledby="t-funciones">
+  <div class="wrap">
+    <span class="eyebrow">Qué hace</span>
+    <h2 id="t-funciones">Todo lo de la compra, en un sitio</h2>
+    <p class="lead">Reconoce lo que llevas en la mano y organiza lo que te falta por comprar.</p>
+    <div class="features">
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM9 2 7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>
+        <h3>Reconoce productos</h3><p>Por código de barras o, si no lo hay, por su aspecto: tú registras una foto de cada sabor y la app lo distingue, sin internet.</p></article>
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <h3>Encuentra tus supermercados</h3><p>Al empezar, busca las cadenas que tienes cerca y las añade por ti. Ves su horario, si están abiertas ahora y cómo llegar.</p></article>
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg></div>
+        <h3>Tu tarjeta de cliente</h3><p>Escanéala una vez, sea código de barras o QR, y se muestra a pantalla completa con el brillo al máximo, lista para la caja.</p></article>
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0020 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></div>
+        <h3>Lista y gastos</h3><p>Productos agrupados por tienda, total estimado, historial por meses y la lista lista para compartir por WhatsApp.</p></article>
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 6c-2.61.7-5.67 1-8.5 1s-5.89-.3-8.5-1L3 8c1.86.5 4 .83 6 1v13h2v-6h2v6h2V9c2-.17 4.14-.5 6-1l-.5-2zM12 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg></div>
+        <h3>Hecha para verse bien</h3><p>Texto pequeño, normal, grande o muy grande sin que nada se deforme; alto contraste, modo oscuro y botones grandes.</p></article>
+      <article class="card"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+        <h3>Tus datos, en tu móvil</h3><p>Sin cuentas ni anuncios. Las fotos de la cámara se procesan en el móvil y nunca se suben.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Cómo empezar ======= -->
+<section class="steps" aria-labelledby="t-pasos">
+  <div class="wrap">
+    <span class="eyebrow">Tres pasos</span>
+    <h2 id="t-pasos">Empezar es muy sencillo</h2>
+    <ol>
+      <li><h3>Instálala</h3><p>Descarga el APK y ábrelo. Más abajo te explicamos cómo, paso a paso.</p></li>
+      <li><h3>Deja que busque tus tiendas</h3><p>Si quieres, usa tu ubicación una sola vez para encontrar los supermercados cercanos. Tú eliges cuáles añadir.</p></li>
+      <li><h3>Apunta y listo</h3><p>Registra una vez tus productos con la cámara; después, solo tienes que apuntar y el móvil te dirá cuál es.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ======= Capturas ======= -->
+<section aria-labelledby="t-capturas">
+  <div class="wrap">
+    <span class="eyebrow">Así se ve</span>
+    <h2 id="t-capturas">Capturas reales</h2>
+    <p class="lead">Datos de demostración con productos extremeños: Torta del Casar, Queso de la Serena, Cerezas del Jerte…</p>
+  </div>
+  <div class="wrap">
+    <div class="gallery" tabindex="0" role="region" aria-label="Capturas de la aplicación; desplázate hacia los lados">
+      <figure><div class="phone"><img loading="lazy" src="screenshots/tiendas.png" alt="Pantalla principal con las tiendas, el número de productos y el progreso de cada compra" width="560" height="1257"></div><figcaption>Tus tiendas</figcaption></figure>
+      <figure><div class="phone"><img loading="lazy" src="screenshots/ficha-tienda.png" alt="Ficha de Mercadona con horario, cómo llegar y botón de la tarjeta de cliente" width="560" height="1257"></div><figcaption>Cada tienda</figcaption></figure>
+      <figure><div class="phone"><img loading="lazy" src="screenshots/productos.png" alt="Lista de productos de una tienda con precios y productos ya comprados" width="560" height="1257"></div><figcaption>Productos</figcaption></figure>
+      <figure><div class="phone"><img loading="lazy" src="screenshots/tarjeta-cliente.png" alt="Tarjeta de cliente mostrada como código de barras" width="560" height="1257"></div><figcaption>Tarjeta de cliente</figcaption></figure>
+      <figure><div class="phone"><img loading="lazy" src="screenshots/reconocer.jpg" alt="Pantalla de reconocimiento con la cámara y un marco guía" width="560" height="1257"></div><figcaption>Reconocer</figcaption></figure>
+      <figure><div class="phone"><img loading="lazy" src="screenshots/lista.png" alt="Lista de la compra agrupada por supermercado" width="560" height="1257"></div><figcaption>Lista de la compra</figcaption></figure>
+      <figure><div class="phone"><img loading="lazy" src="screenshots/gastos.png" alt="Gasto del mes y compras agrupadas por meses" width="560" height="1257"></div><figcaption>Gastos</figcaption></figure>
+      <figure><div class="phone"><img loading="lazy" src="screenshots/texto-muy-grande.png" alt="Pantalla principal con el tamaño de texto muy grande, sin elementos deformados" width="560" height="1257"></div><figcaption>Texto muy grande</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Instalar ======= -->
+<section class="install" id="instalar" aria-labelledby="t-instalar">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow" style="color:#FFE08A">Instalar</span>
+      <h2 id="t-instalar">Descárgala e instálala en un minuto</h2>
+      <p class="lead">Mis Compras se distribuye como archivo APK, fuera de Google Play. Android te lo avisará: es lo normal con las apps que no vienen de la tienda.</p>
+      <ol>
+        <li>Pulsa <strong>Descargar para Android</strong> desde tu móvil y guarda el archivo.</li>
+        <li>Ábrelo. Si Android te lo pide, activa <strong>«Permitir desde esta fuente»</strong> para tu navegador o gestor de archivos.</li>
+        <li>Pulsa <strong>Instalar</strong> y, al terminar, <strong>Abrir</strong>. ¡Listo!</li>
+      </ol>
+    </div>
+    <div class="box">
+      <p style="margin-top:0"><a class="btn primary" href="https://github.com/achojosan/mis-compras-android/releases/latest">Descargar APK</a></p>
+      <p><strong>Requisitos:</strong> Android 12 o superior · unos 78 MB libres.</p>
+      <details>
+        <summary>Comprobar que el archivo es el original</summary>
+        <p style="margin:10px 0 0">Todas las versiones van firmadas con la misma clave. Huella SHA‑256 del certificado:</p>
+        <code>f78c9ebe45721ac17c8e1627f0c8b01a0755d4716425c8fd4307fcf23385b4d5</code>
+        <p style="margin:10px 0 0;font-size:.95rem">Puedes comprobarla con <em>apksigner verify --print-certs</em>.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Privacidad ======= -->
+<section class="privacy" aria-labelledby="t-priv">
+  <div class="wrap">
+    <span class="eyebrow">Privacidad</span>
+    <h2 id="t-priv">Qué sale de tu móvil (casi nada)</h2>
+    <p class="lead">Sin cuentas, sin anuncios, sin analíticas. Solo hay dos consultas a internet, y únicamente cuando tú lo pides.</p>
+    <div class="grid">
+      <article class="card"><span class="pill">Ubicación</span><h3>Buscar tiendas</h3><p>Al pulsar «Buscar tiendas cercanas» se envían tus coordenadas aproximadas a los servidores públicos de OpenStreetMap. Puede ser ubicación aproximada.</p></article>
+      <article class="card"><span class="pill">Código de barras</span><h3>Autocompletar</h3><p>Al registrar un producto nuevo se consulta Open Food Facts solo con el código, para rellenar el nombre.</p></article>
+      <article class="card"><span class="pill">Nada más</span><h3>Todo lo demás, local</h3><p>Tiendas, productos, fotos, tarjeta de cliente y reconocimiento se quedan en tu móvil.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ======= FAQ ======= -->
+<section class="faq" aria-labelledby="t-faq">
+  <div class="wrap" style="max-width:820px">
+    <span class="eyebrow">Dudas</span>
+    <h2 id="t-faq">Preguntas frecuentes</h2>
+    <details><summary>¿Necesita internet?</summary><p>Casi nunca. Reconocer productos, la lista, los gastos y la tarjeta de cliente funcionan sin conexión. Solo hace falta para buscar tiendas cercanas y para autocompletar el nombre de un código nuevo.</p></details>
+    <details><summary>¿Con qué supermercados funciona?</summary><p>Busca Mercadona, Carrefour, Lidl, Aldi, Dia, Hipercor / El Corte Inglés, Alcampo, Consum, Eroski y BM, y puede abrir la app oficial de cada una. Puedes añadir cualquier otra tienda a mano.</p></details>
+    <details><summary>La tarjeta de mi supermercado es un QR, ¿sirve?</summary><p>Sí: la app lee y vuelve a dibujar códigos de barras y QR. Ten en cuenta que algunas cadenas renuevan el QR de su app cada pocos minutos; en ese caso una copia no valdría en caja y es mejor abrir la app de la tienda desde Mis Compras.</p></details>
+    <details><summary>¿Reconocerá cualquier producto?</summary><p>Los que tengan código de barras, sí. Los de aspecto casi idéntico (como dos sabores con la misma lata) los distingue a partir de las fotos que registres tú. Es un sistema nuevo y se está afinando con productos reales.</p></details>
+    <details><summary>¿Hay versión para iPhone?</summary><p>Por ahora solo para Android 12 o superior.</p></details>
+    <details><summary>¿Por qué ocupa unos 78 MB?</summary><p>Lleva dentro el modelo que reconoce productos y los lectores de códigos, para que funcionen sin internet.</p></details>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Mis Compras</strong> · hecha con cariño en <strong>Extremadura</strong> por Josan</p>
+    <p><a href="https://github.com/achojosan/mis-compras-android">Código en GitHub</a> · <a href="mailto:achojosan@proton.me">achojosan@proton.me</a></p>
+    <p style="font-size:.85rem;opacity:.75">Los logotipos de las cadenas pertenecen a sus propietarios. Mis Compras es independiente y no está afiliada a ninguna. Mapas © colaboradores de OpenStreetMap · Productos: Open Food Facts.</p>
+  </div>
+  <div class="tri" aria-hidden="true"><i style="background:#007A3D"></i><i style="background:#fff"></i><i style="background:#1A1A1A"></i></div>
+</footer>
+</body>
+</html>

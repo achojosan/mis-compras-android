@@ -106,7 +106,7 @@ blockquote{margin:22px 0 0;padding:18px 22px;border-left:5px solid var(--amber);
 .install a{color:#FFE08A}
 
 /* privacidad + faq */
-.privacy .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px}
+.privacy .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:34px}
 .pill{display:inline-block;background:var(--amber-soft);color:#7A5300;font-weight:800;font-size:.8rem;border-radius:999px;padding:4px 12px;margin-bottom:12px}
 @media (prefers-color-scheme:dark){.pill{color:#FFD97A}}
 .faq details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 22px;margin:12px 0}

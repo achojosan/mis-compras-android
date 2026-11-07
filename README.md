@@ -64,6 +64,12 @@ flowchart LR
 - **Compartir la lista** (solo lo pendiente) por WhatsApp, correo…, o copiarla y abrir la app de la tienda.
 - Historial de compras por meses, repetir una compra anterior con un toque.
 
+### Se actualiza desde la propia app
+- Al abrir la app avisa si hay una versión nueva en GitHub y la descarga e instala con un toque; no hace falta volver a la web.
+- Antes de instalar comprueba el **SHA-256** del archivo, y Android exige además que lleve **la misma firma** que la app instalada.
+- Se puede desactivar en Ajustes y también buscar a mano.
+- Google Play Protect puede preguntar al final (no conoce la app): elige «Instalar sin analizar» o «Analizar app».
+
 ### Accesible de verdad
 - **Tamaño de texto** pequeño, normal, grande y **muy grande**: las pantallas cambian a un diseño apilado para que ninguna tarjeta se deforme.
 - Espaciado, **alto contraste**, modo claro/oscuro/sistema y 7 colores de tema.
@@ -83,14 +89,15 @@ flowchart LR
 
 Sin cuentas, sin anuncios, sin analíticas. Tus tiendas, productos, fotos y tarjeta **se guardan solo en el móvil**. Las imágenes de la cámara se procesan en el dispositivo y nunca se suben.
 
-La app hace solo estas dos consultas a internet, y solo cuando tú lo pides:
+La app hace solo estas consultas a internet, y todas son opcionales:
 
 | Cuándo | Qué se envía | A quién |
 |---|---|---|
 | «Buscar tiendas cercanas» (al empezar) o «Buscar sucursal» | Tus coordenadas aproximadas | Servidores públicos de [Overpass](https://overpass-api.de) (OpenStreetMap) |
 | Registrar un artículo con código de barras | Solo ese código | [Open Food Facts](https://world.openfoodfacts.org) |
+| Al abrir la app (como mucho una vez al día) o «Buscar actualizaciones» | Una petición a la API de GitHub para saber si hay versión nueva (tu IP, sin datos personales) | [GitHub](https://github.com) |
 
-El permiso de ubicación puede ser **aproximado**. Aparte, el sistema Android puede incluir los datos de la app en su copia de seguridad, como con cualquier otra app.
+El aviso de actualizaciones se puede **desactivar** en Ajustes. El permiso de ubicación puede ser **aproximado**. Aparte, el sistema Android puede incluir los datos de la app en su copia de seguridad, como con cualquier otra app.
 
 ## Para desarrolladores
 
@@ -103,6 +110,8 @@ cd mis-compras-android
 ./gradlew testDebugUnitTest      # tests unitarios
 ./gradlew assembleDebug          # APK de depuración en app/build/outputs/apk/debug/
 ```
+
+**Actualizador integrado:** usa el permiso `REQUEST_INSTALL_PACKAGES`, que Google Play restringe. Una futura versión para Play debería compilarse sin el actualizador.
 
 **APK firmado (release):** la firma no está en el repositorio. Copia `keystore.properties.example` a `keystore.properties` (ignorado por git), pon los datos de tu keystore y ejecuta `./gradlew assembleRelease`. Sin ese fichero se genera un APK **sin firmar**.
 

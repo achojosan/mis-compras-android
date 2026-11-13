@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8">
+<title>Vista previa social</title>
+<style>
+@font-face{font-family:"Bricolage Grotesque";src:url("../../fonts/bricolage-grotesque.ttf") format("truetype");font-weight:200 800;font-stretch:75% 100%}
+*{box-sizing:border-box;margin:0}
+body{width:1200px;height:630px;overflow:hidden;position:relative;background:#0C110E;color:#E9F0EB;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.glow{position:absolute;right:-120px;top:-60px;width:760px;height:760px;border-radius:50%;background:radial-gradient(circle,rgba(30,110,55,.55),rgba(12,17,14,0) 68%)}
+.brand{position:absolute;left:72px;top:58px;display:flex;align-items:center;gap:16px;font:700 28px "Bricolage Grotesque";letter-spacing:-.01em}
+.brand i{width:52px;height:52px;border-radius:14px;background:#145A29;display:grid;place-items:center}
+.brand svg{width:30px;height:30px}
+h1{position:absolute;left:72px;top:160px;width:560px;font:800 88px/1 "Bricolage Grotesque";font-stretch:85%;letter-spacing:-.01em}
+p{position:absolute;left:72px;top:372px;width:520px;font-size:28px;line-height:1.35;color:#B7C6BC}
+.chips{position:absolute;left:72px;bottom:56px;display:flex;gap:14px}
+.chips b{font:700 24px system-ui;padding:12px 24px;border-radius:999px;background:#FFC83D;color:#1a1500}
+.chips span{font:600 24px system-ui;padding:12px 24px;border-radius:999px;border:2px solid #3B5444;color:#DDE8E0}
+.phone{position:absolute;padding:8px;border-radius:44px;background:#0F1512;box-shadow:0 30px 50px -16px rgba(0,0,0,.8),inset 0 0 0 2px rgba(255,255,255,.14);height:520px}
+.phone img{height:100%;display:block;border-radius:36px;background:#fff}
+.a{left:672px;top:70px;transform:rotate(-4deg)}
+.b{left:902px;top:112px;transform:rotate(4deg)}
+</style>
+<div class="glow"></div>
+<div class="brand"><i><svg viewBox="0 0 32 32"><path fill="#fff" d="M8 9h2.2l.5 2H24l-2.4 7.2a1.5 1.5 0 0 1-1.4 1H12.4l.4 1.3h9v1.8H11.5L9.1 10.8H8zM13 25a1.6 1.6 0 1 1 0 .01zM20.5 25a1.6 1.6 0 1 1 0 .01z"/></svg></i>Mis Compras</div>
+<h1>Toda tu compra en un sitio.</h1>
+<p>Tus supermercados, tu tarjeta de cliente, la lista y tus gastos. Con letras tan grandes como necesites.</p>
+<div class="chips"><b>Gratis</b><span>Android</span><span>Sin cuentas ni anuncios</span></div>
+<div class="phone a"><img src="../../img/app-tiendas@2x.webp" alt=""></div>
+<div class="phone b"><img src="../../img/app-lista@2x.webp" alt=""></div>
+</html>

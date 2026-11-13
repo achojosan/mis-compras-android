@@ -1,5 +1,23 @@
 package app.miscompras.com.ui.screens.recognition
 
+import androidx.compose.ui.Alignment
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.Hyphens
+import androidx.compose.ui.text.style.LineBreak
+import androidx.compose.material3.Icon
+import app.miscompras.com.recognition.commonPart
+import app.miscompras.com.recognition.distinctiveWord
+import app.miscompras.com.ui.components.ItemIcons
+import app.miscompras.com.ui.theme.PassPalette
+import app.miscompras.com.ui.theme.resolvePass
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,8 +63,11 @@ fun ItemDetailScreen(
     val data by viewModel.item.collectAsState(initial = null)
     val scroll = rememberScrollState()
     val fraction = rememberTopBarFraction(scroll)
+    // Cada artículo tiene su color: «el azul es el pollo». Se distingue antes de leer.
+    val resolved = resolvePass(PassPalette.byId(data?.item?.color, data?.item?.id ?: 0L))
+    val content = resolved.content
 
-    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    Column(modifier = Modifier.fillMaxSize().background(resolved.container)) {
         FloatingTopBar(
             title = data?.item?.name ?: "",
             backgroundFraction = fraction,
@@ -62,6 +83,16 @@ fun ItemDetailScreen(
             }
         )
         val current = data ?: return@Column
+        val word = distinctiveWord(current.item.name)
+        val common = commonPart(current.item.name)
+        val icon = ItemIcons.byKey(current.item.icon)
+        // Palabra enorme: se parte con guion si es larga, nunca se corta ni se sale de la pantalla.
+        val wordStyle = MaterialTheme.typography.displayLarge.copy(
+            fontSize = 60.sp,
+            lineHeight = 64.sp,
+            hyphens = Hyphens.Auto,
+            lineBreak = LineBreak.Heading
+        )
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -69,26 +100,48 @@ fun ItemDetailScreen(
                 .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.SectionSpacing)
         ) {
-            Text(
-                text = current.item.name,
-                fontSize = 40.sp,
-                lineHeight = 48.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.fillMaxWidth()
-            )
+            Box(
+                modifier = Modifier
+                    .size(88.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(Color.White),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon?.vector ?: Icons.Default.Check,
+                    contentDescription = icon?.label,
+                    tint = if (resolved.outlined) Color.Black else resolved.container,
+                    modifier = Modifier.size(52.dp)
+                )
+            }
+            Column {
+                if (common != null) {
+                    Text(
+                        text = common,
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = content,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                Text(
+                    text = word,
+                    style = wordStyle,
+                    color = content,
+                    modifier = Modifier.fillMaxWidth().semantics { heading() }
+                )
+            }
             if (current.item.description.isNotBlank()) {
                 Text(
                     text = current.item.description,
                     style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = content
                 )
             }
             current.item.barcode?.let {
                 Text(
                     text = "Código de barras: $it",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = content.copy(alpha = 0.9f)
                 )
             }
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -106,7 +159,14 @@ fun ItemDetailScreen(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 16.dp),
             verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
         ) {
-            AccessibleButton(text = "Escanear otro", onClick = onNavigateBack)
+            // Blanco sobre el color del artículo: contraste garantizado con cualquier pase.
+            Button(
+                onClick = onNavigateBack,
+                modifier = Modifier.fillMaxWidth().heightIn(min = AccessibilityDefaults.MinTouchTarget),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color(0xFF13201A))
+            ) {
+                Text("Escanear otro", style = MaterialTheme.typography.labelLarge)
+            }
         }
     }
 }

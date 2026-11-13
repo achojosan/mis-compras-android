@@ -1,5 +1,6 @@
 package app.miscompras.com.ui.screens.shopping
 
+import app.miscompras.com.util.formatEuros
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.miscompras.com.data.local.datastore.UserPreferencesDataStore
@@ -135,7 +136,7 @@ class ShoppingListViewModel @Inject constructor(
                 }
             }
 
-            _events.send("Compra registrada: ${String.format("%.2f", totalAmount)} €")
+            _events.send("Compra registrada: ${formatEuros(totalAmount)}")
         }
     }
 }

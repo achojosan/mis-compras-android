@@ -1,5 +1,27 @@
 package app.miscompras.com.ui.screens.shopping
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
+import app.miscompras.com.ui.components.BigFigure
+import app.miscompras.com.ui.components.DashedDivider
+import app.miscompras.com.ui.components.QuantityStepper
+import app.miscompras.com.ui.components.TicketCard
+import app.miscompras.com.ui.theme.LocalAccessibilityConfig
+import app.miscompras.com.ui.theme.PassPalette
+import app.miscompras.com.ui.theme.TabularNumbers
+import app.miscompras.com.ui.theme.isLargeText
+import app.miscompras.com.ui.theme.pass
+import app.miscompras.com.util.formatEuros
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -83,69 +105,52 @@ fun ShoppingListScreen(
             }
             is ShoppingListUiState.Success -> {
                 val grandTotal = state.shoppingItems.sumOf { it.total }
-                val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
                 val totalProductCount = state.shoppingItems.sumOf { it.products.size }
+                val largeText = LocalAccessibilityConfig.current.isLargeText
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = androidx.compose.foundation.layout.PaddingValues(AccessibilityDefaults.ItemSpacing),
-                    verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                    contentPadding = androidx.compose.foundation.layout.PaddingValues(
+                        start = AccessibilityDefaults.ItemSpacing,
+                        end = AccessibilityDefaults.ItemSpacing,
+                        top = AccessibilityDefaults.SectionSpacing,
+                        bottom = AccessibilityDefaults.SectionSpacing
+                    ),
+                    verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.SectionSpacing)
                 ) {
                     item {
-                        Card(
-                            modifier = Modifier.fillMaxWidth(),
-                            shape = AppShapes.card,
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.primary,
-                                contentColor = MaterialTheme.colorScheme.onPrimary
-                            ),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 8.dp),
+                            verticalAlignment = Alignment.Top,
+                            horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
                         ) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(AccessibilityDefaults.CardPadding),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
-                            ) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text(
-                                        text = "Total estimado",
-                                        style = MaterialTheme.typography.titleSmall,
-                                        color = MaterialTheme.colorScheme.onPrimary
+                            BigFigure(
+                                figure = formatEuros(grandTotal),
+                                caption = "estimado en $totalProductCount producto${if (totalProductCount != 1) "s" else ""}",
+                                figureStyle = if (largeText) MaterialTheme.typography.displaySmall
+                                else MaterialTheme.typography.displayMedium,
+                                modifier = Modifier.weight(1f)
+                            )
+                            androidx.compose.material3.IconButton(
+                                modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget),
+                                onClick = {
+                                    val text = app.miscompras.com.util.ShoppingListFormatter.format(
+                                        state.shoppingItems.map { (it.supermarket?.name ?: "Sin tienda") to it.products }
                                     )
-                                    Text(
-                                        text = "$totalProductCount producto${if (totalProductCount != 1) "s" else ""}",
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onPrimary
-                                    )
-                                }
-
-                                Text(
-                                    text = currencyFormat.format(grandTotal),
-                                    style = MaterialTheme.typography.headlineSmall,
-                                    color = MaterialTheme.colorScheme.onPrimary,
-                                    fontWeight = FontWeight.Bold
-                                )
-
-                                androidx.compose.material3.IconButton(
-                                    onClick = {
-                                        val text = app.miscompras.com.util.ShoppingListFormatter.format(
-                                            state.shoppingItems.map { (it.supermarket?.name ?: "Sin tienda") to it.products }
-                                        )
-                                        if (text.isBlank()) {
-                                            android.widget.Toast.makeText(context, "No hay nada pendiente que compartir", android.widget.Toast.LENGTH_SHORT).show()
-                                        } else {
-                                            app.miscompras.com.util.ListSharing.share(context, text)
-                                        }
+                                    if (text.isBlank()) {
+                                        android.widget.Toast.makeText(context, "No hay nada pendiente que compartir", android.widget.Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        app.miscompras.com.util.ListSharing.share(context, text)
                                     }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Share,
-                                        contentDescription = "Compartir lista",
-                                        tint = MaterialTheme.colorScheme.onPrimary
-                                    )
                                 }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Share,
+                                    contentDescription = "Compartir lista",
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
                             }
                         }
                     }
@@ -187,54 +192,45 @@ fun SupermarketShoppingCard(
     modifier: Modifier = Modifier
 ) {
     val supermarket = shoppingItem.supermarket
-    val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
     val purchasedCount = shoppingItem.products.count { it.isPurchased }
     val totalCount = shoppingItem.products.size
+    val pass = supermarket?.pass ?: PassPalette.defaultFor(0)
 
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = AppShapes.card,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(AccessibilityDefaults.CardPadding)
-        ) {
+    TicketCard(
+        pass = pass,
+        modifier = modifier,
+        header = { content ->
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = AccessibilityDefaults.ItemSpacing),
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
             ) {
                 SupermarketLogoPlate(
                     supermarketName = supermarket?.name ?: "",
                     logoPath = supermarket?.logoPath,
-                    height = 56.dp,
-                    cornerRadius = 18.dp,
-                    contentPadding = 10.dp,
-                    shadowElevation = 2.dp
+                    height = 52.dp,
+                    cornerRadius = 14.dp,
+                    contentPadding = 8.dp,
+                    shadowElevation = 0.dp,
+                    showBorder = false,
+                    containerColor = androidx.compose.ui.graphics.Color.White
                 )
-
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = supermarket?.name ?: "Supermercado",
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.headlineSmall
                     )
                     Text(
-                        text = "$purchasedCount de $totalCount productos",
+                        text = "$purchasedCount de $totalCount comprado${if (purchasedCount != 1) "s" else ""}",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = content.copy(alpha = 0.88f)
                     )
                 }
             }
-
-            shoppingItem.products.forEach { product ->
+        },
+        body = {
+            shoppingItem.products.forEachIndexed { index, product ->
+                if (index > 0) DashedDivider()
                 ShoppingProductItem(
                     product = product,
                     onToggle = { onToggleProduct(product) },
@@ -242,29 +238,39 @@ fun SupermarketShoppingCard(
                 )
             }
 
+            DashedDivider()
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = AccessibilityDefaults.ItemSpacing),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Bottom
             ) {
                 Text(
-                    text = "Total: ${currencyFormat.format(shoppingItem.total)}",
+                    text = "Total",
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.primary
+                    modifier = Modifier.padding(end = 8.dp)
                 )
-
-                AccessibleButton(
-                    text = "Finalizar",
-                    onClick = onFinishPurchase,
-                    modifier = Modifier.padding(start = AccessibilityDefaults.ItemSpacing)
+                Text(
+                    text = formatEuros(shoppingItem.total),
+                    style = MaterialTheme.typography.headlineMedium.copy(fontFeatureSettings = TabularNumbers)
                 )
             }
+            Spacer(Modifier.height(AccessibilityDefaults.ItemSpacing))
+            AccessibleButton(
+                text = "Finalizar compra",
+                onClick = onFinishPurchase,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
-    }
+    )
 }
 
+/**
+ * Fila de un producto. Pulsar el nombre (o el círculo) lo marca como comprado: el objetivo táctil
+ * es toda la fila de arriba, no una casilla de 24 dp. La cantidad va aparte, con su − / +.
+ * Con texto grande el precio baja a la línea de la cantidad en lugar de apretar el nombre.
+ */
 @Composable
 fun ShoppingProductItem(
     product: Product,
@@ -273,67 +279,83 @@ fun ShoppingProductItem(
     modifier: Modifier = Modifier
 ) {
     val totalPrice = product.price?.let { it * product.quantity }
+    val dim = MaterialTheme.colorScheme.onSurfaceVariant
+    val largeText = LocalAccessibilityConfig.current.isLargeText
 
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .then(
-                if (product.isPurchased) Modifier.graphicsLayer { alpha = 0.6f }
-                else Modifier
-            )
-            .padding(vertical = AccessibilityDefaults.ItemSpacing / 2),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing / 2)
-    ) {
-        Checkbox(
-            checked = product.isPurchased,
-            onCheckedChange = { onToggle() },
-            modifier = Modifier.size(AccessibilityDefaults.MinTouchTarget)
-        )
-
-        Column(modifier = Modifier.weight(1f)) {
+    Column(modifier = modifier.fillMaxWidth().padding(vertical = AccessibilityDefaults.ItemSpacing / 2)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .defaultMinSize(minHeight = AccessibilityDefaults.MinTouchTarget)
+                .toggleable(
+                    value = product.isPurchased,
+                    role = Role.Checkbox,
+                    onValueChange = { onToggle() }
+                ),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+        ) {
+            CheckCircle(checked = product.isPurchased)
             Text(
                 text = product.name,
                 style = MaterialTheme.typography.bodyLarge,
                 textDecoration = if (product.isPurchased) TextDecoration.LineThrough else null,
-                color = if (product.isPurchased) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                else MaterialTheme.colorScheme.onSurface
+                color = if (product.isPurchased) dim else MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f)
             )
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                OutlinedTextField(
-                    value = product.quantity.toBigDecimal().stripTrailingZeros().toPlainString(),
-                    onValueChange = { value ->
-                        value.toDoubleOrNullLocalized()
-                            ?.takeIf { it > 0 }
-                            ?.let { onQuantityChange(it) }
-                    },
-                    textStyle = MaterialTheme.typography.bodySmall,
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    modifier = Modifier.width(60.dp).heightIn(min = 36.dp),
-                    colors = OutlinedTextFieldDefaults.colors(
-                        unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
-                        focusedBorderColor = MaterialTheme.colorScheme.primary
-                    )
-                )
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(
-                    text = product.unit,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = if (product.isPurchased) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
-                    else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
+            if (!largeText && totalPrice != null) PriceText(totalPrice, product.isPurchased)
         }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 28.dp + AccessibilityDefaults.ItemSpacing),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            QuantityStepper(
+                quantity = product.quantity,
+                unit = product.unit,
+                onQuantityChange = onQuantityChange
+            )
+            if (largeText && totalPrice != null) PriceText(totalPrice, product.isPurchased)
+        }
+    }
+}
 
-        Text(
-            text = if (totalPrice != null) "${String.format("%.2f", totalPrice)}€" else "",
-            style = MaterialTheme.typography.bodyMedium,
-            color = if (product.isPurchased) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.4f)
-            else MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.SemiBold
-        )
+@Composable
+private fun PriceText(amount: Double, purchased: Boolean) {
+    Text(
+        text = formatEuros(amount),
+        style = MaterialTheme.typography.bodyLarge.copy(fontFeatureSettings = TabularNumbers),
+        fontWeight = FontWeight.SemiBold,
+        color = if (purchased) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface
+    )
+}
+
+/** Círculo que se rellena al marcar el producto. La forma (círculo + marca), no solo el color, indica el estado. */
+@Composable
+private fun CheckCircle(checked: Boolean) {
+    val fill by animateColorAsState(
+        targetValue = if (checked) MaterialTheme.colorScheme.primary else androidx.compose.ui.graphics.Color.Transparent,
+        animationSpec = tween(200),
+        label = "checkFill"
+    )
+    Box(
+        modifier = Modifier
+            .size(28.dp)
+            .clip(CircleShape)
+            .background(fill)
+            .border(2.5.dp, MaterialTheme.colorScheme.primary, CircleShape),
+        contentAlignment = Alignment.Center
+    ) {
+        if (checked) {
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier.size(18.dp)
+            )
+        }
     }
 }
 
@@ -346,8 +368,7 @@ fun FinishPurchaseDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
-
+    
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Finalizar compra") },
@@ -356,7 +377,7 @@ fun FinishPurchaseDialog(
                 Text(
                     "¿Confirmas que has comprado $productCount producto" +
                         "${if (productCount != 1) "s" else ""} en $supermarketName " +
-                        "por un total de ${currencyFormat.format(total)}?"
+                        "por un total de ${formatEuros(total)}?"
                 )
                 if (noneMarked) {
                     Spacer(modifier = Modifier.height(8.dp))

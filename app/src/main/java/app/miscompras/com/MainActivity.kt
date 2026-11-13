@@ -1,5 +1,15 @@
 package app.miscompras.com
 
+import androidx.compose.ui.unit.sp
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
+import app.miscompras.com.ui.theme.LARGE_TEXT_THRESHOLD
+import app.miscompras.com.ui.theme.LocalAccessibilityConfig
+import app.miscompras.com.ui.theme.isLargeText
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.activity.ComponentActivity
@@ -239,9 +249,10 @@ fun MainContent(
 }
 
 /**
- * Barra de navegación flotante, solo con iconos, al estilo de iOS: una cápsula
- * con sombra y borde sutil donde el destino activo se resalta con un fondo
- * tintado del color del tema.
+ * Barra de navegación de Material 3 con etiquetas siempre visibles (quien tiene baja
+ * visión o dificultades cognitivas no puede depender solo de un icono). Con texto grande
+ * la etiqueta se limita a 1,3× para que quepa en una línea y se usa el título corto;
+ * la altura de la barra crece con el contenido.
  */
 @Composable
 private fun FloatingBottomBar(
@@ -249,76 +260,46 @@ private fun FloatingBottomBar(
     isSelected: (Screen) -> Boolean,
     onSelect: (Screen) -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .navigationBarsPadding()
-            .padding(horizontal = 24.dp, vertical = 8.dp),
-        contentAlignment = Alignment.Center
+    val largeText = LocalAccessibilityConfig.current.isLargeText
+    val density = LocalDensity.current
+    val labelDensity = Density(
+        density = density.density,
+        fontScale = density.fontScale.coerceAtMost(LARGE_TEXT_THRESHOLD)
+    )
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 3.dp
     ) {
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(28.dp),
-            color = MaterialTheme.colorScheme.surface,
-            shadowElevation = 8.dp,
-            border = BorderStroke(
-                1.dp,
-                MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f)
-            )
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 10.dp, vertical = 10.dp),
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                items.forEach { screen ->
-                    val selected = isSelected(screen)
-                    val background by animateColorAsState(
-                        targetValue = if (selected) {
-                            MaterialTheme.colorScheme.primary
-                        } else {
-                            Color.Transparent
-                        },
-                        animationSpec = tween(durationMillis = 200),
-                        label = "bottomItemBackground"
+        items.forEach { screen ->
+            NavigationBarItem(
+                selected = isSelected(screen),
+                onClick = { onSelect(screen) },
+                icon = {
+                    Icon(
+                        imageVector = screen.icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(26.dp)
                     )
-                    val tint by animateColorAsState(
-                        targetValue = if (selected) {
-                            MaterialTheme.colorScheme.onPrimary
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant
-                        },
-                        animationSpec = tween(durationMillis = 200),
-                        label = "bottomItemTint"
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .clip(RoundedCornerShape(22.dp))
-                            .clickable { onSelect(screen) }
-                            .padding(vertical = 6.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(44.dp)
-                                .clip(RoundedCornerShape(14.dp))
-                                .background(background),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = screen.icon,
-                                contentDescription = screen.title,
-                                tint = tint,
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
+                },
+                label = {
+                    CompositionLocalProvider(LocalDensity provides labelDensity) {
+                        Text(
+                            text = if (largeText) screen.shortTitle else screen.title,
+                            style = MaterialTheme.typography.labelSmall.copy(fontSize = 13.sp, letterSpacing = 0.sp),
+                            maxLines = 1,
+                            softWrap = false
+                        )
                     }
-                }
-            }
+                },
+                alwaysShowLabel = true,
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                    indicatorColor = MaterialTheme.colorScheme.primary,
+                    selectedTextColor = MaterialTheme.colorScheme.onSurface,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            )
         }
     }
 }

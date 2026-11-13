@@ -1,5 +1,18 @@
 package app.miscompras.com.ui.screens.loyalty
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Surface
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import app.miscompras.com.ui.theme.AppShapes
+import app.miscompras.com.ui.theme.PassColor
+import app.miscompras.com.ui.theme.TabularNumbers
+import app.miscompras.com.ui.theme.pass
+import app.miscompras.com.ui.theme.resolvePass
+import app.miscompras.com.util.groupCode
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
@@ -69,6 +82,7 @@ fun LoyaltyCardScreen(
         if (hasCard && !editing) {
             CardView(
                 storeName = store.name,
+                pass = store.pass,
                 code = store.loyaltyCode!!,
                 format = store.loyaltyFormat,
                 onChange = viewModel::startEditing,
@@ -91,6 +105,7 @@ fun LoyaltyCardScreen(
 @Composable
 private fun CardView(
     storeName: String,
+    pass: PassColor,
     code: String,
     format: Int?,
     onChange: () -> Unit,
@@ -112,31 +127,55 @@ private fun CardView(
     val bitmap = remember(code, format) { renderCode(code, format) }
     var confirmDelete by remember { mutableStateOf(false) }
 
+    val resolved = resolvePass(pass)
+    val grouped = remember(code) { groupCode(code) }
+    var enlarged by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 12.dp),
         verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.SectionSpacing),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(storeName, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.ExtraBold, textAlign = TextAlign.Center)
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(24.dp))
-                .background(Color.White)
-                .padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+        // La tarjeta: el color de la tienda por fuera y, dentro, el código sobre blanco con margen
+        // (zona de silencio) y a todo el ancho: nunca se reduce por debajo de lo que lee la caja.
+        Surface(
+            shape = AppShapes.pass,
+            color = resolved.container,
+            contentColor = resolved.content,
+            border = if (resolved.outlined) BorderStroke(2.dp, MaterialTheme.colorScheme.outline) else null,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            if (bitmap != null) {
-                Image(
-                    bitmap = bitmap.asImageBitmap(),
-                    contentDescription = "Código de la tarjeta de $storeName",
-                    contentScale = ContentScale.FillWidth,
-                    filterQuality = FilterQuality.None,
-                    modifier = Modifier.fillMaxWidth()
-                )
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(14.dp)
+            ) {
+                Text(storeName, style = MaterialTheme.typography.headlineMedium)
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color.White)
+                        .padding(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    if (bitmap != null) {
+                        Image(
+                            bitmap = bitmap.asImageBitmap(),
+                            contentDescription = "Código de la tarjeta de $storeName",
+                            contentScale = ContentScale.FillWidth,
+                            filterQuality = FilterQuality.None,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                    Text(
+                        grouped,
+                        style = MaterialTheme.typography.headlineSmall.copy(fontFeatureSettings = TabularNumbers),
+                        color = Color.Black,
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
-            Text(code, style = MaterialTheme.typography.titleLarge, color = Color.Black, fontWeight = FontWeight.Medium, textAlign = TextAlign.Center)
         }
         Text(
             "Acerca la pantalla al lector de la caja. El brillo sube al máximo mientras la ves.",
@@ -144,8 +183,41 @@ private fun CardView(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
         )
-        AccessibleButton(text = "Cambiar tarjeta", onClick = onChange, style = ButtonStyle.Outlined)
-        TextButton(onClick = { confirmDelete = true }) { Text("Eliminar tarjeta", color = MaterialTheme.colorScheme.error) }
+        AccessibleButton(text = "Ver número en grande", onClick = { enlarged = true }, modifier = Modifier.fillMaxWidth())
+        AccessibleButton(text = "Cambiar tarjeta", onClick = onChange, style = ButtonStyle.Outlined, modifier = Modifier.fillMaxWidth())
+        TextButton(
+            onClick = { confirmDelete = true },
+            modifier = Modifier.defaultMinSize(minHeight = AccessibilityDefaults.MinTouchTarget)
+        ) { Text("Eliminar tarjeta", color = MaterialTheme.colorScheme.error) }
+    }
+
+    if (enlarged) {
+        // Para quien no ve bien o para dictar el número en caja: cifras enormes sobre blanco, en bloques.
+        Dialog(
+            onDismissRequest = { enlarged = false },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            Surface(color = Color.White, modifier = Modifier.fillMaxSize(), onClick = { enlarged = false }) {
+                Column(
+                    modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(24.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(storeName, style = MaterialTheme.typography.titleLarge, color = Color.Black)
+                    Spacer(Modifier.height(16.dp))
+                    grouped.split(' ').forEach { block ->
+                        Text(
+                            block,
+                            style = MaterialTheme.typography.displayLarge.copy(fontFeatureSettings = TabularNumbers),
+                            color = Color.Black,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                    Spacer(Modifier.height(24.dp))
+                    Text("Toca para cerrar", style = MaterialTheme.typography.bodyLarge, color = Color(0xFF3B4F43))
+                }
+            }
+        }
     }
 
     if (confirmDelete) {

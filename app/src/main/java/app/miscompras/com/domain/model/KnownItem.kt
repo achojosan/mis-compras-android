@@ -18,6 +18,10 @@ data class KnownItem(
     val name: String,
     val description: String = "",
     val barcode: String? = null,
+    /** Id del color de pase del artículo (PassPalette); nulo = el de por defecto. */
+    val color: Int? = null,
+    /** Clave del icono del artículo (ver ItemIcons); nula = ninguno. */
+    val icon: String? = null,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )

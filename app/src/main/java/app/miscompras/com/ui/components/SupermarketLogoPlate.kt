@@ -41,7 +41,8 @@ fun SupermarketLogoPlate(
     cornerRadius: Dp = 18.dp,
     contentPadding: Dp = 10.dp,
     shadowElevation: Dp = 3.dp,
-    showBorder: Boolean = true
+    showBorder: Boolean = true,
+    containerColor: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.surface
 ) {
     var aspectRatio by remember { mutableFloatStateOf(1f) }
 
@@ -55,7 +56,7 @@ fun SupermarketLogoPlate(
 
     Surface(
         shape = RoundedCornerShape(cornerRadius),
-        color = MaterialTheme.colorScheme.surface,
+        color = containerColor,
         border = if (showBorder) {
             BorderStroke(
                 1.dp,

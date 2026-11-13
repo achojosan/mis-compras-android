@@ -48,10 +48,11 @@ import coil.request.ImageRequest
 @Composable
 fun AddSupermarketSheet(
     onDismiss: () -> Unit,
-    onSave: (name: String, logoUri: String?) -> Unit
+    onSave: (name: String, logoUri: String?, passColor: Int?) -> Unit
 ) {
     var name by remember { mutableStateOf("") }
     var logoUri by remember { mutableStateOf<String?>(null) }
+    var passColor by remember { mutableStateOf<Int?>(null) }
     var nameError by remember { mutableStateOf<String?>(null) }
 
     SupermarketFormBody(
@@ -64,12 +65,14 @@ fun AddSupermarketSheet(
         },
         logoUri = logoUri,
         onLogoUriChange = { logoUri = it },
+        passColor = passColor,
+        onPassColorChange = { passColor = it },
         nameError = nameError,
         saveLabel = "Crear tienda",
         onSave = {
             nameError = if (name.isBlank()) "El nombre es obligatorio" else null
             if (name.isNotBlank()) {
-                onSave(name.trim(), logoUri)
+                onSave(name.trim(), logoUri, passColor)
             }
         },
         onDismiss = onDismiss
@@ -83,12 +86,13 @@ fun AddSupermarketSheet(
 fun EditSupermarketSheet(
     supermarket: Supermarket,
     onDismiss: () -> Unit,
-    onSave: (name: String, logoUri: String?) -> Unit
+    onSave: (name: String, logoUri: String?, passColor: Int?) -> Unit
 ) {
     var name by remember { mutableStateOf(supermarket.name) }
     var logoUri by remember {
         mutableStateOf(supermarket.logoPath ?: DefaultSupermarkets.getLogoAssetPath(supermarket.name))
     }
+    var passColor by remember { mutableStateOf(supermarket.passColor) }
     var nameError by remember { mutableStateOf<String?>(null) }
 
     SupermarketFormBody(
@@ -101,12 +105,14 @@ fun EditSupermarketSheet(
         },
         logoUri = logoUri,
         onLogoUriChange = { logoUri = it },
+        passColor = passColor,
+        onPassColorChange = { passColor = it },
         nameError = nameError,
         saveLabel = "Guardar cambios",
         onSave = {
             nameError = if (name.isBlank()) "El nombre es obligatorio" else null
             if (name.isNotBlank()) {
-                onSave(name.trim(), logoUri)
+                onSave(name.trim(), logoUri, passColor)
             }
         },
         onDismiss = onDismiss
@@ -121,6 +127,8 @@ private fun SupermarketFormBody(
     onNameChange: (String) -> Unit,
     logoUri: String?,
     onLogoUriChange: (String?) -> Unit,
+    passColor: Int?,
+    onPassColorChange: (Int?) -> Unit,
     nameError: String?,
     saveLabel: String,
     onSave: () -> Unit,
@@ -291,6 +299,18 @@ private fun SupermarketFormBody(
                 }
             }
         }
+
+        Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing))
+
+        Text(
+            text = "Color de la tienda",
+            style = MaterialTheme.typography.titleSmall
+        )
+        Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing / 2))
+        PassColorPicker(
+            selectedId = passColor,
+            onSelect = onPassColorChange
+        )
 
         Spacer(modifier = Modifier.height(AccessibilityDefaults.ItemSpacing + 8.dp))
 

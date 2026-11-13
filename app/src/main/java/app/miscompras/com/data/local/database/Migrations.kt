@@ -74,3 +74,15 @@ val MIGRATION_4_5 = object : Migration(4, 5) {
         db.execSQL("ALTER TABLE `supermarkets` ADD COLUMN `loyaltyFormat` INTEGER")
     }
 }
+
+/**
+ * Migración 5 -> 6: color de pase por tienda y color/icono por artículo
+ * (tres columnas nulas; no toca los datos existentes).
+ */
+val MIGRATION_5_6 = object : Migration(5, 6) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE `supermarkets` ADD COLUMN `passColor` INTEGER")
+        db.execSQL("ALTER TABLE `known_items` ADD COLUMN `color` INTEGER")
+        db.execSQL("ALTER TABLE `known_items` ADD COLUMN `icon` TEXT")
+    }
+}

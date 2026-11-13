@@ -2,52 +2,76 @@ package app.miscompras.com.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
+import app.miscompras.com.R
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 
+/**
+ * Bricolage Grotesque (OFL 1.1), la misma de la web. Solo para titulares y cifras:
+ * cuerpo, etiquetas y nombres de producto siguen en la fuente del sistema para que
+ * se lean igual que en el resto del móvil. Fuente variable (minSdk 31).
+ */
+@OptIn(ExperimentalTextApi::class)
+val DisplayFamily = FontFamily(
+    Font(
+        R.font.bricolage_grotesque, FontWeight.Bold,
+        variationSettings = FontVariation.Settings(FontVariation.weight(700))
+    ),
+    Font(
+        R.font.bricolage_grotesque, FontWeight.ExtraBold,
+        variationSettings = FontVariation.Settings(FontVariation.weight(800))
+    )
+)
+
+/** Cifras de ancho fijo para importes y cantidades. */
+const val TabularNumbers = "tnum"
+
 val Typography = Typography(
     displayLarge = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Bold,
+        fontFamily = DisplayFamily,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 36.sp,
         lineHeight = 1.2.em,
         letterSpacing = (-0.5).sp
     ),
     displayMedium = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Bold,
+        fontFamily = DisplayFamily,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 32.sp,
         lineHeight = 1.2.em,
         letterSpacing = (-0.25).sp
     ),
     displaySmall = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Bold,
+        fontFamily = DisplayFamily,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 28.sp,
         lineHeight = 1.2.em
     ),
     headlineLarge = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.SemiBold,
+        fontFamily = DisplayFamily,
+        fontWeight = FontWeight.Bold,
         fontSize = 26.sp,
         lineHeight = 1.3.em
     ),
     headlineMedium = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.SemiBold,
+        fontFamily = DisplayFamily,
+        fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         lineHeight = 1.3.em
     ),
     headlineSmall = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.SemiBold,
+        fontFamily = DisplayFamily,
+        fontWeight = FontWeight.Bold,
         fontSize = 22.sp,
         lineHeight = 1.3.em
     ),
     titleLarge = TextStyle(
-        fontFamily = FontFamily.SansSerif,
+        fontFamily = DisplayFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 22.sp,
         lineHeight = 1.3.em,

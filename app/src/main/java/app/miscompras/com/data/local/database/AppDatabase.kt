@@ -17,7 +17,7 @@ import app.miscompras.com.domain.model.Supermarket
         Supermarket::class, Product::class, PurchaseHistory::class,
         KnownItem::class, ItemReference::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

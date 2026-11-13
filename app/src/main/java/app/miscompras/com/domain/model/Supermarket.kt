@@ -16,5 +16,7 @@ data class Supermarket(
     /** Tarjeta de cliente: contenido del código y formato ML Kit con el que se leyó. */
     val loyaltyCode: String? = null,
     val loyaltyFormat: Int? = null,
+    /** Id del color de pase en [app.miscompras.com.ui.theme.PassPalette]; nulo = el de por defecto. */
+    val passColor: Int? = null,
     val createdAt: Long = System.currentTimeMillis()
 )

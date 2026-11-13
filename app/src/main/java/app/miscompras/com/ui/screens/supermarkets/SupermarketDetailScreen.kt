@@ -234,8 +234,8 @@ fun SupermarketDetailScreen(
                 EditSupermarketSheet(
                     supermarket = state.supermarket,
                     onDismiss = { showEditSupermarket = false },
-                    onSave = { name, logoUri ->
-                        viewModel.updateSupermarket(name, logoUri)
+                    onSave = { name, logoUri, passColor ->
+                        viewModel.updateSupermarket(name, logoUri, passColor)
                         showEditSupermarket = false
                     }
                 )

@@ -17,6 +17,14 @@ object DefaultSupermarkets {
         DefaultSupermarket("Hipercor", "logos/hipercor.svg")
     )
 
+    /** Color de pase propio de cada cadena conocida (ids de PassPalette). */
+    private val chainPassColors = mapOf(
+        "mercadona" to 0, "carrefour" to 1, "lidl" to 3,
+        "aldi" to 4, "dia" to 2, "hipercor" to 0
+    )
+
+    fun passColorFor(name: String): Int? = chainPassColors[name.trim().lowercase()]
+
     fun getLogoAssetPath(name: String): String? {
         return list.find { it.name.equals(name, ignoreCase = true) }?.logoAssetPath
     }

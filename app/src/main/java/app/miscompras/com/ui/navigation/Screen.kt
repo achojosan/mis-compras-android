@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 sealed class Screen(
     val route: String,
     val title: String,
+    val shortTitle: String = title,
     val icon: ImageVector
 ) {
     data object Supermarkets : Screen(
@@ -28,6 +29,7 @@ sealed class Screen(
     data object Recognize : Screen(
         route = "recognize",
         title = "Reconocer",
+        shortTitle = "Recon.",
         icon = Icons.Default.CameraAlt
     )
 

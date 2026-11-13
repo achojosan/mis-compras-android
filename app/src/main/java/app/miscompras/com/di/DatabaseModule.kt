@@ -6,6 +6,7 @@ import app.miscompras.com.data.local.database.AppDatabase
 import app.miscompras.com.data.local.database.MIGRATION_2_3
 import app.miscompras.com.data.local.database.MIGRATION_3_4
 import app.miscompras.com.data.local.database.MIGRATION_4_5
+import app.miscompras.com.data.local.database.MIGRATION_5_6
 import app.miscompras.com.data.local.database.dao.KnownItemDao
 import app.miscompras.com.data.local.database.dao.ProductDao
 import app.miscompras.com.data.local.database.dao.PurchaseHistoryDao
@@ -29,7 +30,7 @@ object DatabaseModule {
             AppDatabase::class.java,
             "mis_compras_database"
         )
-        .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+        .addMigrations(MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
         .fallbackToDestructiveMigration()
         .build()
     }

@@ -112,7 +112,9 @@ class HistoryListViewModel @Inject constructor(
                         yearPurchaseCount = monthsForYear.sumOf { it.purchaseCount },
                         currentMonthTotal = allMonths.find { it.yearMonth == YearMonth.now() }?.total ?: 0.0,
                         totalSpent = historyList.sumOf { it.totalAmount },
-                        totalPurchases = historyList.size
+                        totalPurchases = historyList.size,
+                        recentMonths = recentMonths(allMonths, YearMonth.now()),
+                        previousMonthTotal = allMonths.find { it.yearMonth == YearMonth.now().minusMonths(1) }?.total ?: 0.0
                     )
                 }
             }.collect { state ->
@@ -133,7 +135,10 @@ sealed class HistoryListUiState {
         val yearPurchaseCount: Int,
         val currentMonthTotal: Double,
         val totalSpent: Double,
-        val totalPurchases: Int
+        val totalPurchases: Int,
+        /** Los 6 meses que terminan en el actual, con 0 donde no hubo compras. */
+        val recentMonths: List<MonthExpense>,
+        val previousMonthTotal: Double
     ) : HistoryListUiState()
 }
 

@@ -34,6 +34,8 @@ import app.miscompras.com.ui.components.ButtonStyle
 import app.miscompras.com.ui.components.CameraPermissionGate
 import app.miscompras.com.ui.components.CameraScanner
 import app.miscompras.com.ui.components.FloatingTopBar
+import app.miscompras.com.ui.components.ItemIconPicker
+import app.miscompras.com.ui.components.PassColorPicker
 import app.miscompras.com.ui.components.rememberTopBarFraction
 import app.miscompras.com.ui.theme.AccessibilityDefaults
 
@@ -103,6 +105,10 @@ fun RegisterItemScreen(
                 label = "Código de barras (opcional)",
                 keyboardType = KeyboardType.Number
             )
+            Text("Color del artículo", style = MaterialTheme.typography.titleSmall)
+            PassColorPicker(selectedId = state.color, onSelect = viewModel::onColor)
+            Text("Icono del artículo", style = MaterialTheme.typography.titleSmall)
+            ItemIconPicker(selectedKey = state.icon, onSelect = viewModel::onIcon)
             state.suggestion?.let {
                 Text(it, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
             }

@@ -67,7 +67,7 @@ class SupermarketListViewModel @Inject constructor(
         }
     }
 
-    fun addSupermarket(name: String, logoUri: String?) {
+    fun addSupermarket(name: String, logoUri: String?, passColor: Int? = null) {
         viewModelScope.launch {
             repository.insertSupermarket(
                 Supermarket(
@@ -75,7 +75,8 @@ class SupermarketListViewModel @Inject constructor(
                     // Guardamos la ruta del logo (asset) para que no dependa del nombre:
                     // así, si más adelante se renombra la tienda, el logo se conserva.
                     logoPath = logoUri ?: DefaultSupermarkets.getLogoAssetPath(name),
-                    isDefault = DefaultSupermarkets.getLogoAssetPath(name) != null
+                    isDefault = DefaultSupermarkets.getLogoAssetPath(name) != null,
+                    passColor = passColor
                 )
             )
         }

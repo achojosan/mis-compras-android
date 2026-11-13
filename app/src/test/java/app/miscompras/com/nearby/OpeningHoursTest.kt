@@ -86,4 +86,27 @@ class OpeningHoursTest {
         }
         assertNotNull(OpeningHours.parse("Mo-Sa 09:00-22:00; Su 10:00-16:00"))
     }
+
+    private fun status(raw: String, day: Int, h: Int, m: Int = 0) = OpeningHours.parse(raw)!!.statusText(at(day, h, m))
+
+    @Test fun statusAbiertoMuestraCuandoCierra() {
+        assertEquals("Abierto · cierra 20:00", status("Mo-Fr 09:00-20:00", 1, 10))
+    }
+
+    @Test fun statusCerradoMuestraCuandoAbreHoy() {
+        assertEquals("Cerrado · abre 09:00", status("Mo-Fr 09:00-20:00", 1, 8))
+    }
+
+    @Test fun statusCerradoMananaYDiaConcreto() {
+        assertEquals("Cerrado · abre mañana 09:00", status("Mo-Fr 09:00-20:00", 1, 21))
+        assertEquals("Cerrado · abre el lunes 09:00", status("Mo-Fr 09:00-20:00", 6, 12))
+    }
+
+    @Test fun statusCierreTrasMedianoche() {
+        assertEquals("Abierto · cierra 02:00", status("Mo-Su 18:00-02:00", 2, 1))
+    }
+
+    @Test fun status24Horas() {
+        assertEquals("Abierto 24 horas", status("24/7", 3, 5))
+    }
 }

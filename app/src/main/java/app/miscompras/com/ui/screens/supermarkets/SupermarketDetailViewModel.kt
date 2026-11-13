@@ -174,7 +174,7 @@ class SupermarketDetailViewModel @Inject constructor(
         viewModelScope.launch { dataStore.setHideOpenAppDialog(hide) }
     }
 
-    fun updateSupermarket(name: String, logoUri: String?) {
+    fun updateSupermarket(name: String, logoUri: String?, passColor: Int? = null) {
         val current = (_uiState.value as? SupermarketDetailUiState.Success)?.supermarket ?: return
         viewModelScope.launch {
             supermarketRepository.updateSupermarket(
@@ -185,7 +185,8 @@ class SupermarketDetailViewModel @Inject constructor(
                     logoPath = logoUri
                         ?: current.logoPath
                         ?: DefaultSupermarkets.getLogoAssetPath(current.name),
-                    isDefault = DefaultSupermarkets.getLogoAssetPath(name) != null
+                    isDefault = DefaultSupermarkets.getLogoAssetPath(name) != null,
+                    passColor = passColor
                 )
             )
             _events.send("Tienda actualizada")

@@ -25,6 +25,8 @@ data class RegisterUiState(
     val name: String = "",
     val description: String = "",
     val barcode: String = "",
+    val color: Int? = null,
+    val icon: String? = null,
     val photos: List<StagedPhoto> = emptyList(),
     val existingPhotos: Int = 0,
     val isEditing: Boolean = false,
@@ -60,12 +62,17 @@ class RegisterItemViewModel @Inject constructor(
                         name = data.item.name,
                         description = data.item.description,
                         barcode = data.item.barcode.orEmpty(),
+                        color = data.item.color,
+                        icon = data.item.icon,
                         existingPhotos = data.references.size
                     )
                 }
             }
         }
     }
+
+    fun onColor(id: Int?) = _state.update { it.copy(color = id) }
+    fun onIcon(key: String?) = _state.update { it.copy(icon = key) }
 
     fun onName(v: String) = _state.update { it.copy(name = v, error = null) }
     fun onDescription(v: String) = _state.update { it.copy(description = v) }
@@ -133,7 +140,9 @@ class RegisterItemViewModel @Inject constructor(
                 base.copy(
                     name = s.name.trim(),
                     description = s.description.trim(),
-                    barcode = s.barcode.ifBlank { null }
+                    barcode = s.barcode.ifBlank { null },
+                    color = s.color,
+                    icon = s.icon
                 )
             )
             s.photos.forEach { repository.addReference(id, it.bitmap, EmbeddingMath.toBytes(it.embedding)) }

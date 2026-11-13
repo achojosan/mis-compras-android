@@ -29,6 +29,33 @@ class Schedule internal constructor(private val days: List<List<IntRange>>) {
         return intervals.joinToString(", ") { "${fmt(it.first)}–${fmt(it.last % 1440).let { e -> if (it.last == 1440) "24:00" else e }}" }
     }
 
+    /**
+     * Estado corto para la cartera de tiendas: «Abierto · cierra 22:00»,
+     * «Cerrado · abre 09:00», «Cerrado · abre mañana 09:00» o «Abierto 24 horas».
+     */
+    fun statusText(now: LocalDateTime): String {
+        val d = now.dayOfWeek.value - 1
+        val m = now.hour * 60 + now.minute
+        val current = days[d].firstOrNull { m in it.first until it.last }
+        val carried = days[(d + 6) % 7].firstOrNull { it.last > 1440 && (m + 1440) in it.first until it.last }
+        if (current != null || carried != null) {
+            if (days.all { it.size == 1 && it[0].first == 0 && it[0].last >= 1440 }) return "Abierto 24 horas"
+            val end = if (current != null) current.last else carried!!.last - 1440
+            return "Abierto · cierra ${fmt(end % 1440)}"
+        }
+        days[d].filter { it.first > m }.minByOrNull { it.first }?.let {
+            return "Cerrado · abre ${fmt(it.first)}"
+        }
+        for (offset in 1..7) {
+            val first = days[(d + offset) % 7].minByOrNull { it.first } ?: continue
+            val whenText = if (offset == 1) "mañana" else dayLabels[(d + offset) % 7]
+            return "Cerrado · abre $whenText ${fmt(first.first)}"
+        }
+        return "Cerrado"
+    }
+
+    private val dayLabels = listOf("el lunes", "el martes", "el miércoles", "el jueves", "el viernes", "el sábado", "el domingo")
+
     private fun fmt(minutes: Int) = "%02d:%02d".format(minutes / 60, minutes % 60)
 }
 

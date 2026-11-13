@@ -1,5 +1,18 @@
 package app.miscompras.com.ui.screens.history
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import app.miscompras.com.ui.components.BigFigure
+import app.miscompras.com.ui.components.DashedDivider
+import app.miscompras.com.ui.theme.LocalAccessibilityConfig
+import app.miscompras.com.ui.theme.TabularNumbers
+import app.miscompras.com.ui.theme.isLargeText
+import app.miscompras.com.util.formatEuros
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -67,6 +80,7 @@ fun HistoryListScreen(
             is HistoryListUiState.Success -> {
                 val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "ES"))
                 val currentMonth = YearMonth.now()
+                val largeText = LocalAccessibilityConfig.current.isLargeText
 
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -77,11 +91,13 @@ fun HistoryListScreen(
                     verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
                 ) {
                     item {
-                        CurrentMonthCard(
+                        MonthSummary(
                             currentMonthTotal = state.currentMonthTotal,
+                            previousMonthTotal = state.previousMonthTotal,
+                            recent = state.recentMonths,
                             totalSpent = state.totalSpent,
                             totalPurchases = state.totalPurchases,
-                            currencyFormat = currencyFormat
+                            largeText = largeText
                         )
                     }
 
@@ -136,53 +152,129 @@ fun HistoryListScreen(
     }
 }
 
+/**
+ * Lo primero que se ve: lo gastado este mes en cifra grande, la comparación con el mes anterior
+ * y los últimos seis meses en un gráfico. Sin tarjeta: la cifra y el gráfico se apoyan en el fondo.
+ */
 @Composable
-private fun CurrentMonthCard(
+private fun MonthSummary(
     currentMonthTotal: Double,
+    previousMonthTotal: Double,
+    recent: List<MonthExpense>,
     totalSpent: Double,
     totalPurchases: Int,
-    currencyFormat: NumberFormat
+    largeText: Boolean
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = AppShapes.card,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+    val now = YearMonth.now()
+    val comparison = comparisonText(currentMonthTotal, previousMonthTotal, now.minusMonths(1))
+    Column(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
     ) {
+        BigFigure(
+            figure = formatEuros(currentMonthTotal),
+            caption = "gastados en ${formatMonthName(now).lowercase()}",
+            figureStyle = if (largeText) MaterialTheme.typography.displayMedium
+            else MaterialTheme.typography.displayLarge
+        )
+        if (comparison != null) {
+            Text(
+                text = comparison,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        }
+        MonthBarChart(months = recent, current = now, largeText = largeText)
+        Text(
+            text = "Total acumulado: ${formatEuros(totalSpent)} · $totalPurchases compra${if (totalPurchases != 1) "s" else ""}",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+/**
+ * Gráfico de los últimos meses. Normal: barras verticales con el mes debajo y el importe del
+ * mes actual encima. Texto grande: barras horizontales con «mes · importe» escrito encima de
+ * cada una, para que ningún texto tenga que encogerse. El conjunto se lee como una sola frase.
+ */
+@Composable
+private fun MonthBarChart(months: List<MonthExpense>, current: YearMonth, largeText: Boolean) {
+    val max = (months.maxOfOrNull { it.total } ?: 0.0).coerceAtLeast(1.0)
+    val past = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+    val now = MaterialTheme.colorScheme.primary
+    val description = chartDescription(months)
+
+    if (largeText) {
+        Column(
+            modifier = Modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = description },
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            // Con texto grande se omiten los meses sin gasto: el texto completo sigue en la descripción.
+            months.reversed().filter { it.total > 0 || it.yearMonth == current }.forEach { m ->
+                val isNow = m.yearMonth == current
+                Column {
+                    Text(
+                        text = "${shortMonthName(m.yearMonth)} · ${formatEuros(m.total)}",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = if (isNow) FontWeight.Bold else FontWeight.Normal
+                    )
+                    if (m.total > 0) Box(
+                        modifier = Modifier
+                            .fillMaxWidth((m.total / max).toFloat().coerceAtLeast(0.02f))
+                            .height(14.dp)
+                            .clip(RoundedCornerShape(7.dp))
+                            .background(if (isNow) now else past)
+                    )
+                }
+            }
+        }
+    } else {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(AccessibilityDefaults.CardPadding),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
+                .height(168.dp)
+                .clearAndSetSemantics { contentDescription = description },
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.Bottom
         ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = "Gasto del mes",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-                Text(
-                    text = "Total acumulado: ${currencyFormat.format(totalSpent)} · " +
-                        "$totalPurchases compra${if (totalPurchases != 1) "s" else ""}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
+            months.forEach { m ->
+                val isNow = m.yearMonth == current
+                Column(
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Bottom
+                ) {
+                    if (isNow && m.total > 0) {
+                        Text(
+                            text = formatEuros(m.total).replace(",00", ""),
+                            style = MaterialTheme.typography.labelMedium.copy(fontFeatureSettings = TabularNumbers),
+                            maxLines = 1,
+                            softWrap = false
+                        )
+                    }
+                    Spacer(Modifier.height(4.dp))
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(((m.total / max).toFloat() * 0.78f).coerceAtLeast(0.02f))
+                            .clip(RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))
+                            .background(if (isNow) now else past)
+                    )
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        text = shortMonthName(m.yearMonth),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = if (isNow) FontWeight.Bold else FontWeight.Normal,
+                        maxLines = 1
+                    )
+                }
             }
-
-            Text(
-                text = currencyFormat.format(currentMonthTotal),
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontWeight = FontWeight.Bold
-            )
         }
     }
 }
 
+/** Fila de un mes: sin tarjeta, con separador; todo el ancho es el objetivo táctil. */
 @Composable
 private fun MonthExpenseCard(
     monthExpense: MonthExpense,
@@ -190,70 +282,51 @@ private fun MonthExpenseCard(
     currencyFormat: NumberFormat,
     onClick: () -> Unit
 ) {
-    Card(
-        onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
-        shape = AppShapes.card,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-    ) {
+    val largeText = LocalAccessibilityConfig.current.isLargeText
+    val count = "${monthExpense.purchaseCount} compra${if (monthExpense.purchaseCount != 1) "s" else ""}"
+    Column {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(AccessibilityDefaults.CardPadding),
+                .defaultMinSize(minHeight = 72.dp)
+                .clip(AppShapes.small)
+                .clickable(onClick = onClick)
+                .padding(horizontal = 8.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
         ) {
-            Box(
-                modifier = Modifier
-                    .size(44.dp)
-                    .clip(RoundedCornerShape(14.dp))
-                    .background(MaterialTheme.colorScheme.primary),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Default.CalendarMonth,
-                    contentDescription = null,
-                    modifier = Modifier.size(22.dp),
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = formatMonthName(monthExpense.yearMonth),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = if (isCurrentMonth) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.onSurface
-                    }
+                    style = MaterialTheme.typography.titleLarge,
+                    color = if (isCurrentMonth) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    text = "${monthExpense.purchaseCount} compra${if (monthExpense.purchaseCount != 1) "s" else ""}",
-                    style = MaterialTheme.typography.bodySmall,
+                    text = count,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                if (largeText) {
+                    Text(
+                        text = currencyFormat.format(monthExpense.total),
+                        style = MaterialTheme.typography.titleLarge.copy(fontFeatureSettings = TabularNumbers)
+                    )
+                }
             }
-
-            Text(
-                text = currencyFormat.format(monthExpense.total),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.Bold
-            )
-
+            if (!largeText) {
+                Text(
+                    text = currencyFormat.format(monthExpense.total),
+                    style = MaterialTheme.typography.titleLarge.copy(fontFeatureSettings = TabularNumbers)
+                )
+            }
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(24.dp)
             )
         }
+        DashedDivider(Modifier.padding(horizontal = 8.dp))
     }
 }
 

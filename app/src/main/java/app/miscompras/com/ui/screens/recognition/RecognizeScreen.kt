@@ -1,5 +1,10 @@
 package app.miscompras.com.ui.screens.recognition
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.material3.Surface
+import app.miscompras.com.ui.theme.AppShapes
+import app.miscompras.com.ui.theme.PassPalette
+import app.miscompras.com.ui.theme.resolvePass
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -62,21 +67,28 @@ fun RecognizeScreen(
                 onFrame = viewModel::onFrame,
                 modifier = Modifier.align(Alignment.Center)
             )
-            Text(
-                text = state.status,
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurface,
+            // Panel de estado: pase «Tinta» con texto blanco (≥ 4,5:1 sobre cualquier imagen de la cámara,
+            // porque el panel es opaco). Crece en alto con el texto; nunca se corta.
+            val ink = resolvePass(PassPalette.all.last())
+            Surface(
+                shape = AppShapes.pass,
+                color = ink.container,
+                contentColor = ink.content,
+                border = if (ink.outlined) BorderStroke(2.dp, MaterialTheme.colorScheme.outline) else null,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
                     .statusBarsPadding()
-                    .padding(AccessibilityDefaults.CardPadding)
+                    .padding(horizontal = AccessibilityDefaults.ItemSpacing, vertical = AccessibilityDefaults.ItemSpacing)
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.92f))
-                    .padding(AccessibilityDefaults.CardPadding)
                     .semantics { liveRegion = LiveRegionMode.Polite }
-            )
+            ) {
+                Text(
+                    text = state.status,
+                    style = MaterialTheme.typography.headlineSmall,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)
+                )
+            }
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -89,14 +101,15 @@ fun RecognizeScreen(
                     AccessibleButton(text = "Registrar este artículo", onClick = onRegisterClick)
                 }
                 // Fondo propio: un botón transparente sobre la imagen de la cámara no se lee.
-                androidx.compose.material3.Surface(
-                    shape = app.miscompras.com.ui.theme.AppShapes.button,
-                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
+                Surface(
+                    shape = AppShapes.button,
+                    color = MaterialTheme.colorScheme.surface
                 ) {
                     AccessibleButton(
                         text = "Mis artículos",
                         onClick = onKnownItemsClick,
-                        style = app.miscompras.com.ui.components.ButtonStyle.Outlined
+                        style = app.miscompras.com.ui.components.ButtonStyle.Outlined,
+                        modifier = Modifier.fillMaxWidth()
                     )
                 }
             }

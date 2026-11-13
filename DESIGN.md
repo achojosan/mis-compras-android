@@ -2,9 +2,9 @@
 
 > Alcance: la landing estática de GitHub Pages (`docs/index.html` + `docs/assets/site.css`) y, desde la sección «App Android: la cartera», la app Compose, que hereda el mismo mundo.
 
-## Dirección: «Cartera de tarjetas»
-La web es un monedero. Cada función de la app es una tarjeta de color con esquinas muy redondeadas que se apila sobre la anterior al desplazarse; el móvil real de cada función asoma por su borde inferior. El enfoque es **«toda tu compra en un sitio»** (tiendas, tarjeta de cliente, lista, gastos, letras grandes) y el reconocimiento de productos es una tarjeta más, la última.
-Se rechaza la rejilla de tarjetas iguales con icono, el kicker sobre el titular, los brillos y los degradados de texto.
+## Dirección: «La cartera y el ticket»
+La web es una cartera que se abre al hacer scroll. Cada función de la app sale del bolsillo como una tarjeta de color con su móvil real completo, se queda apilada asomando por arriba, y al final la cartera se guarda y «paga»: un ticket de caja se imprime con el scroll y el total es **GRATIS**. Todo gira en torno al gasto de la compra. El enfoque sigue siendo **«toda tu compra en un sitio»** y el reconocimiento de productos es la última tarjeta.
+Se rechaza la rejilla de tarjetas iguales con icono, el kicker sobre el titular, los brillos, los degradados de texto y el secuestro del scroll (nada de scroll suave por JS).
 
 ## Color
 Estrategia *Full palette*: seis tarjetas con color propio sobre un suelo neutro teñido de verde.
@@ -28,30 +28,22 @@ Suelo `#E8EDE9` (oscuro `#0C110E`), tinta `#13201A` / secundaria `#3B4F43`, secc
 Tarjetas: radio 36 px (28 en móvil), sombra neutra con desplazamiento, 500 px de alto mínimo, el móvil sale por abajo con el borde inferior recortado. Secciones con 104 px de relleno (64 en móvil) y 20 px laterales. Botón principal 60 px de alto, radio 18.
 
 ## Componentes
-- **Abanico de la cabecera**: tres miniaturas de tarjeta (3:2) con recortes reales de la interfaz (tiendas, tarjeta de cliente, lista), inclinadas y superpuestas.
-- **Tarjeta (`.pass`)**: texto a un lado, móvil real al otro, alternando lados; en el modo escritorio con altura suficiente se apila con `position: sticky` (14 px de asomo por tarjeta), sin JavaScript.
-- **Móvil**: bisel `#101512` liso; se recorta la barra de estado con margen negativo proporcional.
+- **Cartera de la cabecera** (SVG): piel verde `#0B2F18` con costura discontinua y cierre ámbar; cuatro tarjetas de color asoman en abanico. En la sección de funciones el bolsillo es el mismo, a todo el ancho.
+- **Tarjeta (`.pass`)**: texto a un lado, móvil real **completo** al otro (bisel `#0F1512`, esquinas de 34 px), alternando lados.
+- **Ticket (`.ticket`)**: papel `#FBFAF4` con borde inferior dentado (máscara cónica), tipografía monoespaciada tabular, una línea por función **sin precios** y total «GRATIS». Es decorativo (`aria-hidden`); el mensaje y el botón de descarga están en texto normal a su lado.
 - **Pasos**: lista con número circular ámbar. **Tabla de privacidad**: tabla real con `<caption>` y `th scope`; apilada con etiquetas `data-l` en móvil. **Preguntas**: `<details>` con `+` / `–`.
 
 ## Movimiento
-Un único momento: al cargar, las tres miniaturas «se reparten» (suben 30 px). Más el apilado sticky, que es CSS puro. `prefers-reduced-motion` lo desactiva todo.
+Librería: **GSAP 3.15 + ScrollTrigger**, alojadas en `docs/vendor/gsap/` (sin terceros; licencia Standard No Charge, cabecera intacta). Scroll siempre nativo.
+- **Escritorio** (≥ 900×640, sin «reducir movimiento»): la cartera se fija (`pin`, `scrub`); cada tarjeta sube desde detrás del bolsillo, las anteriores quedan apiladas asomando 16 px y a escala −2,5 %; contador «n / 6» arriba; al final las tarjetas se guardan. Después el ticket se fija y se imprime desde una ranura (`yPercent` −100 → 0), con el sello GRATIS.
+- **Móvil / pantallas bajas**: variante ligera sin fijar nada; cada tarjeta entra con un pequeño giro y el móvil hace parallax; el ticket se imprime al entrar en pantalla.
+- **Sin JavaScript o con `prefers-reduced-motion`**: tarjetas apiladas en flujo normal (en escritorio sin JS, `position: sticky`), ticket completo y visible.
 
 ## Superficies del navegador
 `::selection` ámbar, `caret-color` / `accent-color` / `scrollbar-color` verdes, subrayado con `text-underline-offset`, `color-scheme: light dark`, `theme-color` por esquema, cifras tabulares en la huella SHA‑256.
 
 ## Accesibilidad
-Enlace «Saltar al contenido», un `h1`, títulos en orden, `alt` descriptivo en cada captura, objetivos táctiles ≥ 48 px, foco visible, sin JavaScript y funcional en modo oscuro y a 200 % de zoom.
+Enlace «Saltar al contenido», un `h1`, títulos en orden, `alt` descriptivo en cada captura, objetivos táctiles ≥ 48 px, foco visible. Todo el contenido está en el DOM en orden de lectura; el JavaScript solo añade fijado y transformaciones. Las tarjetas no contienen elementos enfocables, así que el fijado no puede ocultar el foco. Funcional sin JS, con «reducir movimiento», en modo oscuro y a 200 % de zoom.
 
 ## Procedencia de las imágenes
-Las 8 capturas de `docs/img/` son **capturas reales** de la app en un emulador Pixel_10 con datos de demostración; cada PNG lleva su origen incrustado. No hay imágenes generadas.
-
-## App Android: la cartera
-La app adopta el mundo de la web. Operate: la personalidad vive en tema, tipografía, forma y color; los controles siguen siendo los de Material 3 (Checkbox, NavigationBar, diálogos).
-
-- **Pases (`ui/theme/PassPalette.kt`):** Verde `#145A29`, Azul `#1E3A8A`, Terracota `#A93C1A`, Ámbar `#FFC83D` (texto `#1B1405`) y Tinta `#16221B`, con variante oscura. En la base de datos solo se guarda el id. Cada tienda (`Supermarket.passColor`) y cada artículo (`KnownItem.color`, `icon`) tiene el suyo; las cadenas conocidas traen uno por defecto. Todas las parejas ≥ 4,5:1 (test `PassPaletteTest`).
-- **No pisa el tema:** `primary` sigue siendo el color de tema que elige la persona usuaria (7 opciones). El pase solo pinta pases, tickets y la ficha del artículo.
-- **Alto contraste:** los pases pasan a superficie con borde de 2 dp y texto `onSurface`; se conservan forma y jerarquía.
-- **Tipografía:** Bricolage Grotesque (variable, OFL, `res/font`) solo en `display*`, `headline*` y `titleLarge`; cuerpo, etiquetas y nombres de producto en la fuente del sistema. Cifras con `tnum`.
-- **Piezas:** `StorePass` (pase solapado 14 dp; apilado y sin solape con texto grande), `TicketCard` (cabecera de color, papel, borde dentado, separadores discontinuos), `QuantityStepper` (− / + de 56 dp; pulsación larga para teclear decimales), `BigFigure` (cifra + leyenda, sin tarjeta), `PassColorPicker`/`ItemIconPicker` (muestra + nombre, nunca solo color).
-- **Texto grande:** la escala efectiva es la del sistema × la de la app, con tope 2,0 (`effectiveFontScale`). Un único umbral, `LARGE_TEXT_THRESHOLD = 1,3`, cambia a diseños apilados; nada se encoge. La barra inferior limita sus etiquetas a 1,3× y usa títulos cortos («Recon.»). El gráfico de gastos pasa a barras horizontales con el texto encima y tiene descripción completa para TalkBack.
-- **Sin sombras inventadas ni botón flotante que tape contenido:** «Añadir tienda» es el último elemento de la lista.
+Las capturas de `docs/img/` (WebP a 360 y 720 px, `srcset`) son **capturas reales a 1080×2424** del emulador Pixel_10 con una compilación *debug* del rediseño de la app y datos de demostración extremeños, con barra de estado limpia (modo demo de SystemUI: 9:41, batería llena). Cada WebP lleva su origen en el XMP. `app-salmon` y `app-pollo` proceden de la v1.10 (pantalla de reconocimiento aún no recapturada). No hay imágenes generadas.

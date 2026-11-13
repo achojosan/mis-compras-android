@@ -1,5 +1,17 @@
 package app.miscompras.com.ui.screens.recognition
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
+import androidx.compose.ui.draw.clip
+import app.miscompras.com.recognition.commonPart
+import app.miscompras.com.recognition.distinctiveWord
+import app.miscompras.com.ui.components.ItemIcons
+import app.miscompras.com.ui.theme.AppShapes
+import app.miscompras.com.ui.theme.PassPalette
+import app.miscompras.com.ui.theme.resolvePass
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -74,30 +86,11 @@ fun KnownItemsScreen(
                     verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
                 ) {
                     items(list, key = { it.item.id }) { entry ->
-                        Card(
-                            modifier = Modifier.fillMaxWidth().clickable { onItemClick(entry.item.id) },
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-                        ) {
-                            Row(
-                                modifier = Modifier.padding(AccessibilityDefaults.CardPadding),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text(entry.item.name, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                                    Text(
-                                        "${entry.references.size} foto(s)" +
-                                            (entry.item.barcode?.let { " · $it" } ?: ""),
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                }
-                                FloatingIconButton(
-                                    icon = Icons.Default.Delete,
-                                    contentDescription = "Eliminar ${entry.item.name}",
-                                    onClick = { toDelete = entry }
-                                )
-                            }
-                        }
+                        KnownItemRow(
+                            entry = entry,
+                            onClick = { onItemClick(entry.item.id) },
+                            onDelete = { toDelete = entry }
+                        )
                     }
                 }
                 Column(Modifier.padding(horizontal = 24.dp, vertical = 16.dp)) {
@@ -117,5 +110,61 @@ fun KnownItemsScreen(
             },
             dismissButton = { TextButton(onClick = { toDelete = null }) { Text("Cancelar") } }
         )
+    }
+}
+
+/**
+ * Fila de un artículo: a la izquierda su baldosa (color + icono propios, la misma que verá al
+ * reconocerlo), después el nombre con la palabra distintiva en grande y los datos. Con texto grande
+ * el nombre ocupa todo el ancho y los datos bajan; el botón de eliminar mide 56 dp.
+ */
+@Composable
+private fun KnownItemRow(entry: KnownItemWithRefs, onClick: () -> Unit, onDelete: () -> Unit) {
+    val item = entry.item
+    val resolved = resolvePass(PassPalette.byId(item.color, item.id))
+    val icon = ItemIcons.byKey(item.icon)
+    val common = commonPart(item.name)
+    val details = "${entry.references.size} foto${if (entry.references.size == 1) "" else "s"}" +
+        (item.barcode?.let { " · $it" } ?: "")
+
+    Surface(
+        shape = AppShapes.pass,
+        color = MaterialTheme.colorScheme.surface,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+        modifier = Modifier.fillMaxWidth().clip(AppShapes.pass).clickable(onClick = onClick)
+    ) {
+        Row(
+            modifier = Modifier.padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Surface(
+                shape = AppShapes.small,
+                color = resolved.container,
+                border = if (resolved.outlined) BorderStroke(2.dp, MaterialTheme.colorScheme.outline) else null,
+                modifier = Modifier.size(60.dp)
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        imageVector = icon?.vector ?: Icons.Default.CameraAlt,
+                        contentDescription = icon?.label,
+                        tint = resolved.content,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                if (common != null) {
+                    Text(common, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Text(distinctiveWord(item.name), style = MaterialTheme.typography.headlineSmall)
+                Text(details, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            FloatingIconButton(
+                icon = Icons.Default.Delete,
+                contentDescription = "Eliminar ${item.name}",
+                onClick = onDelete
+            )
+        }
     }
 }

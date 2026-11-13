@@ -18,6 +18,7 @@
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23145A29'/%3E%3Cpath fill='%23fff' d='M8 9h2.2l.5 2H24l-2.4 7.2a1.5 1.5 0 0 1-1.4 1H12.4l.4 1.3h9v1.8H11.5L9.1 10.8H8zM13 25a1.6 1.6 0 1 1 0 .01zM20.5 25a1.6 1.6 0 1 1 0 .01z'/%3E%3C/svg%3E">
 <link rel="preload" href="fonts/bricolage-grotesque.ttf" as="font" type="font/ttf" crossorigin>
+<script>document.documentElement.classList.add("js")</script>
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
@@ -31,6 +32,7 @@
     </a>
     <ul>
       <li><a href="#cartera">Funciones</a></li>
+      <li><a href="#cuenta">La cuenta</a></li>
       <li><a href="#instalar">Instalar</a></li>
       <li><a href="#privacidad">Privacidad</a></li>
     </ul>
@@ -51,67 +53,103 @@
       </div>
       <p class="facts">Android 12 o superior · unos 78 MB · sin anuncios ni compras dentro de la app</p>
     </div>
-
-    <div class="fan" aria-hidden="true">
-      <div class="mini m1"><span>Tus tiendas</span><img src="img/app-tiendas.png" width="540" height="1212" alt=""></div>
-      <div class="mini m2"><span>Tarjeta de cliente</span><img src="img/app-tarjeta.png" width="540" height="1212" alt=""></div>
-      <div class="mini m3"><span>La lista</span><img src="img/app-lista.png" width="540" height="1212" alt=""></div>
+    <div class="hero-art">
+      <svg class="wallet-art" viewBox="0 0 540 470" aria-hidden="true" focusable="false">
+        <defs><linearGradient id="piel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B6B34"/><stop offset="1" stop-color="#0B2F18"/></linearGradient></defs>
+        <g class="hc hc1"><g transform="rotate(-11 270 330)"><rect x="105" y="30" width="330" height="250" rx="26" fill="#145A29"/><text x="132" y="68">Tiendas</text></g></g>
+        <g class="hc hc2"><g transform="rotate(-4 270 330)"><rect x="105" y="52" width="330" height="250" rx="26" fill="#1E3A8A"/><text x="132" y="90">Tarjeta de cliente</text></g></g>
+        <g class="hc hc3"><g transform="rotate(3.5 270 330)"><rect x="105" y="74" width="330" height="250" rx="26" fill="#A93C1A"/><text x="132" y="112">La lista</text></g></g>
+        <g class="hc hc4"><g transform="rotate(10 270 330)"><rect x="105" y="96" width="330" height="250" rx="26" fill="#FFC83D"/><text x="132" y="134" class="dk">Gastos</text></g></g>
+        <rect x="14" y="214" width="512" height="244" rx="44" fill="url(#piel)"/>
+        <rect x="32" y="232" width="476" height="208" rx="30" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="2.5" stroke-dasharray="8 8"/>
+        <rect x="222" y="196" width="96" height="46" rx="16" fill="#FFC83D"/><circle cx="270" cy="219" r="7" fill="#13201A"/>
+      </svg>
+      <p class="hint" aria-hidden="true">Baja y abre la cartera <span>↓</span></p>
     </div>
   </section>
 
-  <div class="wallet wrap" id="cartera">
-    <article class="pass verde">
-      <div class="copy">
-        <h2>Tus supermercados, con horario y cómo llegar.</h2>
-        <p>Si quieres, al empezar busca los que tienes cerca. Ves si están abiertos ahora, a qué hora cierran y cómo llegar, y abres la app oficial de la cadena con un toque.</p>
-      </div>
-      <figure class="shot"><div class="phone"><img loading="lazy" src="img/app-tienda.png" width="540" height="1212" alt="Ficha de Mercadona con «Abierto ahora», el horario de hoy y el botón «Cómo llegar»."></div></figure>
-    </article>
-
-    <article class="pass azul flip">
-      <div class="copy">
-        <h2>Tu tarjeta de cliente, siempre contigo.</h2>
-        <p>Escanéala una vez, sea código de barras o QR. Se muestra a pantalla completa y con el brillo al máximo, lista para la caja.</p>
-      </div>
-      <figure class="shot"><div class="phone"><img loading="lazy" src="img/app-tarjeta.png" width="540" height="1212" alt="Tarjeta de cliente mostrada como código de barras grande sobre fondo blanco."></div></figure>
-    </article>
-
-    <article class="pass terracota">
-      <div class="copy">
-        <h2>La lista, ordenada por tienda.</h2>
-        <p>Cada producto en su supermercado, con el total estimado. Compártela por WhatsApp con un toque y marca lo que ya has comprado.</p>
-      </div>
-      <figure class="shot"><div class="phone"><img loading="lazy" src="img/app-lista.png" width="540" height="1212" alt="Lista de la compra agrupada por supermercado, con el total estimado arriba."></div></figure>
-    </article>
-
-    <article class="pass ambar flip">
-      <div class="copy">
-        <h2>Lo que gastas, mes a mes.</h2>
-        <p>Cada compra queda guardada. Mira cuánto llevas este mes y repite una compra anterior con un toque.</p>
-      </div>
-      <figure class="shot"><div class="phone"><img loading="lazy" src="img/app-gastos.png" width="540" height="1212" alt="Gasto del mes y compras agrupadas por meses."></div></figure>
-    </article>
-
-    <article class="pass blanca">
-      <div class="copy">
-        <h2>Letras del tamaño que necesites.</h2>
-        <p>Texto pequeño, normal, grande o muy grande: las pantallas se reorganizan para que nada se deforme. Además, alto contraste y modo oscuro.</p>
-      </div>
-      <figure class="shot"><div class="phone"><img loading="lazy" src="img/app-texto.png" width="540" height="1212" alt="Pantalla principal con el texto en tamaño muy grande: las cifras y las tiendas se apilan sin deformarse."></div></figure>
-    </article>
-
-    <article class="pass tinta flip">
-      <div class="copy">
-        <h2>Y también reconoce productos.</h2>
-        <p>Apunta la cámara a un producto: el móvil vibra y te dice qué es, en letras enormes. Sirve incluso para dos latas casi idénticas, solo con una foto de cada una. Funciona sin internet.</p>
-        <p class="demo">Capturas reales con datos de demostración.</p>
-      </div>
-      <figure class="shot pair">
-        <div class="phone"><img loading="lazy" src="img/app-salmon.png" width="540" height="1212" alt="La app muestra «Lata gato · Salmón» en letras enormes."></div>
-        <div class="phone"><img loading="lazy" src="img/app-pollo.png" width="540" height="1212" alt="La app muestra «Lata gato · Pollo» en letras enormes."></div>
-      </figure>
-    </article>
+  <div class="stage" id="cartera">
+    <p class="progress" aria-hidden="true"><span class="count"><b>1</b> / 6</span> <span class="name">Tiendas</span></p>
+    <div class="passes">
+      <article class="pass verde" data-label="Tiendas">
+        <div class="copy">
+          <h2>Tus supermercados, con horario y cómo llegar.</h2>
+          <p>Si quieres, al empezar busca los que tienes cerca. Ves si están abiertos ahora, a qué hora cierran y cómo llegar, y abres la app oficial de la cadena con un toque.</p>
+        </div>
+        <figure class="shot"><div class="phone"><img src="img/app-tienda.webp" srcset="img/app-tienda.webp 360w, img/app-tienda@2x.webp 720w" sizes="(max-width: 899px) 220px, 280px" width="360" height="808" alt="Ficha de Mercadona con «Abierto ahora», el horario de hoy y el botón «Cómo llegar»."></div></figure>
+      </article>
+      <article class="pass azul flip" data-label="Tarjeta">
+        <div class="copy">
+          <h2>Tu tarjeta de cliente, siempre contigo.</h2>
+          <p>Escanéala una vez, sea código de barras o QR. Se muestra a pantalla completa y con el brillo al máximo, lista para la caja.</p>
+        </div>
+        <figure class="shot"><div class="phone"><img loading="lazy" src="img/app-tarjeta.webp" srcset="img/app-tarjeta.webp 360w, img/app-tarjeta@2x.webp 720w" sizes="(max-width: 899px) 220px, 280px" width="360" height="808" alt="Tarjeta de cliente de Mercadona como código de barras grande sobre fondo blanco, con su número debajo."></div></figure>
+      </article>
+      <article class="pass terracota" data-label="Lista">
+        <div class="copy">
+          <h2>La lista, ordenada por tienda.</h2>
+          <p>Cada producto en su supermercado, con el total estimado. Compártela por WhatsApp con un toque y marca lo que ya has comprado.</p>
+        </div>
+        <figure class="shot"><div class="phone"><img loading="lazy" src="img/app-lista.webp" srcset="img/app-lista.webp 360w, img/app-lista@2x.webp 720w" sizes="(max-width: 899px) 220px, 280px" width="360" height="808" alt="Lista de la compra agrupada por supermercado: Carrefour con tres productos y su total, como un ticket."></div></figure>
+      </article>
+      <article class="pass ambar flip" data-label="Gastos">
+        <div class="copy">
+          <h2>Lo que gastas, mes a mes.</h2>
+          <p>Cada compra queda guardada. Mira cuánto llevas este mes, compáralo con el anterior y repite una compra con un toque.</p>
+        </div>
+        <figure class="shot"><div class="phone"><img loading="lazy" src="img/app-gastos.webp" srcset="img/app-gastos.webp 360w, img/app-gastos@2x.webp 720w" sizes="(max-width: 899px) 220px, 280px" width="360" height="808" alt="Gasto de noviembre con gráfica de barras de los últimos meses y compras agrupadas por mes."></div></figure>
+      </article>
+      <article class="pass blanca" data-label="Letras">
+        <div class="copy">
+          <h2>Letras del tamaño que necesites.</h2>
+          <p>Texto pequeño, normal, grande o muy grande: las pantallas se reorganizan para que nada se deforme. Además, alto contraste y modo oscuro.</p>
+        </div>
+        <figure class="shot"><div class="phone"><img loading="lazy" src="img/app-texto.webp" srcset="img/app-texto.webp 360w, img/app-texto@2x.webp 720w" sizes="(max-width: 899px) 220px, 280px" width="360" height="808" alt="Pantalla de tiendas con el texto muy grande: las cifras y los datos de cada tienda se apilan sin deformarse."></div></figure>
+      </article>
+      <article class="pass tinta flip" data-label="Reconoce">
+        <div class="copy">
+          <h2>Y también reconoce productos.</h2>
+          <p>Apunta la cámara a un producto: el móvil vibra y te dice qué es, en letras enormes. Sirve incluso para dos latas casi idénticas, solo con una foto de cada una. Funciona sin internet.</p>
+        <p class="demo">Capturas con datos de demostración.</p>
+        </div>
+        <figure class="shot pair"><div class="phone"><img loading="lazy" src="img/app-salmon.webp" width="540" height="1212" alt="La app muestra «Lata gato · Salmón» en letras enormes."></div><div class="phone"><img loading="lazy" src="img/app-pollo.webp" width="540" height="1212" alt="La app muestra «Lata gato · Pollo» en letras enormes."></div></figure>
+      </article>
+    </div>
+    <div class="pocket" aria-hidden="true"></div>
   </div>
+
+  <section class="cuenta" id="cuenta" aria-labelledby="t-cuenta">
+    <div class="wrap cuenta-in">
+      <div class="cuenta-copy">
+        <h2 id="t-cuenta">La cuenta sale a cero.</h2>
+        <p>Todo esto es gratis: sin anuncios, sin cuentas y sin compras dentro de la app.</p>
+        <div class="actions">
+          <a class="btn" href="https://github.com/achojosan/mis-compras-android/releases/latest">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+            Descargar gratis para Android
+          </a>
+          <a class="textlink" href="#instalar">Cómo se instala</a>
+        </div>
+      </div>
+      <div class="ticket" aria-hidden="true">
+        <div class="slot"></div>
+        <div class="feed"><div class="paper">
+          <p class="shop">MIS COMPRAS</p>
+          <p class="sub">Hecha en Extremadura</p>
+          <ul>
+            <li><span>Tus supermercados</span><span>con horario</span></li>
+            <li><span>Tarjeta de cliente</span><span>en la caja</span></li>
+            <li><span>Lista por tienda</span><span>y su total</span></li>
+            <li><span>Gastos del mes</span><span>al día</span></li>
+            <li><span>Letras grandes</span><span>a tu medida</span></li>
+            <li><span>Reconoce productos</span><span>sin internet</span></li>
+          </ul>
+          <p class="total"><span>TOTAL</span><strong>GRATIS</strong></p>
+          <p class="gracias">Sin anuncios · sin cuentas<br>¡Gracias por su visita!</p>
+        </div></div>
+      </div>
+    </div>
+  </section>
 
   <section class="install" id="instalar" aria-labelledby="t-inst">
     <div class="wrap split">
@@ -176,9 +214,12 @@
     <p class="made"><strong>Mis Compras</strong>, hecha con cariño en <strong>Extremadura</strong> por Josan.</p>
     <p><a href="https://github.com/achojosan/mis-compras-android">Código en GitHub</a> · <a href="mailto:achojosan@proton.me">achojosan@proton.me</a></p>
     <p class="small">Licencia: <a href="https://github.com/achojosan/mis-compras-android/blob/main/LICENSE">PolyForm Strict 1.0.0</a>. Uso no comercial; se puede compartir el APK oficial sin modificar. Textos e imágenes: todos los derechos reservados.</p>
-    <p class="small">Los logotipos de las cadenas pertenecen a sus propietarios; Mis Compras es independiente y no está afiliada a ninguna. Mapas © colaboradores de OpenStreetMap. Productos: Open Food Facts. Tipografía: Bricolage Grotesque (SIL OFL 1.1).</p>
+    <p class="small">Los logotipos de las cadenas pertenecen a sus propietarios; Mis Compras es independiente y no está afiliada a ninguna. Mapas © colaboradores de OpenStreetMap. Productos: Open Food Facts. Tipografía: Bricolage Grotesque (SIL OFL 1.1). Animaciones: GSAP, de GreenSock (licencia Standard No Charge).</p>
   </div>
   <div class="stripes" aria-hidden="true"><i></i><i></i><i></i></div>
 </footer>
+<script src="vendor/gsap/gsap.min.js"></script>
+<script src="vendor/gsap/ScrollTrigger.min.js"></script>
+<script src="assets/site.js"></script>
 </body>
 </html>

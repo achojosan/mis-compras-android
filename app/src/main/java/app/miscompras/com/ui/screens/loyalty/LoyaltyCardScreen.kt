@@ -91,6 +91,7 @@ fun LoyaltyCardScreen(
         } else {
             AddCardView(
                 storeName = store.name,
+                pass = store.pass,
                 canCancel = hasCard,
                 onCancel = viewModel::cancelEditing,
                 onFormat = viewModel::onFormat,
@@ -234,6 +235,7 @@ private fun CardView(
 @Composable
 private fun AddCardView(
     storeName: String,
+    pass: PassColor,
     canCancel: Boolean,
     onCancel: () -> Unit,
     onFormat: (Int) -> Unit,
@@ -245,11 +247,24 @@ private fun AddCardView(
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(AccessibilityDefaults.ItemSpacing)
     ) {
-        Text(
-            "Apunta la cámara al código de barras o QR de tu tarjeta de $storeName. Se guarda en este móvil y no se envía a ninguna parte.",
-            style = MaterialTheme.typography.bodyLarge
-        )
-        Box(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp))) {
+        // Cabecera con el pase de la tienda: la persona ve de qué tarjeta se trata antes de leer nada.
+        val resolved = resolvePass(pass)
+        Surface(
+            shape = AppShapes.pass,
+            color = resolved.container,
+            contentColor = resolved.content,
+            border = if (resolved.outlined) BorderStroke(2.dp, MaterialTheme.colorScheme.outline) else null,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(storeName, style = MaterialTheme.typography.headlineMedium)
+                Text(
+                    "Apunta la cámara al código de barras o QR de tu tarjeta. Se guarda en este móvil y no se envía a ninguna parte.",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
+        Box(modifier = Modifier.fillMaxWidth().clip(AppShapes.pass)) {
             CameraPermissionGate {
                 CameraScanner(
                     onFrame = { code, _ -> onScan(code) },
@@ -260,7 +275,7 @@ private fun AddCardView(
         }
         Text("O escribe el número a mano:", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         AccessibleTextField(value = typed, onValueChange = { typed = it }, label = "Número de la tarjeta")
-        AccessibleButton(text = "Guardar número", onClick = { onTyped(typed) }, enabled = typed.isNotBlank())
+        AccessibleButton(text = "Guardar número", onClick = { onTyped(typed) }, enabled = typed.isNotBlank(), modifier = Modifier.fillMaxWidth())
         if (canCancel) TextButton(onClick = onCancel) { Text("Cancelar") }
     }
 }

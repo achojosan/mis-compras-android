@@ -1,7 +1,9 @@
 package app.miscompras.com.ui.screens.history
 
 import app.miscompras.com.util.formatEuros
+import java.time.Instant
 import java.time.YearMonth
+import java.time.ZoneId
 import java.time.format.TextStyle
 import java.util.Locale
 import kotlin.math.abs
@@ -41,3 +43,9 @@ fun chartDescription(months: List<MonthExpense>): String =
     "Gasto de los últimos meses. " + months.joinToString(". ") {
         "${it.yearMonth.month.getDisplayName(TextStyle.FULL, es)}: ${formatEuros(it.total)}"
     }
+
+/** «Última compra: 3 nov · 67,45 €». */
+fun lastPurchaseText(purchasedAtMillis: Long, amount: Double, zone: ZoneId = ZoneId.systemDefault()): String {
+    val date = Instant.ofEpochMilli(purchasedAtMillis).atZone(zone).toLocalDate()
+    return "Última compra: ${date.dayOfMonth} ${shortMonthName(YearMonth.from(date))} · ${formatEuros(amount)}"
+}

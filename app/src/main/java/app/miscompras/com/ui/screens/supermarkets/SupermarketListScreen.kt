@@ -1,5 +1,6 @@
 package app.miscompras.com.ui.screens.supermarkets
 
+import app.miscompras.com.ui.components.SwipeToDelete
 import app.miscompras.com.ui.components.AccessibleButton
 import app.miscompras.com.ui.components.ButtonStyle
 import androidx.compose.ui.semantics.CustomAccessibilityAction
@@ -156,8 +157,10 @@ fun SupermarketListScreen(
                         }
 
                         itemsIndexed(ordered, key = { _, item -> item.supermarket.id }) { index, item ->
-                            SwipeToDeletePass(
+                            SwipeToDelete(
                                 onDelete = { supermarketToDelete = item.supermarket },
+                                deleteLabel = "Eliminar tienda",
+                                shape = AppShapes.pass,
                                 modifier = Modifier.animateItem()
                             ) {
                                 StorePass(
@@ -312,56 +315,6 @@ private fun WalletHeader(
             caption = "cosa${plural(pendingCount)} por comprar en $stores",
             modifier = modifier
         )
-    }
-}
-
-/** Arrastrar un pase a la izquierda lo elimina (con confirmación); también hay una acción de accesibilidad. */
-@Composable
-private fun SwipeToDeletePass(
-    onDelete: () -> Unit,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
-) {
-    var offsetX by remember { mutableFloatStateOf(0f) }
-    val animatedOffset by animateFloatAsState(targetValue = offsetX, label = "swipeAnimation")
-
-    Box(modifier = modifier.fillMaxWidth()) {
-        Box(
-            modifier = Modifier
-                .matchParentSize()
-                .clip(AppShapes.pass)
-                .background(MaterialTheme.colorScheme.error),
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onError,
-                modifier = Modifier
-                    .padding(horizontal = AccessibilityDefaults.CardPadding)
-                    .size(AccessibilityDefaults.IconSize)
-            )
-        }
-        Box(
-            modifier = Modifier
-                .offset { IntOffset(animatedOffset.roundToInt(), 0) }
-                .semantics {
-                    customActions = listOf(
-                        CustomAccessibilityAction("Eliminar tienda") { onDelete(); true }
-                    )
-                }
-                .pointerInput(Unit) {
-                    detectHorizontalDragGestures(
-                        onDragEnd = {
-                            if (abs(offsetX) > 150f) onDelete()
-                            offsetX = 0f
-                        },
-                        onHorizontalDrag = { _, dragAmount ->
-                            offsetX = (offsetX + dragAmount).coerceIn(-300f, 0f)
-                        }
-                    )
-                }
-        ) { content() }
     }
 }
 

@@ -1,5 +1,8 @@
 package app.miscompras.com.ui.screens.supermarkets
 
+import app.miscompras.com.data.repository.PurchaseHistoryRepository
+import app.miscompras.com.domain.model.PurchaseHistory
+import kotlinx.coroutines.flow.map
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -37,6 +40,7 @@ enum class ProductSortOrder {
 class SupermarketDetailViewModel @Inject constructor(
     private val supermarketRepository: SupermarketRepository,
     private val productRepository: ProductRepository,
+    private val purchaseHistoryRepository: PurchaseHistoryRepository,
     private val dataStore: UserPreferencesDataStore,
     private val locationProvider: LocationProvider,
     private val overpass: OverpassClient,
@@ -47,6 +51,12 @@ class SupermarketDetailViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow<SupermarketDetailUiState>(SupermarketDetailUiState.Loading)
     val uiState: StateFlow<SupermarketDetailUiState> = _uiState.asStateFlow()
+
+    /** Última compra registrada en esta tienda (para la línea «Última compra» de la ficha). */
+    val lastPurchase: StateFlow<PurchaseHistory?> =
+        purchaseHistoryRepository.getHistoryBySupermarket(supermarketId)
+            .map { list -> list.maxByOrNull { it.purchasedAt } }
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     private val _sortOrder = MutableStateFlow(ProductSortOrder.NameAsc)
     val sortOrder: StateFlow<ProductSortOrder> = _sortOrder.asStateFlow()

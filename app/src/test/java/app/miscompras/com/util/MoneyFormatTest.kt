@@ -15,4 +15,10 @@ class MoneyFormatTest {
         assertEquals("12", formatQuantity(12.0))
         assertEquals("1,5", formatQuantity(1.5))
     }
+
+    @Test fun unidadEnSingularConUno() {
+        assertEquals("1 unidad", quantityLabel(1.0, "unidades"))
+        assertEquals("2 unidades", quantityLabel(2.0, "unidades"))
+        assertEquals("1,5 kg", quantityLabel(1.5, "kg"))
+    }
 }

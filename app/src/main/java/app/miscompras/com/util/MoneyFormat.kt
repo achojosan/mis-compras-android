@@ -18,3 +18,9 @@ fun formatQuantity(quantity: Double): String =
         maximumFractionDigits = 3
         isGroupingUsed = false
     }.format(quantity)
+
+/** «12 ud», «1 unidad», «2,5 kg»: la unidad en singular cuando la cantidad es 1. */
+fun quantityLabel(quantity: Double, unit: String): String {
+    val u = if (quantity == 1.0 && unit.equals("unidades", ignoreCase = true)) "unidad" else unit
+    return "${formatQuantity(quantity)} $u".trim()
+}

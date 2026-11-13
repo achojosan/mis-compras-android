@@ -1,5 +1,6 @@
 package app.miscompras.com.ui.screens.shopping
 
+import app.miscompras.com.ui.components.CheckCircle
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -330,33 +331,6 @@ private fun PriceText(amount: Double, purchased: Boolean) {
         fontWeight = FontWeight.SemiBold,
         color = if (purchased) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface
     )
-}
-
-/** Círculo que se rellena al marcar el producto. La forma (círculo + marca), no solo el color, indica el estado. */
-@Composable
-private fun CheckCircle(checked: Boolean) {
-    val fill by animateColorAsState(
-        targetValue = if (checked) MaterialTheme.colorScheme.primary else androidx.compose.ui.graphics.Color.Transparent,
-        animationSpec = tween(200),
-        label = "checkFill"
-    )
-    Box(
-        modifier = Modifier
-            .size(28.dp)
-            .clip(CircleShape)
-            .background(fill)
-            .border(2.5.dp, MaterialTheme.colorScheme.primary, CircleShape),
-        contentAlignment = Alignment.Center
-    ) {
-        if (checked) {
-            Icon(
-                imageVector = Icons.Default.Check,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.size(18.dp)
-            )
-        }
-    }
 }
 
 @Composable

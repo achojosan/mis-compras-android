@@ -8,7 +8,9 @@ import app.miscompras.com.ui.screens.history.shortMonthName
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
+import app.miscompras.com.ui.screens.history.lastPurchaseText
 import java.time.YearMonth
+import java.time.ZoneOffset
 
 class HistoryLogicTest {
     private val nov = YearMonth.of(2026, 11)
@@ -41,5 +43,10 @@ class HistoryLogicTest {
     @Test fun descripcionIncluyeTodosLosValores() {
         val d = chartDescription(recentMonths(listOf(MonthExpense(nov, 67.45, 1)), nov, 2)).plain()
         assertEquals("Gasto de los últimos meses. octubre: 0,00 €. noviembre: 67,45 €", d)
+    }
+
+    @Test fun textoDeUltimaCompra() {
+        val millis = java.time.LocalDateTime.of(2026, 11, 3, 12, 0).toInstant(ZoneOffset.UTC).toEpochMilli()
+        assertEquals("Última compra: 3 nov · 67,45 €", lastPurchaseText(millis, 67.45, ZoneOffset.UTC).plain())
     }
 }

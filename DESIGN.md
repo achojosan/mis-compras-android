@@ -3,7 +3,7 @@
 > Alcance: la landing estática de GitHub Pages (`docs/index.html` + `docs/assets/site.css`) y, desde la sección «App Android: la cartera», la app Compose, que hereda el mismo mundo.
 
 ## Dirección: «La cartera y el ticket»
-La web es una cartera que se abre al hacer scroll. Cada función de la app sale del bolsillo como una tarjeta de color con su móvil real completo, se queda apilada asomando por arriba, y al final la cartera se guarda y «paga»: un ticket de caja se imprime con el scroll y el total es **GRATIS**. Todo gira en torno al gasto de la compra. El enfoque sigue siendo **«toda tu compra en un sitio»** y el reconocimiento de productos es la última tarjeta.
+La web es una cartera que se abre al hacer scroll. Cada pantalla de la app sale del bolsillo como una tarjeta de color con su móvil real completo (ocho tarjetas: tiendas, ficha de tienda, tarjeta de cliente, lista, gastos, letras grandes, mis artículos y resultado de reconocimiento), se queda apilada asomando por arriba, y al final la cartera se guarda y «paga»: un ticket de caja se imprime con el scroll y el total es **GRATIS**. Todo gira en torno al gasto de la compra. El enfoque sigue siendo **«toda tu compra en un sitio»** y el reconocimiento de productos es la última tarjeta.
 Se rechaza la rejilla de tarjetas iguales con icono, el kicker sobre el titular, los brillos, los degradados de texto y el secuestro del scroll (nada de scroll suave por JS).
 
 ## Color
@@ -35,8 +35,8 @@ Tarjetas: radio 36 px (28 en móvil), sombra neutra con desplazamiento, 500 px d
 
 ## Movimiento
 Librería: **GSAP 3.15 + ScrollTrigger**, alojadas en `docs/vendor/gsap/` (sin terceros; licencia Standard No Charge, cabecera intacta). Scroll siempre nativo.
-- **Escritorio** (≥ 900×640, sin «reducir movimiento»): la cartera se fija (`pin`, `scrub`); cada tarjeta sube desde detrás del bolsillo, las anteriores quedan apiladas asomando 16 px y a escala −2,5 %; contador «n / 6» arriba; al final las tarjetas se guardan. Después el ticket se fija y se imprime desde una ranura (`yPercent` −100 → 0), con el sello GRATIS.
-- **Móvil / pantallas bajas**: variante ligera sin fijar nada; cada tarjeta entra con un pequeño giro y el móvil hace parallax; el ticket se imprime al entrar en pantalla.
+- **La cartera se fija en escritorio y en móvil** (sin «reducir movimiento»): `pin` + `scrub`; cada tarjeta sube desde detrás del bolsillo, las anteriores quedan apiladas asomando 10 px y a escala −2,5 %; contador «n / 8» arriba; al final las tarjetas se guardan. En móvil la tarjeta es de una columna (texto arriba, móvil completo asomando por abajo) y ocupa el 70 % de la altura. Después el ticket se imprime desde una ranura.
+- **Comprobación de ajuste**: antes de fijar, el JS mide que el texto de cada tarjeta quepa (en móvil, como mucho la mitad de la tarjeta). Si no cabe (letra al 200 %, pantallas muy bajas), se usa la **variante ligera**: sin fijar nada, cada tarjeta entra con un pequeño giro y el ticket se imprime al llegar a él. El ticket solo se fija si cabe entero en pantalla. Al cambiar el tamaño o el zoom se vuelve a decidir.
 - **Sin JavaScript o con `prefers-reduced-motion`**: tarjetas apiladas en flujo normal (en escritorio sin JS, `position: sticky`), ticket completo y visible.
 
 ## Superficies del navegador
@@ -46,5 +46,5 @@ Librería: **GSAP 3.15 + ScrollTrigger**, alojadas en `docs/vendor/gsap/` (sin t
 Enlace «Saltar al contenido», un `h1`, títulos en orden, `alt` descriptivo en cada captura, objetivos táctiles ≥ 48 px, foco visible. Todo el contenido está en el DOM en orden de lectura; el JavaScript solo añade fijado y transformaciones. Las tarjetas no contienen elementos enfocables, así que el fijado no puede ocultar el foco. Funcional sin JS, con «reducir movimiento», en modo oscuro y a 200 % de zoom.
 
 ## Procedencia de las imágenes
-Las capturas de `docs/img/` (WebP a 360 y 720 px, `srcset`) son **capturas reales a 1080×2424** del emulador Pixel_10 con una compilación *debug* del rediseño de la app y datos de demostración extremeños, con barra de estado limpia (modo demo de SystemUI: 9:41, batería llena). Cada WebP lleva su origen en el XMP. `app-salmon` y `app-pollo` proceden de la v1.10 (pantalla de reconocimiento aún no recapturada). No hay imágenes generadas.
+Las 13 capturas de `docs/img/` (WebP a 360 y 720 px, `srcset`) son **capturas reales a 1080×2424** del emulador Pixel_10 con una compilación *debug* del rediseño de la app y datos de demostración extremeños, con barra de estado limpia (modo demo de SystemUI: 9:41, batería llena). Cada WebP lleva su origen en el XMP. Las de reconocimiento (artículos, registrar, resultado) se obtienen sin cámara: lista sembrada en la base de datos de demostración y pantalla de detalle. La de letras grandes tiene los iconos de la barra de estado repuestos a mano (el modo demo los duplicaba). No hay imágenes generadas.
 - **Ficha de tienda:** la tienda es su pase (`StoreHero`: logo, nombre, estado «Abierto · cierra 21:30», pendientes en grande y «Cómo llegar»); acciones como mosaicos con icono y texto (`ActionTiles`, repartidos de forma pareja, 2 por fila con texto grande); productos como ticket (`ProductsTicket`) con selector «Ordenar», fila entera para marcar, lápiz para editar y arrastre o acción de accesibilidad para eliminar; «Añadir producto» al final de la lista y «Última compra» del historial.

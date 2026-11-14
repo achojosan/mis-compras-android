@@ -25,7 +25,7 @@ Organiza tus supermercados, reconoce los productos con la cámara y lleva tu tar
 
 ---
 
-> **Página de presentación y descarga:** <https://achojosan.github.io/mis-compras-android/> (el código está en [`docs/`](docs/index.html)).
+> **Página de presentación y descarga:** <https://achojosan.github.io/mis-compras-android/> (el código está en [`docs/`](docs/index.html)). El botón de descarga baja directamente el APK de la [última versión](https://github.com/achojosan/mis-compras-android/releases/latest/download/mis-compras.apk) (versión actual: **1.11**).
 
 ## ¿Por qué existe?
 
@@ -53,14 +53,27 @@ flowchart LR
     R --> H[Vibración + ficha grande]
 ```
 
+### Una cartera de tarjetas
+Toda tu compra en un sitio, con el aspecto de una **cartera**: cada cosa tiene su propia tarjeta y se reconoce de un vistazo.
+- **Tiendas como pases de color**: cada supermercado tiene su color (paleta de alto contraste) y puedes cambiarlo.
+- **Lista como ticket**, con control **− / +** para las cantidades y marcado de lo comprado.
+- **Artículos con color e icono propios**, y la palabra distintiva en grande en «Mis artículos».
+- **Gastos con gráfico** por meses y barra inferior con etiquetas.
+- La cámara, el alta de tarjeta y la ficha de cada tienda comparten el mismo mundo visual (cabecera con el pase de la tienda).
+- Titulares en **Bricolage Grotesque** (licencia OFL), incluida en la app.
+
 ### Tus supermercados
 - **Al instalarla, busca por ti** las cadenas que tienes cerca (con tu ubicación, solo en ese momento) y las añade: eliges cuáles.
-- Ficha de cada tienda con **horario y «abierto/cerrado ahora»**, botón **Cómo llegar** y acceso a **la app oficial** de la cadena (Mercadona, Carrefour, Lidl, Aldi, Dia, Hipercor / El Corte Inglés, Alcampo, Consum, Eroski y BM).
+- **Ficha de la tienda como un pase abierto**: cabecera con su color, estado de apertura y pendientes en grande; acciones en mosaicos con icono y texto (2 por fila con texto grande).
+- Con **horario y «abierto/cerrado ahora»**, botón **Cómo llegar** y acceso a **la app oficial** de la cadena (Mercadona, Carrefour, Lidl, Aldi, Dia, Hipercor / El Corte Inglés, Alcampo, Consum, Eroski y BM).
+- Línea **«Última compra»** calculada a partir del historial.
 - **Tarjeta de cliente**: la escaneas una vez (o escribes el número) y se muestra a pantalla completa, con el brillo al máximo, lista para la caja.
 - **Acceso directo** en la pantalla de inicio a cualquier tienda.
 
 ### La lista y los gastos
 - Productos agrupados por tienda, con total estimado, cantidades editables y marcado de lo comprado.
+- **Selector de orden** en los productos de cada tienda; los productos nuevos se añaden al final de la lista.
+- Deslizar para borrar, igual en Tiendas, Lista y la ficha de la tienda.
 - **Compartir la lista** (solo lo pendiente) por WhatsApp, correo…, o copiarla y abrir la app de la tienda.
 - Historial de compras por meses, repetir una compra anterior con un toque.
 
@@ -72,6 +85,7 @@ flowchart LR
 
 ### Accesible de verdad
 - **Tamaño de texto** pequeño, normal, grande y **muy grande**: las pantallas cambian a un diseño apilado para que ninguna tarjeta se deforme.
+- **La escala de texto del sistema se respeta**: el tamaño efectivo es el del sistema × el de la app (con tope de 2,0), en lugar de pisarse.
 - Espaciado, **alto contraste**, modo claro/oscuro/sistema y 7 colores de tema.
 - Botones y zonas táctiles grandes (≥ 56 dp).
 - ¿Demasiados números? **Mostrar recuento** se puede apagar, y la pantalla principal queda limpia.
@@ -111,16 +125,22 @@ cd mis-compras-android
 ./gradlew assembleDebug          # APK de depuración en app/build/outputs/apk/debug/
 ```
 
+**Diseño y producto:** el contexto de producto está en [`PRODUCT.md`](PRODUCT.md) y el sistema de diseño («La cartera») en [`DESIGN.md`](DESIGN.md).
+
+**Web (`docs/`):** página estática con scroll animado con GSAP 3.15 + ScrollTrigger, alojado en el propio repositorio (`docs/vendor/gsap`, sin terceros). Hay una variante ligera sin JavaScript o con «reducir movimiento».
+
 **Actualizador integrado:** usa el permiso `REQUEST_INSTALL_PACKAGES`, que Google Play restringe. Una futura versión para Play debería compilarse sin el actualizador.
 
 **APK firmado (release):** la firma no está en el repositorio. Copia `keystore.properties.example` a `keystore.properties` (ignorado por git), pon los datos de tu keystore y ejecuta `./gradlew assembleRelease`. Sin ese fichero se genera un APK **sin firmar**.
+
+**Publicar una versión:** sube `versionCode` y `versionName` en `app/build.gradle.kts`, compila el release y publícalo con el APK adjunto con el nombre fijo `mis-compras.apk` (la web enlaza a `releases/latest/download/mis-compras.apk`). El APK release solo lleva librerías **arm64** (~78 MB).
 
 ### Cómo está hecha
 
 | Capa | Tecnología |
 |---|---|
-| Interfaz | Jetpack Compose · Material 3 · Navigation Compose · Coil (logos SVG) |
-| Datos | Room (migraciones 2→3→4→5) · DataStore · Hilt |
+| Interfaz | Jetpack Compose · Material 3 · Navigation Compose · Coil (logos SVG) · Bricolage Grotesque |
+| Datos | Room (migraciones 2→3→4→5→6) · DataStore · Hilt |
 | Cámara y lectura | CameraX · ML Kit Barcode Scanning (en el dispositivo) |
 | Reconocimiento visual | MediaPipe Image Embedder (MobileNet V3 small, incluido en la app) |
 | Tarjeta de cliente | ZXing (dibuja de nuevo el código leído) |
